@@ -6,7 +6,8 @@ This application supports the [Getting Started with Python on Heroku](https://de
 
 ## Local Setup
 
-### Download the pycharm ide - community edition from https://www.jetbrains.com/pycharm/download/download-thanks.html?platform=windows&code=PCC
+### Setup Python IDE
+Download the pycharm ide - community edition from https://www.jetbrains.com/pycharm/download/download-thanks.html?platform=windows&code=PCC
 
 ### Ensure you have python installed and then install pip
 wget https://bootstrap.pypa.io/get-pip.py
