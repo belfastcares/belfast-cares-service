@@ -1,6 +1,6 @@
-# python-getting-started
+# django-heroku-getting-started
 
-A barebones Django app, which can easily be deployed to Heroku.
+A barebones Django app utilizing postgres & bootstrap, which can easily be deployed to Heroku.
 
 This application supports the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
 
@@ -9,12 +9,12 @@ This application supports the [Getting Started with Python on Heroku](https://de
 Make sure you have Python [installed properly](http://install.python-guide.org).  Also, install the [Heroku Toolbelt](https://toolbelt.heroku.com/) and [Postgres](https://devcenter.heroku.com/articles/heroku-postgresql#local-setup).
 
 ```sh
-$ git clone git@github.com:heroku/python-getting-started.git
-$ cd python-getting-started
+$ git clone git@github.com/apoclyps/django-heroku-seed.git
+$ cd django-heroku-seed
 
 $ pip install -r requirements.txt
 
-$ createdb python_getting_started
+$ createdb django-heroku-seed
 
 $ python manage.py migrate
 $ python manage.py collectstatic
