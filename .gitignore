@@ -1,0 +1,10 @@
+venv
+*.pyc
+staticfiles
+.env
+db.sqlite3
+.idea
+activate
+hackathon
+hackathon-env
+migrations
