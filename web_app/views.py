@@ -22,7 +22,7 @@ def charities_listing(request):
 
 
 def charities_single(request, charity_id):
-    organisation = Organisation.objects.filter(id=charity_id)[0]
+    organisation = get_object_or_404(Organisation, id=charity_id)
     org_address = organisation.address
     org_wishlist = organisation.wishlist
     org_contact = organisation.primary_contact
