@@ -49,8 +49,9 @@
                                     {{item.description}}
                                  </li>
                                 <br>
+                                {% empty %}
+                                <h4>No Items in Wishlist</h4>
                                 {% endfor %}
-                                </li>
                             </ol>
 <!--                            <div class="causes-progress">
                                 <div class="progress-item">
