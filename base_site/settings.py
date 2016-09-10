@@ -73,17 +73,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'base_site.wsgi.application'
 
 
-#DATABASES = {'default': dj_database_url.config(conn_max_age=600)}
-DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-         'NAME': 'hackathon',
-         'USER': 'djangodbuser',
-         'PASSWORD': 'hellokittyislandadventure69',
-         'HOST': 'localhost',
-         'PORT': '',
-     }
- }
+DATABASES = {'default': dj_database_url.config(conn_max_age=600)}
+# DATABASES = {
+#      'default': {
+#          'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#          'NAME': 'hackathon',
+#          'USER': 'djangodbuser',
+#          'PASSWORD': 'hellokittyislandadventure69',
+#          'HOST': 'localhost',
+#          'PORT': '',
+#      }
+#  }
 
 
 # Password validation
