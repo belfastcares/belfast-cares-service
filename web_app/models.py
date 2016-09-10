@@ -10,7 +10,7 @@ class Wishlist(models.Model):
     reoccurring = models.BooleanField('reoccurring')
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class Address(models.Model):
@@ -46,7 +46,7 @@ class Organisation(models.Model):
     wishlist = models.OneToOneField(Wishlist, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.id + " " + self.name
+        return str(self.id) + " " + str(self.name)
 
 
 @python_2_unicode_compatible
