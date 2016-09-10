@@ -4,7 +4,6 @@ from django.utils.encoding import python_2_unicode_compatible
 
 # Create your models here.
 @python_2_unicode_compatible
-@python_2_unicode_compatible
 class Wishlist(models.Model):
     start_time = models.DateTimeField('start_time')
     end_time = models.DateTimeField('end_time')
