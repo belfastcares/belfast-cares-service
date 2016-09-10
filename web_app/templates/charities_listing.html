@@ -2,6 +2,20 @@
 {% load staticfiles %}
 
 {% block content %}
+{% for charity in charities %}
+<div class="charity">
+    <div class="name">
+        <h1><a href="/charity/{{ charity.id }}/">
+                {{ charity.name }}
+            </a>
+        </h1>
+    </div>
+    <div class="description">
+        {{ charity.description }}
+    </div>
+    <br></br>
+</div>
+{% endfor %}
 
 
 <section class="event-feature pb-60 pt-60" data-bg-color="#fafafa">
