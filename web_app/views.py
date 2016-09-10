@@ -25,5 +25,9 @@ def charities_single(request):
     return render(request, 'charities_single.html')
 
 
+def help(request):
+    return render(request, 'help.html')
+
+
 def contact(request):
     return render(request, 'contact.html')
