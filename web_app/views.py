@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import *
 
-
 def index(request):
     return render(request, 'index.html')
 
@@ -18,7 +17,8 @@ def volunteer_single(request, volunteer_id):
 
 
 def charities_listing(request):
-    return render(request, 'charities_listing.html')
+    charities = Organisation.objects.all()
+    return render(request, 'charities_listing.html', {'charities': charities})
 
 
 def charities_single(request, charity_id):
