@@ -2,34 +2,402 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Python Getting Started on Heroku</title>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <!-- responsive meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title>Belfast Cares | Giving back to the community!</title>
+    <!-- master stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- responsive stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <!-- Custom Margin Padding stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap-margin-padding.css' %}">
 
-    <title>Hack The Hub Template</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="{% static 'css/heroic-features.css' %}" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 </head>
+
 <body>
 
+<!-- /.top-bar -->
+<header class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="logo">
+                    <a href="index1.html">
+                        <img src="{% static 'img/resources/logo.png' %}" alt="Awesome Image"/>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-8">
+                <div class="header-right-info pull-right sm-pull-none clearfix">
+                    <div class="single-header-info pb-sm-20">
+                        <div class="icon-box">
+                            <div class="inner-box">
+                                <i class="flaticon-interface-2"></i>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3>EMAIL</h3>
+                            <p>contact@belfastcares.com</p>
+                        </div>
+                    </div>
+                    <div class="single-header-info">
+                        <div class="icon-box">
+                            <div class="inner-box">
+                                <i class="flaticon-telephone"></i>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3>Call Now</h3>
+                            <p><b>(732) 803-010-03</b></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- /.header -->
+
+<nav class="mainmenu-area stricky">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-lg-3 col-md-12">
+                <div class="donate-btn clearfix">
+                    <!-- Modal: donate now Starts -->
+                    <a class="thm-btn pull-left" data-toggle="modal" href="#modal-donate-now">Donate Now</a>
+
+                    <div class="nav-footer pull-right">
+                        <button><i class="fa fa-bars"></i></button>
+                    </div>
+                    <div class="modal fade" id="modal-donate-now" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel">
+                        <div class="modal-dialog style-one" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Make a Donation</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="donation-form-outer">
+                                        <form action="contact.html" method="post">
+                                            <!--Form Portlet-->
+                                            <div class="form-portlet">
+                                                <h3>Donation Amount</h3>
+                                                <div class="row clearfix">
+                                                    <div class="form-group col-xs-12 clearfix">
+                                                        <div class="radio-select">
+                                                            <input type="radio" id="amount-1" name="sel-amount">
+                                                            <label for="amount-1">$10</label>
+                                                        </div>
+                                                        <div class="radio-select">
+                                                            <input type="radio" checked="" id="amount-2"
+                                                                   name="sel-amount">
+                                                            <label for="amount-2">$25</label>
+                                                        </div>
+                                                        <div class="radio-select">
+                                                            <input type="radio" id="amount-3" name="sel-amount">
+                                                            <label for="amount-3">$50</label>
+                                                        </div>
+                                                        <div class="radio-select">
+                                                            <input type="radio" id="amount-4" name="sel-amount">
+                                                            <label for="amount-4">$100</label>
+                                                        </div>
+                                                        <div class="radio-select">
+                                                            <input type="radio" id="amount-5" name="sel-amount">
+                                                            <label for="amount-5">$150</label>
+                                                        </div>
+                                                        <div class="radio-select">
+                                                            <input type="radio" id="amount-6" name="sel-amount">
+                                                            <label for="amount-6">$200</label>
+                                                        </div>
+                                                        <div class="radio-select">
+                                                            OR
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group  col-xs-12 padd-top-20">
+                                                        <input type="text" placeholder="Other Amount" value=""
+                                                               name="other-amount">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <!--Form Portlet-->
+                                            <div class="form-portlet">
+                                                <h3>Billing Information</h3>
+                                                <div class="row clearfix">
+                                                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                                                        <div class="field-label">Card Number <span
+                                                                class="required">*</span></div>
+                                                        <input type="text" required="" placeholder="Card Number"
+                                                               value="" name="name">
+                                                    </div>
+                                                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                                                        <div class="field-label">Security Code (CVC) <span
+                                                                class="required">*</span></div>
+                                                        <input type="text" required="" placeholder="Security Code"
+                                                               value="" name="name">
+                                                    </div>
+                                                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                                                        <div class="field-label">Name <span class="required">*</span>
+                                                        </div>
+                                                        <input type="text" required="" placeholder="First Name" value=""
+                                                               name="name">
+                                                    </div>
+                                                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                                                        <div class="field-label">Email <span class="required">*</span>
+                                                        </div>
+                                                        <input type="email" required="" placeholder="Email" value=""
+                                                               name="name">
+                                                    </div>
+                                                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                                                        <div class="field-label">Phone <span class="required">*</span>
+                                                        </div>
+                                                        <input type="text" required="" placeholder="Phone" value=""
+                                                               name="name">
+                                                    </div>
+                                                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                                                        <div class="field-label">Address <span class="required">*</span>
+                                                        </div>
+                                                        <input type="text" required="" placeholder="Address 1" value=""
+                                                               name="name">
+                                                    </div>
+                                                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                                                        <div class="field-label">City <span class="required">*</span>
+                                                        </div>
+                                                        <select>
+                                                            <option>City</option>
+                                                            <option>City Name</option>
+                                                            <option>City Other</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                                                        <div class="field-label">Zip / Postal Code <span
+                                                                class="required">*</span></div>
+                                                        <input type="text" required="" placeholder="Zip Code" value=""
+                                                               name="name">
+                                                    </div>
+                                                    <hr>
+                                                    <div class="text-center">
+                                                        <button class="thm-btn mt-30 mb-30" type="submit">Donate Now
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <!--Form Portlet-->
+                                            <div class="form-portlet">
+                                                <h3>Online Payment Information</h3>
+                                                <div class="payment-option-logo"><img alt=""
+                                                                                      src="{% static 'img/resources/payment-logos.png' %}"
+                                                                                      class="img-responsive"></div>
+                                                <br>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal: donate now Ends -->
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                <div class="navigation">
+                    <div class="nav-header">
+                        <ul>
+                            <li class="dropdown">
+                                <a href="#">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#">Helping</a>
+                                <ul class="submenu">
+                                    <li><a href="volunteer-style-one.html">Volunteer Style One</a></li>
+                                    <li><a href="volunteer-style-two.html">Volunteer Style Two</a></li>
+                                    <li><a href="volunteer-profile.html">Volunteer Profile</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#">Charaties</a>
+                                <ul class="submenu">
+                                    <li><a href="causes-list.html">Charaties</a></li>
+                                    <li><a href="causes-single.html">Single Cause</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#">Volunteer</a>
+                                <ul class="submenu">
+                                    <li><a href="events-list.html">Events List</a></li>
+                                    <li><a href="events-single.html">Event Single</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="/contact">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
 {% block content %}{% endblock %}
+
+
+<!--Footer Section-->
+<footer class="footer sec-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-3">
+                <div class="footer-widget about-widget">
+                    <a href="#">
+                        <img src="{% static 'img/resources/footer-logo.png' %}" alt="Awesome Image"/>
+                    </a>
+                    <p>Lorem ipsum dolor sit amet, eu me evert laboramus, iudico </p>
+                    <ul class="contact">
+                        <li><i class="fa fa-map-marker"></i> <span>60 Grant Ave. Carteret NJ 0708</span></li>
+                        <li><i class="fa fa-phone"></i> <span>(880) 1723801729</span></li>
+                        <li><i class="fa fa-envelope-o"></i> <span>example@gmail.com</span></li>
+                    </ul>
+                    <ul class="social">
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                        <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-2">
+                <div class="footer-widget quick-links">
+                    <h3 class="title">Pages</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="causes-grid.html">Charities</a></li>
+                        <li><a href="events-grid.html">Events</a></li>
+                        <li><a href="faq.html">Faq</a></li>
+                        <li><a href="blog-style-two.html">Archives</a></li>
+                        <li><a href="blog-style-one.html">News</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-6 latest-post col-md-3">
+                <div class="footer-widget latest-post">
+                    <h3 class="title">Latest News</h3>
+                    <ul>
+                        <li>
+                            <span class="border"></span>
+                            <div class="content">
+                                <a href="blog-details.html">If you need a crown or lorem an implant you will pay it </a>
+                                <span>July 2, 2014</span>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="border"></span>
+                            <div class="content">
+                                <a href="blog-details.html">If you need a crown or lorem an implant you will pay it </a>
+                                <span>July 2, 2014</span>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="border"></span>
+                            <div class="content">
+                                <a href="blog-details.html">If you need a crown or lorem an implant you will pay it </a>
+                                <span>July 2, 2014</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="footer-widget contact-widget">
+                    <h3 class="title">Contact Form</h3>
+                    <form action="inc/sendemail.php" class="contact-form" id="footer-cf">
+                        <input type="text" name="name" placeholder="Full Name">
+                        <input type="text" name="email" placeholder="Email Address">
+                        <textarea name="message" placeholder="Your Message"></textarea>
+                        <button type="submit">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<section class="footer-bottom">
+    <div class="container text-center">
+        <p>Theme Created By <a href="#">TEMPLATE PATH</a> with love</p>
+    </div>
+</section>
+
+<!--Scroll to top-->
+<div class="scroll-to-top"><span class="fa fa-arrow-up"></span></div>
+
+<!-- main jQuery -->
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+<!-- bootstrap -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- bx slider -->
+<script src="{% static 'js/jquery.bxslider.min.js' %}"></script>
+<!-- owl carousel -->
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<!-- validate -->
+<script src="{% static 'js/jquery-parallax.js' %}"></script>
+<!-- validate -->
+<script src="{% static 'js/validate.js' %}"></script>
+<!-- mixit up -->
+<script src="{% static 'js/jquery.mixitup.min.js' %}"></script>
+<!-- fancybox -->
+<script src="{% static 'js/jquery.fancybox.pack.js' %}"></script>
+<!-- easing -->
+<script src="{% static 'js/jquery.easing.min.js' %}"></script>
+<!-- circle progress -->
+<script src="{% static 'js/circle-progress.js' %}"></script>
+<!-- appear js -->
+<script src="{% static 'js/jquery.appear.js' %}"></script>
+<!-- count to -->
+<script src="{% static 'js/jquery.countTo.js' %}"></script>
+<!-- gmap helper -->
+<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<!-- gmap main script -->
+<script src="{% static 'js/gmap.js' %}"></script>
+<!-- isotope script -->
+<script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+<!-- jQuery ui js -->
+<script src="{% static 'js/jquery-ui-1.11.4/jquery-ui.js' %}"></script>
+
+
+<script src="{% static 'revolution/js/jquery.themepunch.tools.min.js' %}"></script>
+<script src="{% static 'revolution/js/jquery.themepunch.revolution.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'revolution/js/extensions/revolution.extension.actions.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'revolution/js/extensions/revolution.extension.carousel.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'revolution/js/extensions/revolution.extension.kenburn.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'revolution/js/extensions/revolution.extension.layeranimation.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'revolution/js/extensions/revolution.extension.migration.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'revolution/js/extensions/revolution.extension.navigation.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'revolution/js/extensions/revolution.extension.parallax.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'revolution/js/extensions/revolution.extension.slideanims.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.video.min.js' %}"></script>
+
+
+<!-- thm custom script -->
+<script src="{% static 'js/custom.js' %}"></script>
+
 
 </body>
 </html>
