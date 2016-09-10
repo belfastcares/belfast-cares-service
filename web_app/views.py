@@ -10,6 +10,7 @@ def login(request):
     return render(request, 'login.html')
 
 def volunteer_single(request, volunteer_id):
+    volunteer_data = ''
     return render(request, 'volunteer_single.html', {'id': volunteer_id})
 
 
