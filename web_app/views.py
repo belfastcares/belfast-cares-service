@@ -17,7 +17,7 @@ def volunteer_single(request, volunteer_id):
 
 
 def charities_listing(request):
-    return render(request, 'charities_single.html')
+    return render(request, 'charities_listing.html')
 
 
 def charities_single(request, charity_id):
