@@ -40,10 +40,9 @@
                                 <p class="p-title">Lorem ipsum dolor sit amet, consectet adipisicing elit. Sed ullam
                                     sequi at.</p>
                                 <p>{{ charity.description }}</p>
+                                {% if charity.just_giving_link %}
+
                                 <div class="pull-left">
-                                    <a class="thm-btn btn-xs mt_30" href="#">Donate Now</a>
-                                </div>
-                                <div class="pull-right">
                                     <h6>Help us by share:</h6>
                                     <ul class="social">
                                         <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -53,6 +52,22 @@
                                         <li><a href="#"><i class="fa fa-youtube"></i></a></li>
                                     </ul>
                                 </div>
+                                <br>
+                                <div class="pull-left">
+                                    <a class="thm-btn btn-xs mt_30" href="{{ charity.just_giving_link }}" target="_blank">Donate Now</a>
+                                </div>
+                                {% else %}
+                                <div class="share">
+                                    <h6>Help us by share:</h6>
+                                    <ul class="social">
+                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                                    </ul>
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
