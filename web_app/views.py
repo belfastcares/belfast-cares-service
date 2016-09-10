@@ -13,24 +13,24 @@ def login(request):
 def volunteer_listing(request):
     return render(request, 'volunteer_listing.html')
 
-
-def volunteer_single(request):
-    return render(request, 'volunteer_single.html')
+def volunteer_single(request, volunteer_id):
+    return render(request, 'volunteer_single.html', {'id': volunteer_id})
 
 
 def charities_listing(request):
-    return render(request, 'charities_single.html')
+    return render(request, 'charities_listing.html')
 
 
-def charities_single(request, id):
-
-    organisation = Organisation.objects.filter(id=id)[0]
+def charities_single(request, charity_id):
+    organisation = Organisation.objects.filter(id=charity_id)[0]
     org_address = organisation.address
-    org_wishlist =organisation.wishlist
+    org_wishlist = organisation.wishlist
+    org_contact = organisation.primary_contact
 
     return render(request, 'charities_single.html', {'organisation': organisation,
                                                      'org_address': org_address,
-                                                     'org_wishlist': org_wishlist})
+                                                     'org_wishlist': org_wishlist,
+                                                     'org_primary': org_contact})
 
 
 def help(request):
