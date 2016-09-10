@@ -16,68 +16,8 @@
                     <div class="col-md-12 p-20">
                         <div class="causes-details">
                             <h1>{{organisation.name }}</h1>
-                            <h3>Address</h3>
-                            <ul>
-                                <li>Street: {{org_address.address_line}}</li>
-                                <li>County: {{org_address.county}}</li>
-                                <li>Postcode: {{org_address.postcode}}</li>
-                            </ul>
-
-
-                            <h3>Primary Contact Details</h3>
-                            <ul>
-                                <li>First Name: {{org_primary.first_name }}</li>
-                                <li>Surname: {{org_primary.surname}}</li>
-                                <li>Telephone: {{org_primary.telephone}}</li>
-                                <li>Mobile: {{org_primary.mobile}}</li>
-                                <li>Email: {{org_primary.email}}</li>
-                                <li>Description: {{org_primary.description}}</li>
-                                <li>Address:<ul>
-                                    <li>Street: {{org_primary.address.address_line}}</li>
-                                    <li>County: {{org_primary.address.county}}</li>
-                                    <li>Postcode: {{org_primary.address.postcode}}</li>
-
-                                </ul></li>
-                            </ul>
-
-                            <h3>Wishlist</h3>
-                            <ol>
-                                {% for item in org_wishlist.item_set.all %}
-                                <li>
-                                    <b>{{item.name}}</b>
-                                    <br>
-                                    {{item.description}}
-                                 </li>
-                                <br>
-                                {% empty %}
-                                <h4>No Items in Wishlist</h4>
-                                {% endfor %}
-                            </ol>
-<!--                            <div class="causes-progress">
-                                <div class="progress-item">
-                                    <div class="progress" data-value="85">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="85"
-                                             aria-valuemin="0" aria-valuemax="100">
-                                            <div class="value-holder"><span class="value"></span>%</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>-->
                             <p class="p-title"> Description</p>
                             <p>{{organisation.description}}</p>
-                            <blockquote>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis commodi molestias
-                                    magni? Porro tenetur quibusdam aliquam itaque rerum possimus blanditiis sint earum.
-                                    Vel, iste minima, incidunt nobis deleniti, doloribus debitis eligendi eaque aliquam
-                                    dicta libero!</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis commodi molestias
-                                    magni? Porro tenetur quibusdam aliquam itaque rerum possimus blanditiis sint earum.
-                                    Vel, iste minima, incidunt nobis deleniti, doloribus debitis eligendi eaque aliquam
-                                    dicta libero!</p>
-                                <footer>Someone famous in
-                                    <cite title="Source Title">Source Title</cite>
-                                </footer>
-                            </blockquote>
                             <div class="pull-left">
                                 <a class="thm-btn btn-xs mt_30" href="#">Donate Now</a>
                             </div>
@@ -91,10 +31,70 @@
                                     <li><a href="#"><i class="fa fa-youtube"></i></a></li>
                                 </ul>
                             </div>
+
                         </div>
                     </div>
+
+                    <div class="col-md-12 p-20">
+
+                        <h3>Wishlist</h3>
+                        <ol>
+                            {% for item in org_wishlist.item_set.all %}
+                            <li>
+                                <b>{{item.name}}</b>
+                                <br>
+                                {{item.description}}
+                            </li>
+                            <br>
+                            {% empty %}
+                            <h4>No Items in Wishlist</h4>
+                            {% endfor %}
+                        </ol>
+
+                        <div class="col-md-6">
+
+                            <h3>Primary Contact Details</h3>
+                            <ul>
+                                <li><b>First Name:</b> {{org_primary.first_name }}</li>
+                                <li><b>Surname:</b> {{org_primary.surname}}</li>
+                                <li><b>Telephone:</b> {{org_primary.telephone}}</li>
+                                <li><b>Mobile:</b> {{org_primary.mobile}}</li>
+                                <li><b>Email:</b> {{org_primary.email}}</li>
+                                <br><br>
+
+                                <li><b>Address:</b>
+                                    <ul>
+                                        <li>Street: {{org_primary.address.address_line}}</li>
+                                        <li>County: {{org_primary.address.county}}</li>
+                                        <li>Postcode: {{org_primary.address.postcode}}</li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <h3>Address</h3>
+                            <ul>
+                                <li><b>Street:</b> {{org_address.address_line}}</li>
+                                <li>
+                                    <b>County:</b> {{org_address.county}}
+                                </li>
+                                <li><b>Postcode:</b> {{org_address.postcode}}</li>
+                            </ul>
+
+                        </div>
+
+
+                    </div>
+
                 </div>
+
+
             </div>
+
+
         </div>
     </div>
 </section>
