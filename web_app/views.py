@@ -12,17 +12,16 @@ def login(request):
 def volunteer_listing(request):
     return render(request, 'volunteer_listing.html')
 
-
-def volunteer_single(request):
-    return render(request, 'volunteer_single.html')
+def volunteer_single(request, volunteer_id):
+    return render(request, 'volunteer_single.html', {'id': volunteer_id})
 
 
 def charities_listing(request):
     return render(request, 'charities_single.html')
 
 
-def charities_single(request):
-    return render(request, 'charities_single.html')
+def charities_single(request, charity_id):
+    return render(request, 'charities_single.html', {'id': charity_id})
 
 
 def help(request):
