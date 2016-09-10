@@ -2,15 +2,12 @@ from django.shortcuts import render, get_object_or_404
 from web_app.models import Organisation
 
 def index(request):
-    return render(request, 'index.html')
+    charities = Organisation.objects.all()
+    return render(request, 'index.html', {'charities': charities})
 
 
 def login(request):
     return render(request, 'login.html')
-
-
-def volunteer_listing(request):
-    return render(request, 'volunteer_listing.html')
 
 def volunteer_single(request, volunteer_id):
     return render(request, 'volunteer_single.html', {'id': volunteer_id})

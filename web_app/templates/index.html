@@ -147,6 +147,9 @@
     <div class="container">
         <div class="row clearfix">
             <!--Column-->
+            {% for charity in charities|slice:":3" %}
+                {{ charity.name }}
+            {% endfor %}
             <div class="col-xs-12 col-sm-6 col-md-4 column wow fadeInRight" data-wow-delay="200ms"
                  data-wow-duration="1500ms">
                 <article class="inner-box dark-overlay bg-img-cover"
