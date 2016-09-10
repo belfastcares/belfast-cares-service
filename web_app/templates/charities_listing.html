@@ -2,6 +2,19 @@
 {% load staticfiles %}
 
 {% block content %}
-charaties listing
+{% for charity in charities %}
+<div class="charity">
+    <div class="name">
+        <h1><a href="/charities/{{ charity.id }}/">
+                {{ charity.name }}
+            </a>
+        </h1>
+    </div>
+    <div class="description">
+        {{ charity.description }}
+    </div>
+    <br></br>
+</div>
+{% endfor %}
 
 {% endblock %}
