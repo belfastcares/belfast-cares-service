@@ -9,7 +9,7 @@ class Wishlist(models.Model):
     end_time = models.DateTimeField('end_time')
     reoccurring = models.BooleanField('reoccurring')
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 class Address(models.Model):
     address_line = models.CharField('address_line', max_length=100)
@@ -39,7 +39,7 @@ class Organisation(models.Model):
     description = models.TextField('description')
     wishlist = models.OneToOneField(Wishlist, on_delete=models.CASCADE)
     def __str__(self):
-        return self.id + " " + self.name
+        return str(self.id) + " " + str(self.name)
 
 
 @python_2_unicode_compatible
