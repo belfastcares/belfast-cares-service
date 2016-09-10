@@ -46,7 +46,7 @@ class Organisation(models.Model):
     wishlist = models.OneToOneField(Wishlist, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.id) + " " + self.name
+        return str(self.id) + " " + str(self.name)
 
 
 @python_2_unicode_compatible
