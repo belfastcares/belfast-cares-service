@@ -13,6 +13,7 @@ def volunteer_listing(request):
     return render(request, 'volunteer_listing.html')
 
 def volunteer_single(request, volunteer_id):
+    volunteer_data = ''
     return render(request, 'volunteer_single.html', {'id': volunteer_id})
 
 
