@@ -2,21 +2,6 @@
 {% load staticfiles %}
 
 {% block content %}
-{% for charity in charities %}
-<div class="charity">
-    <div class="name">
-        <h1><a href="/charity/{{ charity.id }}/">
-                {{ charity.name }}
-            </a>
-        </h1>
-    </div>
-    <div class="description">
-        {{ charity.description }}
-    </div>
-    <br></br>
-</div>
-{% endfor %}
-
 
 <section class="event-feature pb-60 pt-60" data-bg-color="#fafafa">
 
@@ -24,19 +9,20 @@
 
         <div class="row">
 
+            {% for charity in charities %}
             <div class="col-sm-12">
                 <div class="featured-causes mb-20 pr-15">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="thumb">
-                                <a href="/charity/1">
+                                <a href="/charity/{{ charity.id }}/">
                                     <img class="full-width" src="{% static 'img/causes/clist-1.jpg' %}" alt="">
                                 </a>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="causes-details">
-                                <h3>Charity For Education</h3>
+                                <h3>{{ charity.name }}</h3>
                                 <ul class="list-inline">
                                     <li>Raised: $7890</li>
                                     <li class="text-thm">Goal: $9300</li>
@@ -53,11 +39,7 @@
                                 </div>
                                 <p class="p-title">Lorem ipsum dolor sit amet, consectet adipisicing elit. Sed ullam
                                     sequi at.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint, quibusdam qui sequi
-                                    ullam minima saepe, aliquid suscipit explicabo asperiores nesciunt. Diques ipsum
-                                    dolor sit amet, consectetur adipisicing elit. Sint, quibusdam qui sequi ullam minima
-                                    saepe, aliquid suscipit explicabo asperiores nesciunt. Diques ipsum dolor sit amet,
-                                    consectetur adipisicing elit. Sint, quibusdam qui sequ.</p>
+                                <p>{{ charity.description }}</p>
                                 <div class="pull-left">
                                     <a class="thm-btn btn-xs mt_30" href="#">Donate Now</a>
                                 </div>
@@ -76,6 +58,7 @@
                     </div>
                 </div>
             </div>
+            {% endfor %}
 
             <div class="col-sm-12">
                 <!--Pagination-->
