@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404
+
 from .models import *
+
 
 def index(request):
     charities = Organisation.objects.all()
@@ -8,6 +10,7 @@ def index(request):
 
 def login(request):
     return render(request, 'login.html')
+
 
 def volunteer_single(request, volunteer_id):
     volunteer_data = ''
@@ -37,4 +40,3 @@ def help(request):
 
 def contact(request):
     return render(request, 'contact.html')
-

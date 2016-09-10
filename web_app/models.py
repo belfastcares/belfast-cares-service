@@ -45,6 +45,8 @@ class Organisation(models.Model):
     description = models.TextField('description')
     wishlist = models.OneToOneField(Wishlist, on_delete=models.CASCADE)
     just_giving_link = models.CharField('just_giving_link', max_length=255, blank=True)
+    raised = models.CharField('raised', max_length=10, blank=True)
+    goal = models.CharField('goal', max_length=10, blank=True)
 
     def __str__(self):
         return str(self.id) + " " + str(self.name)
