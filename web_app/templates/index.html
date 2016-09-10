@@ -3,135 +3,589 @@
 
 {% block content %}
 
-<!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
+<!-- /.mainmenu-area -->
 
-    <!-- Page Content -->
+<!--Rev Slider Wrapper Column-->
+ <section class="rev_slider_wrapper bannercontainer">
+        <div id="slider1" class="rev_slider"  data-version="5.0">
+            <ul>
+
+              <!-- SLIDE 1 -->
+              <li data-index="rs-1" data-transition="fade" data-slotamount="2"  data-easein="default" data-easeout="default" data-masterspeed="3000"  data-thumb="{% static 'img/bg/home_hero_1.jpg' %}"  data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off"  data-title="Intro" data-description="">
+                <!-- MAIN IMAGE -->
+                <img src="{% static 'img/bg/home_hero_1.jpg' %}"  alt=""  data-bgposition="50% 90%" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+                <!-- LAYERS -->
+
+                <!-- LAYER NR. 1 -->
+                <div class="tp-caption tp-resizeme rs-parallaxlevel-0 text-uppercase"
+                  id="rs-1-layer-1"
+
+                  data-x="['left','left','left','left']"
+                  data-hoffset="['370','200','30','17']"
+                  data-y="['center','center','center','center']"
+                  data-voffset="['10','110','180','160']"
+                  data-fontsize="['78']"
+                  data-lineheight="['60']"
+                  data-width="['none','none','none','400']"
+                  data-height="none"
+                  data-whitespace="['nowrap','nowrap','nowrap','normal']"
+                  data-transform_idle="o:1;"
+                  data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;"
+                  data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
+                  data-mask_in="x:0px;y:[100%];"
+                  data-mask_out="x:inherit;y:inherit;"
+                  data-start="500"
+                  data-splitin="none"
+                  data-splitout="none"
+                  data-basealign="slide"
+                  data-responsive_offset="on"
+                  style="z-index: 6; white-space: nowrap;"><span class="text-white">SHOW YOU </span><span class="text-thm">CARE</span>
+                </div>
+
+                <!-- LAYER NR. 2 -->
+                <div class="tp-caption BigBold-SubTitle tp-resizeme rs-parallaxlevel-0"
+                  id="rs-1-layer-2"
+
+                  data-x="['left','left','left','left']"
+                  data-hoffset="['370','55','33','20']"
+                  data-y="['bottom','bottom','bottom','bottom']"
+                  data-voffset="['260','1','74','58']"
+                  data-fontsize="['15','15','15','13']"
+                  data-lineheight="['24','24','24','20']"
+                  data-width="['570','570','410','280']"
+                  data-height="['60','100','100','100']"
+                  data-whitespace="normal"
+                  data-transform_idle="o:1;"
+                  data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;"
+                  data-transform_out="y:50px;opacity:0;s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
+                  data-start="650"
+                  data-splitin="none"
+                  data-splitout="none"
+                  data-basealign="slide"
+                  data-responsive_offset="on"
+                  style="z-index: 7; min-width: 570px; max-width: 570px; max-width: 60px; max-width: 60px; white-space: normal;"><span class="text-white">A Premium Revolution Slider Template Lorem ipsum dolor sit amet, consectetur adipisicing. </span>
+                </div>
+
+              </li>
+
+              <!-- SLIDE 2 -->
+              <li data-index="rs-2" data-transition="fade" data-slotamount="7"  data-easein="default" data-easeout="default" data-masterspeed="1000"  data-thumb="{% static 'img/bg/home_hero_2.jpg' %}"  data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off"  data-title="Intro" data-description="">
+                <!-- MAIN IMAGE -->
+                <img src="{% static 'img/bg/home_hero_2.jpg' %}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+                <!-- LAYERS -->
+
+                <!-- LAYER NR. 1 -->
+                <div class="tp-caption tp-resizeme rs-parallaxlevel-0 text-uppercase"
+                  id="rs-2-layer-1"
+
+                  data-x="['left','left','left','left']"
+                  data-hoffset="['370','200','30','17']"
+                  data-y="['center','center','center','center']"
+                  data-voffset="['10','110','180','160']"
+                  data-fontsize="['78']"
+                  data-lineheight="['60']"
+                  data-width="['none','none','none','400']"
+                  data-height="none"
+                  data-whitespace="['nowrap','nowrap','nowrap','normal']"
+                  data-transform_idle="o:1;"
+                  data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;"
+                  data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
+                  data-mask_in="x:0px;y:[100%];"
+                  data-mask_out="x:inherit;y:inherit;"
+                  data-start="500"
+                  data-splitin="none"
+                  data-splitout="none"
+                  data-basealign="slide"
+                  data-responsive_offset="on"
+                  style="z-index: 6; white-space: nowrap;"><span class="text-white">HELP THOSE IN</span><span class="text-thm"> NEED</span>
+                </div>
+
+                <!-- LAYER NR. 2 -->
+                <div class="tp-caption BigBold-SubTitle tp-resizeme text-white rs-parallaxlevel-0"
+                  id="rs-2-layer-2"
+
+                  data-x="['left','left','left','left']"
+                  data-hoffset="['370','55','33','20']"
+                  data-y="['bottom','bottom','bottom','bottom']"
+                  data-voffset="['260','1','74','58']"
+                  data-fontsize="['15','15','15','13']"
+                  data-lineheight="['24','24','24','20']"
+                  data-width="['570','570','410','280']"
+                  data-height="['60','100','100','100']"
+                  data-whitespace="normal"
+                  data-transform_idle="o:1;"
+                  data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;"
+                  data-transform_out="y:50px;opacity:0;s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
+                  data-start="650"
+                  data-splitin="none"
+                  data-splitout="none"
+                  data-basealign="slide"
+                  data-responsive_offset="on"
+                  style="z-index: 7; min-width: 570px; max-width: 570px; max-width: 60px; max-width: 60px; white-space: normal;">A Premium Revolution Slider Template Lorem dolor sit amet, consectetur adipisicing.
+                </div>
+
+              </li>
+
+            </ul>
+        </div>
+    </section>
+
+<!--Featured Three Column-->
+<section class="featured-three-column mt-sm-70">
     <div class="container">
-
-        <!-- Jumbotron Header -->
-        <header class="jumbotron hero-spacer">
-            <h1>A Warm Welcome!</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
-            <p><a class="btn btn-primary btn-large">Call to action!</a>
-            </p>
-        </header>
-
-        <hr>
-
-        <!-- Title -->
-        <div class="row">
-            <div class="col-lg-12">
-                <h3>Latest Features</h3>
+        <div class="row clearfix">
+            <!--Column-->
+            <div class="col-xs-12 col-sm-6 col-md-4 column wow fadeInLeft" data-wow-delay="200ms"
+                 data-wow-duration="1500ms">
+                <article class="inner-box dark-overlay bg-img-cover"
+                         style="background-image: url(% static 'img/features/1.jpg' %});">
+                    <div class="content">
+                        <h3>Donation</h3>
+                        <div class="text">
+                            <p>Proin nec lacus lacus. Sed vitae consectetur est, et mattis felis. Fusce lacinia nibh
+                                vitae fermentum finibus. Donec malesuada efficitur dapibus. Cras euismod nunc tellus,
+                                eget tempor purus.</p>
+                        </div>
+                        <div class="link"><a href="#donation-form" class="thm-btn inverse"><i
+                                class="fa fa-caret-right text-text-thmed"></i> Donate Now</a></div>
+                    </div>
+                </article>
+            </div>
+            <!--Column-->
+            <div class="col-xs-12 col-sm-6 col-md-4 column wow fadeInUp" data-wow-delay="700ms"
+                 data-wow-duration="1500ms">
+                <article class="inner-box bg-img-cover"
+                         style="background-image: url(% static 'img/features/2.jpg' %});">
+                    <div class="content">
+                        <h3>Volunteer</h3>
+                        <div class="text">
+                            <p>Proin nec lacus lacus. Sed vitae consectetur est, et mattis felis. Fusce lacinia nibh
+                                vitae fermentum finibus. Donec malesuada efficitur dapibus. Cras euismod nunc tellus,
+                                eget tempor purus.</p>
+                        </div>
+                        <div class="link"><a href="#" class="read-more thm-btn normal-btn"><span
+                                class="fa fa-caret-right"></span> Join Now</a></div>
+                    </div>
+                </article>
+            </div>
+            <!--Column-->
+            <div class="col-xs-12 col-sm-6 col-md-4 column wow fadeInRight" data-wow-delay="200ms"
+                 data-wow-duration="1500ms">
+                <article class="inner-box dark-overlay bg-img-cover"
+                         style="background-image: url(% static 'img/features/3.jpg' %});">
+                    <div class="content">
+                        <h3>Event</h3>
+                        <div class="text">
+                            <p>Proin nec lacus lacus. Sed vitae consectetur est, et mattis felis. Fusce lacinia nibh
+                                vitae fermentum finibus. Donec malesuada efficitur dapibus. Cras euismod nunc tellus,
+                                eget tempor purus.</p>
+                        </div>
+                        <div class="link"><a href="#" class="thm-btn inverse"><i
+                                class="fa fa-caret-right text-text-thmed"></i> Read More</a></div>
+                    </div>
+                </article>
             </div>
         </div>
-        <!-- /.row -->
-
-        <!-- Page Features -->
-        <div class="row text-center">
-
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
-                    <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
-                    <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
-                    <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
-                    <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <!-- /.row -->
-
-        <hr>
-
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
-                </div>
-            </div>
-        </footer>
-
     </div>
-    <!-- /.container -->
+</section>
 
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+<!--Start Our Event Area-->
+<section class="event-feature sec-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <h2 class="sec-color double-line-bottom font-weight-700 pb-25">Urgent Cause</h2>
+                <div class="urgent-cause">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 pb-sm-30">
+                            <div class="thumb">
+                                <img class="full-width" src="{% static 'img/causes/b1.jpg' %}" alt="">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 pb-sm-30 p-md-0 p-xs-20">
+                            <div class="causes-details">
+                                <h3>Charity For Education</h3>
+                                <p class="p-title font-16">Donate $45 now to feed a Syrian Children.</p>
+                                <div class="inner-box">
+                                    <ul class="cause-list pl-0 pb-10">
+                                        <li class="clearfix border-bottom"><span class="pull-left">Dontators -</span>
+                                            <strong class="pull-right">78</strong></li>
+                                        <li class="clearfix border-bottom"><span class="pull-left">Goal -</span> <strong
+                                                class="pull-right">$45,800</strong></li>
+                                        <li class="clearfix border-bottom"><span class="pull-left">Raised -</span>
+                                            <strong class="pull-right">$39,300</strong></li>
+                                    </ul>
+                                    <div class="progress-item">
+                                        <div class="progress" data-value="85">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="85"
+                                                 aria-valuemin="0" aria-valuemax="100">
+                                                <div class="value-holder"><span class="value"></span>%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, impedit,
+                                        tenetur!</p>
+                                    <a class="thm-btn btn-xs" href="#donation-form"><i
+                                            class="fa fa-angle-double-right text-white"></i> Donate Now</a>
+                                    <a href="#" class="thm-btn inverse btn-xs ml-5"><i
+                                            class="fa fa-heart text-text-thmed"></i> Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <h2 class="sec-color double-line-bottom font-weight-700 pb-25">Upcoming Event</h2>
+                <div class="bx-event-carousel">
+                    <div class="event">
+                        <div class="row pb-xs-15">
+                            <div class="col-sm-4">
+                                <div class="event-thumb">
+                                    <div class="thumb">
+                                        <img class="full-width" src="{% static 'img/event/1.jpg' %}" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="event-content">
+                                    <h4 class="event-title"><a href="#">Found For Education</a></h4>
+                                    <ul class="event-held pl-0 list-inline">
+                                        <li class="mr-0 pb-5" data-text-color="#777"><i class="fa fa-clock-o"></i> 6.00
+                                            pm - 8.30 pm
+                                        </li>
+                                        <li data-text-color="#777"><i class="fa fa-map-marker"></i> 69 Newyork City.
+                                        </li>
+                                    </ul>
+                                    <div class="event-date pl-0">
+                                        <p class="date">28 Aug</p>
+                                    </div>
+                                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi
+                                        expedita perspiciatis soluta quidem, recusandae sapiente.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event">
+                        <div class="row pb-xs-15">
+                            <div class="col-sm-4">
+                                <div class="event-thumb">
+                                    <div class="thumb">
+                                        <img class="full-width" src="{% static 'img/event/2.jpg' %}" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="event-content">
+                                    <h4 class="event-title"><a href="#">Charity For Food</a></h4>
+                                    <ul class="event-held pl-0 list-inline">
+                                        <li class="mr-0 pb-5" data-text-color="#777"><i class="fa fa-clock-o"></i> 6.00
+                                            pm - 8.30 pm
+                                        </li>
+                                        <li data-text-color="#777"><i class="fa fa-map-marker"></i> 69 Newyork City.
+                                        </li>
+                                    </ul>
+                                    <div class="event-date pl-0">
+                                        <p class="date">28 Aug</p>
+                                    </div>
+                                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi
+                                        expedita perspiciatis soluta quidem, recusandae sapiente.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event">
+                        <div class="row pb-xs-15">
+                            <div class="col-sm-4">
+                                <div class="event-thumb">
+                                    <div class="thumb">
+                                        <img class="full-width" src="{% static 'img/event/3.jpg' %}" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="event-content">
+                                    <h4 class="event-title"><a href="#">Charity For Health</a></h4>
+                                    <ul class="event-held pl-0 list-inline">
+                                        <li class="mr-0 pb-5" data-text-color="#777"><i class="fa fa-clock-o"></i> 6.00
+                                            pm - 8.30 pm
+                                        </li>
+                                        <li data-text-color="#777"><i class="fa fa-map-marker"></i> 69 Newyork City.
+                                        </li>
+                                    </ul>
+                                    <div class="event-date pl-0">
+                                        <p class="date">28 Aug</p>
+                                    </div>
+                                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi
+                                        expedita perspiciatis soluta quidem, recusandae sapiente.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event">
+                        <div class="row pb-xs-15">
+                            <div class="col-sm-4">
+                                <div class="event-thumb">
+                                    <div class="thumb">
+                                        <img class="full-width" src="{% static 'img/event/4.jpg' %}" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="event-content">
+                                    <h4 class="event-title"><a href="#">Homem For Homeless</a></h4>
+                                    <ul class="event-held pl-0 list-inline">
+                                        <li class="mr-0 pb-5" data-text-color="#777"><i class="fa fa-clock-o"></i> 6.00
+                                            pm - 8.30 pm
+                                        </li>
+                                        <li data-text-color="#777"><i class="fa fa-map-marker"></i> 69 Newyork City.
+                                        </li>
+                                    </ul>
+                                    <div class="event-date pl-0">
+                                        <p class="date">28 Aug</p>
+                                    </div>
+                                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi
+                                        expedita perspiciatis soluta quidem, recusandae sapiente.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event">
+                        <div class="row pb-xs-15">
+                            <div class="col-sm-4">
+                                <div class="event-thumb">
+                                    <div class="thumb">
+                                        <img class="full-width" src="{% static 'img/event/5.jpg' %}" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="event-content">
+                                    <h4 class="event-title"><a href="#">Charity For Education</a></h4>
+                                    <ul class="event-held pl-0 list-inline">
+                                        <li class="mr-0 pb-5" data-text-color="#777"><i class="fa fa-clock-o"></i> 6.00
+                                            pm - 8.30 pm
+                                        </li>
+                                        <li data-text-color="#777"><i class="fa fa-map-marker"></i> 69 Newyork City.
+                                        </li>
+                                    </ul>
+                                    <div class="event-date pl-0">
+                                        <p class="date">28 Aug</p>
+                                    </div>
+                                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi
+                                        expedita perspiciatis soluta quidem, recusandae sapiente.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+<!--Start Our Recent Causes Areas-->
+<section class="pt-60" data-bg-color="#f1f1f1">
+    <div class="container">
+        <div class="sec-title text-center">
+            <span class="double-line"></span> &ensp;
+            <h2>Recent Causes</h2> &ensp; <span class="double-line"></span>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit!</p>
+        </div>
+        <div class="sec-title">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                    <div class="recent-causes">
+                        <div class="thumb">
+                            <img class="img-responsive img-fullwidth" src="{% static 'img/causes/1.jpg' %}" alt="">
+                        </div>
+                        <div class="causes-details">
+                            <div class="round-style"></div>
+                            <div class="donate-piechart">
+                                <div class="piechart-block">
+                                    <div class="piechart style-one" data-fg-color="rgba(250,119,68,1)" data-value=".75">
+                                        <span>.75</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4 class="title">Sponsor a child today</h4>
+                            <p class="details pt-5">Lorem ipsum dolor sit amet, consectetur adipisicing. Odit qui minima
+                                praesentium illo obcaecati...</p>
+                            <ul class="list-inline mb-0 pb-20 clearfix">
+                                <li class="causes-raised">Raised: $1890</li>
+                                <li class="causes-goal text-thm">Goal: $2500</li>
+                            </ul>
+                            <a href="#donation-form" class="thm-btn btn-xs"><i
+                                    class="fa fa-angle-double-right text-white"></i> Donate Now</a>
+                            <a class="thm-btn inverse btn-xs" href="#"><i class="fa fa-heart text-text-thmed"></i> 25
+                                Donators</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                    <div class="recent-causes">
+                        <div class="thumb">
+                            <img class="img-responsive img-fullwidth" src="{% static 'img/causes/2.jpg' %}" alt="">
+                        </div>
+                        <div class="causes-details">
+                            <div class="round-style"></div>
+                            <div class="donate-piechart">
+                                <div class="piechart-block">
+                                    <div class="piechart style-one" data-fg-color="rgba(250,119,68,1)" data-value=".75">
+                                        <span>.75</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4 class="title">Sponsor a child today</h4>
+                            <p class="details pt-5">Lorem ipsum dolor sit amet, consectetur adipisicing. Odit qui minima
+                                praesentium illo obcaecati...</p>
+                            <ul class="list-inline mb-0 pb-20 clearfix">
+                                <li class="causes-raised">Raised: $1890</li>
+                                <li class="causes-goal text-thm">Goal: $2500</li>
+                            </ul>
+                            <a href="#donation-form" class="thm-btn btn-xs"><i
+                                    class="fa fa-angle-double-right text-white"></i> Donate Now</a>
+                            <a class="thm-btn inverse btn-xs" href="#"><i class="fa fa-heart text-text-thmed"></i> 25
+                                Donators</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                    <div class="recent-causes">
+                        <div class="thumb">
+                            <img class="img-responsive img-fullwidth" src="{% static 'img/causes/3.jpg' %}" alt="">
+                        </div>
+                        <div class="causes-details">
+                            <div class="round-style"></div>
+                            <div class="donate-piechart">
+                                <div class="piechart-block">
+                                    <div class="piechart style-one" data-fg-color="rgba(250,119,68,1)" data-value=".75">
+                                        <span>.75</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4 class="title">Sponsor a child today</h4>
+                            <p class="details pt-5">Lorem ipsum dolor sit amet, consectetur adipisicing. Odit qui minima
+                                praesentium illo obcaecati...</p>
+                            <ul class="list-inline mb-0 pb-20 clearfix">
+                                <li class="causes-raised">Raised: $1890</li>
+                                <li class="causes-goal text-thm">Goal: $2500</li>
+                            </ul>
+                            <a href="#donation-form" class="thm-btn btn-xs"><i
+                                    class="fa fa-angle-double-right text-white"></i> Donate Now</a>
+                            <a class="thm-btn inverse btn-xs" href="#"><i class="fa fa-heart text-text-thmed"></i> 25
+                                Donators</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Start Our Mission Area-->
+<section class="home-serivce sec-padding pb-0">
+    <div class="container">
+        <div class="sec-title text-center">
+            <span class="double-line"></span> &ensp;
+            <h2>Our Mission</h2> &ensp; <span class="double-line"></span>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum.</p>
+        </div>
+        <div class="sec-content">
+            <div class="row">
+                <div class="col-sm-12 col-sm-6 col-md-4">
+                    <div class="single-service-home">
+                        <div class="icon-box">
+                            <div class="inner-box">
+                                <i class="flaticon-gesture-1"></i>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3>Charity For Education</h3>
+                            <p>There are many variations of lorem
+                                <br>passagei of Lorem Ipsum available </p>
+                            <a href="service-details.html">Read More <i class="fa fa-caret-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-sm-6 col-md-4">
+                    <div class="single-service-home">
+                        <div class="icon-box">
+                            <div class="inner-box">
+                                <i class="flaticon-people-1"></i>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3>Feed for hungry child</h3>
+                            <p>There are many variations of lorem
+                                <br>passagei of Lorem Ipsum available </p>
+                            <a href="service-details.html">Read More <i class="fa fa-caret-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-sm-6 col-md-4">
+                    <div class="single-service-home">
+                        <div class="icon-box">
+                            <div class="inner-box">
+                                <i class="flaticon-hand"></i>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3>Home for homeless</h3>
+                            <p>There are many variations of lorem
+                                <br>passagei of Lorem Ipsum available </p>
+                            <a href="service-details.html">Read More <i class="fa fa-caret-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-sm-6 col-md-4">
+                    <div class="single-service-home">
+                        <div class="icon-box">
+                            <div class="inner-box">
+                                <i class="flaticon-people-1"></i>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3>Feed for hungry child</h3>
+                            <p>There are many variations of lorem
+                                <br>passagei of Lorem Ipsum available </p>
+                            <a href="service-details.html">Read More <i class="fa fa-caret-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-sm-6 col-md-4">
+                    <div class="single-service-home">
+                        <div class="icon-box">
+                            <div class="inner-box">
+                                <i class="flaticon-hand"></i>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3>Home for homeless</h3>
+                            <p>There are many variations of lorem
+                                <br>passagei of Lorem Ipsum available </p>
+                            <a href="service-details.html">Read More <i class="fa fa-caret-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-sm-6 col-md-4">
+                    <div class="single-service-home">
+                        <div class="icon-box">
+                            <div class="inner-box">
+                                <i class="flaticon-gesture-1"></i>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3>Charity For Education</h3>
+                            <p>There are many variations of lorem
+                                <br>passagei of Lorem Ipsum available </p>
+                            <a href="service-details.html">Read More <i class="fa fa-caret-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock %}
