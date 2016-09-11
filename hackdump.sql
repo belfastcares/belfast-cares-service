@@ -1,4 +1,4 @@
-NSERT INTO web_app_address VALUES (1, 'Unit 36, Townsend Enterprise Park, Townsend St, Belfast', 'Antrim', 'BT13 2ES');
+INSERT INTO web_app_address VALUES (1, 'Unit 36, Townsend Enterprise Park, Townsend St, Belfast', 'Antrim', 'BT13 2ES');
 INSERT INTO web_app_address VALUES (2, '196-200 Antrim Road, Belfast', 'Antrim', 'BT15 2AJ');
 INSERT INTO web_app_address VALUES (3, '4th Floor, Andras House, 60 Great Victoria St, Belfast', 'Antrim', 'BT2 7BB');
 INSERT INTO web_app_address VALUES (4, '25-27 Franklin St, Belfast', 'Antrim', 'BT2 8DS');
