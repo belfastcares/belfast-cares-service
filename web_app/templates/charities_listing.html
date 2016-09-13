@@ -13,12 +13,18 @@
             <div class="col-sm-12">
                 <div class="featured-causes mb-20 pr-15">
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-1">
+
+                        </div>
+                        <div class="col-sm-2">
                             <div class="thumb">
                                 <a href="/charity/{{ charity.id }}/">
                                     <img class="img-responsive" src="{{ charity.image_url }}">
                                 </a>
                             </div>
+                        </div>
+                        <div class="col-sm-1">
+
                         </div>
                         <div class="col-sm-6">
                             <div class="causes-details">
@@ -27,18 +33,17 @@
                                     <li>Raised: £ {{charity.raised}}</li>
                                     <li class="text-thm">Goal: £ {{charity.goal}}</li>
                                 </ul>
-                                <!--<div class="causes-progress">-->
-                                <!--<div class="progress-item">-->
-                                <!--<div class="progress" data-value="85">-->
-                                <!--<div class="progress-bar" role="progressbar" aria-valuenow="85"-->
-                                <!--aria-valuemin="0" aria-valuemax="100">-->
-                                <!--<div class="value-holder"><span class="value"></span>%</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
+                                <div class="causes-progress">
+                                <div class="progress-item">
+                                <div class="progress" data-value="85">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="85"
+                                aria-valuemin="0" aria-valuemax="100">
+                                <div class="value-holder"><span class="value"></span>%</div>
+                                </div>
+                                </div>
+                                </div>
                                 <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                                <!--<p class="p-title">Lorem ipsum dolor sit amet, consectet adipisicing elit. Sed ullam-->
-                                    <!--sequi at.</p>-->
+  <!--                               <p class="p-title">Lorem ipsum dolor sit amet, consectet adipisicing elit. Sed ullam sequi at.</p> -->
                                 <p>{{ charity.description }}</p>
                                 {% if charity.just_giving_link %}
 
