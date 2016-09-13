@@ -10,59 +10,61 @@
         </div>
         <div class="row">
             <div class="col-md-10 col-md-push-1">
-                <h2>Address</h2>
-                <ul class="contact-info">
-                    <li>
-                        <div class="icon-box">
-                            <div class="inner">
-                                <i class="fa fa-map-marker"></i>
+                <div class="col-md-4">
+                    <h2>Address</h2>
+                    <ul class="contact-info">
+                        <li>
+                            <div class="icon-box">
+                                <div class="inner">
+                                    <i class="fa fa-map-marker"></i>
+                                </div>
                             </div>
-                        </div>
-                        <div class="content-box">
-                            <h4>Address</h4>
-                            <p>165 Avoneil Road ,
-                            <br>Belfast, BT5 4SG</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="icon-box">
-                            <div class="inner">
-                                <i class="fa fa-phone"></i>
+                            <div class="content-box">
+                                <h4>Address</h4>
+                                <p>165 Avoneil Road ,
+                                    <br>Belfast, BT5 4SG</p>
                             </div>
-                        </div>
-                        <div class="content-box">
-                            <h4>Phone</h4>
-                            <p>(+44) 07707 285 085</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="icon-box">
-                            <div class="inner">
-                                <i class="fa fa-envelope-o"></i>
+                        </li>
+                        <li>
+                            <div class="icon-box">
+                                <div class="inner">
+                                    <i class="fa fa-phone"></i>
+                                </div>
                             </div>
+                            <div class="content-box">
+                                <h4>Phone</h4>
+                                <p>(+44) 07707 285 085</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="icon-box">
+                                <div class="inner">
+                                    <i class="fa fa-envelope-o"></i>
+                                </div>
+                            </div>
+                            <div class="content-box">
+                                <h4>Email</h4>
+                                <p>contact@belfastcares.co.uk, kyle90adam@hotmail.com</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-8">
+                    <h2>Contact Form</h2>
+                    <form action="inc/sendemail.php" class="contact-form row" id="contact-page-contact-form">
+                        <div class="col-md-6">
+                            <input type="text" name="name" placeholder="Name">
+                            <input type="text" name="email" placeholder="Email">
+                            <input type="text" name="phone" placeholder="Phone">
                         </div>
-                        <div class="content-box">
-                            <h4>Email</h4>
-                            <p>contact@belfastcares.co.uk, kyle90adam@hotmail.com</p>
+                        <div class="col-md-6">
+                            <textarea name="message" placeholder="Message" cols="30" rows="10"></textarea>
                         </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-8">
-                <h2>Contact Form</h2>
-                <form action="inc/sendemail.php" class="contact-form row" id="contact-page-contact-form">
-                    <div class="col-md-6">
-                        <input type="text" name="name" placeholder="Name">
-                        <input type="text" name="email" placeholder="Email">
-                        <input type="text" name="phone" placeholder="Phone">
-                    </div>
-                    <div class="col-md-6">
-                        <textarea name="message" placeholder="Message" cols="30" rows="10"></textarea>
-                    </div>
-                    <div class="col-md-12">
-                        <button class="thm-btn" type="submit">Send</button>
-                    </div>
-                </form>
+                        <div class="col-md-12">
+                            <button class="thm-btn" type="submit">Send</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

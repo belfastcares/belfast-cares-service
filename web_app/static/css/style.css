@@ -3178,7 +3178,7 @@ blockquote {
 }
 .featured-causes {
 	background-color: #fff;
-	display: inline-block;
+	/*display: inline-block;*/
 	margin-bottom: 10px;
 }
 .featured-causes .thumb {
