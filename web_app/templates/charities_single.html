@@ -31,12 +31,10 @@
                                     <li><a href="#"><i class="fa fa-youtube"></i></a></li>
                                 </ul>
                             </div>
-
                         </div>
                     </div>
 
                     <div class="col-md-12 p-20">
-
                         <h3>Wishlist</h3>
                         <ol>
                             {% for item in org_wishlist.item_set.all %}
@@ -50,9 +48,7 @@
                             <h4>No Items in Wishlist</h4>
                             {% endfor %}
                         </ol>
-
                         <div class="col-md-6">
-
                             <h3>Primary Contact Details</h3>
                             <ul>
                                 <li><b>First Name:</b> {{org_primary.first_name }}</li>
@@ -61,40 +57,18 @@
                                 <li><b>Mobile:</b> {{org_primary.mobile}}</li>
                                 <li><b>Email:</b> {{org_primary.email}}</li>
                                 <br><br>
-
                                 <li><b>Address:</b>
                                     <ul>
                                         <li>Street: {{org_primary.address.address_line}}</li>
                                         <li>County: {{org_primary.address.county}}</li>
                                         <li>Postcode: {{org_primary.address.postcode}}</li>
-
                                     </ul>
                                 </li>
                             </ul>
-
                         </div>
-
-                        <div class="col-md-6">
-                            <h3>Address</h3>
-                            <ul>
-                                <li><b>Street:</b> {{org_address.address_line}}</li>
-                                <li>
-                                    <b>County:</b> {{org_address.county}}
-                                </li>
-                                <li><b>Postcode:</b> {{org_address.postcode}}</li>
-                            </ul>
-
-                        </div>
-
-
                     </div>
-
                 </div>
-
-
             </div>
-
-
         </div>
     </div>
 </section>
