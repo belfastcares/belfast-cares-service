@@ -16,13 +16,13 @@
                         <div class="col-sm-3">
                             <div class="thumb">
                                 <a href="/charity/{{ charity.id }}/">
-                                    <img class="img-responsive" src="{{ charity.image_url }}">
+                                    <img class="img-responsive" src="{{ charity.image.url}}">
                                 </a>
                             </div>
                         </div>
                         <div class="col-sm-7">
                             <div class="causes-details">
-                                <h3>{{ charity.name }}</h3>
+                                <a href="/charity/{{ charity.id }}/"><h3>{{ charity.name }}</h3></a>
                                 <ul class="list-inline">
                                     <li>Raised: £ {{charity.raised}}</li>
                                     <li class="text-thm">Goal: £ {{charity.goal}}</li>

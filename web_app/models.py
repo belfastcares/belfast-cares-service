@@ -1,4 +1,6 @@
 from __future__ import unicode_literals
+
+import os
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 
@@ -18,7 +20,7 @@ class Contact(models.Model):
     surname = models.CharField('surname', max_length=30)
     telephone = models.CharField('telephone', max_length=15)
     mobile = models.CharField('mobile', max_length=15)
-    email = models.CharField('email', max_length=50)
+    email = models.EmailField('email', max_length=50)
     description = models.TextField('description')
     address = models.OneToOneField(Address, on_delete=models.CASCADE)
 
@@ -43,20 +45,39 @@ class Wishlist(models.Model):
     def __str__(self):
         return "wishlist " + str(self.id)
 
+def get_logo_file_name(instance, filename):
+    return os.path.join('uploads', instance.name, 'logo' + os.path.splitext(filename)[1])
+
 @python_2_unicode_compatible
 class Organisation(models.Model):
     name = models.CharField('name', max_length=30)
-    image_url = models.CharField('image_url', max_length=255)
+    image = models.ImageField(upload_to=get_logo_file_name, blank=True)
     primary_contact = models.OneToOneField(Contact, on_delete=models.CASCADE)
     address = models.OneToOneField(Address, on_delete=models.CASCADE)
     description = models.TextField('description')
     wishlist = models.OneToOneField(Wishlist, on_delete=models.CASCADE)
-    just_giving_link = models.CharField('just_giving_link', max_length=255, blank=True)
-    raised = models.CharField('raised', max_length=10, blank=True)
-    goal = models.CharField('goal', max_length=10, blank=True)
+    just_giving_link = models.URLField('just giving link', max_length=255, blank=True)
+    raised = models.DecimalField('raised', max_digits=25, decimal_places=2, blank=True)
+    goal = models.DecimalField('goal', max_digits=25, decimal_places=2, blank=True)
 
     def __str__(self):
         return str(self.id) + " " + str(self.name)
+
+    def image_preview_large(self):
+        if self.image:
+            return '<img src="%s" width="150" height="150"/>' % self.image.url
+        else:
+            return 'No Logo'
+    image_preview_large.allow_tags = True
+    image_preview_large.short_description = 'Logo Preview'
+
+    def image_preview_small(self):
+        if self.image:
+            return '<img src="%s" width="50" height="50"/>' % self.image.url
+        else:
+            return 'No Logo'
+    image_preview_small.allow_tags = True
+    image_preview_small.short_description = 'Image Preview'
 
 @python_2_unicode_compatible
 class User(models.Model):
