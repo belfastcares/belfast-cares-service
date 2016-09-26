@@ -29,7 +29,7 @@
                                 </ul>
                                 <div class="causes-progress">
                                     <div class="progress-item">
-                                        <div class="progress" data-value="85">
+                                        <div class="progress" data-value="{{charity.percentage_to_fund_raising_goal}}">
                                             <div class="progress-bar" role="progressbar" aria-valuenow="85"
                                                  aria-valuemin="0" aria-valuemax="100">
                                                 <div class="value-holder"><span class="value"></span>%</div>
@@ -42,7 +42,7 @@
                                     {% if charity.just_giving_link %}
 
                                     <div class="pull-left">
-                                        <h6>Help us by share:</h6>
+                                        <h6>Help us by sharing:</h6>
                                         <ul class="social">
                                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                                             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
