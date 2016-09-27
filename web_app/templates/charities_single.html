@@ -19,10 +19,11 @@
                             <p class="p-title"> Description</p>
                             <p>{{organisation.description}}</p>
                             <div class="pull-left">
-                                <a class="thm-btn btn-xs mt_30" href="#">Donate Now</a>
+                                <a class="thm-btn btn-xs mt_30" href="{{organisation.just_giving_link}}">Donate Now</a>
                             </div>
                             <div class="pull-right">
-                                <h6>Help us by share:</h6>
+                                <img src="{{organisation.image.url}}" alt="">
+                                <h6>Help us by sharing:</h6>
                                 <ul class="social">
                                     <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                                     <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -37,7 +38,7 @@
                     <div class="col-md-12 p-20">
                         <h3>Wishlist</h3>
                         <ol>
-                            {% for item in org_wishlist.item_set.all %}
+                            {% for item in org_wishlist.items.all %}
                             <li>
                                 <b>{{item.name}}</b>
                                 <br>
