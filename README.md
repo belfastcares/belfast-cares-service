@@ -1,6 +1,6 @@
-# django-heroku-getting-started
+# belfast-cares-service
 
-A barebones Django app utilizing postgres & bootstrap, which can easily be deployed to Heroku.
+The belfast cares api service built using Django utilizing postgres & bootstrap, which can easily be deployed to Heroku.
 
 This application supports the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
 
