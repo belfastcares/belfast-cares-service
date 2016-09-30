@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-import os
+import os, re
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.auth.models import User
@@ -39,7 +39,9 @@ class Item(models.Model):
         return self.name
 
 def get_logo_file_name(instance, filename):
-    return os.path.join('uploads', instance.name, 'logo' + os.path.splitext(filename)[1])
+    org_name = re.sub('[^0-9a-zA-Z]+','', instance.name)
+    return os.path.join('uploads', org_name, 'logo' + os.path.splitext(filename)[1])
+
 
 @python_2_unicode_compatible
 class Organisation(models.Model):
@@ -53,7 +55,8 @@ class Organisation(models.Model):
     goal = models.DecimalField('goal', max_digits=25, decimal_places=2, blank=True)
 
     def __str__(self):
-        return str(self.id) + " " + str(self.name)
+        return str(self.id) + " " + self.name
+
 
     def image_preview_large(self):
         if self.image:
