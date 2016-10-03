@@ -46,7 +46,7 @@ def get_logo_file_name(instance, filename):
 @python_2_unicode_compatible
 class Organisation(models.Model):
     name = models.CharField('name', max_length=30)
-    image = models.ImageField(upload_to=get_logo_file_name, blank=True)
+    image = models.ImageField(upload_to=get_logo_file_name, blank=True, default='default.jpg')
     primary_contact = models.OneToOneField(Contact, on_delete=models.CASCADE)
     address = models.OneToOneField(Address, on_delete=models.CASCADE)
     description = models.TextField('description')
