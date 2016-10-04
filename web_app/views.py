@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 
 from .models import *
@@ -32,6 +33,10 @@ def organisation_single(request, organisation_id):
                                                      'org_address': org_address,
                                                      'org_wishlist': org_wishlist,
                                                      'org_primary': org_contact})
+
+@login_required(login_url='/login/')
+def account_dashboard(request):
+    return render(request, 'account_dashboard.html')
 
 
 def help(request):
