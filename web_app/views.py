@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
+from django.core.urlresolvers import reverse
 
 from web_app.forms import ContactForm
 from .models import *
@@ -39,6 +40,8 @@ def organisation_single(request, organisation_id):
 
 @login_required(login_url='/login/')
 def account_dashboard(request):
+    if request.user.is_superuser:
+        return HttpResponseRedirect(reverse('admin:index'))
     return render(request, 'account_dashboard.html')
 
 
@@ -51,13 +54,9 @@ def contact(request):
         form = ContactForm(request.POST)
 
         if form.is_valid():
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            phone = form.cleaned_data['phone']
-            message = form.cleaned_data['message']
-            print(name, email, phone, message)
-            messages.success(request, 'Thanks for getting in Touch.')
-            form = ContactForm()
+            form.save()
+            messages.success(request, 'Thanks for getting in touch. Someone will be in contact shortly.')
+            return HttpResponseRedirect(reverse(contact))
     else:
         form = ContactForm()
 
