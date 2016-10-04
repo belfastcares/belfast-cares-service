@@ -51,17 +51,34 @@
                 </div>
                 <div class="col-md-8">
                     <h2>Contact Form</h2>
-                    <form action="inc/sendemail.php" class="contact-form row" id="contact-page-contact-form">
+                    <form action="/contact/" method="post" class="contact-form row">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
                         <div class="col-md-6">
-                            <input type="text" name="name" placeholder="Name">
-                            <input type="text" name="email" placeholder="Email">
-                            <input type="text" name="phone" placeholder="Phone">
+                            {{ form.name.errors }}
+                            {{ form.name.label_tag }}
+                            {{ form.name }}
+                            {{ form.email.errors }}
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                            {{ form.phone.errors }}
+                            {{ form.phone.label_tag }}
+                            {{ form.phone }}
                         </div>
                         <div class="col-md-6">
-                            <textarea name="message" placeholder="Message" cols="30" rows="10"></textarea>
+                            {{ form.message.errors }}
+                            {{ form.message.label_tag }}
+                            {{ form.message }}
                         </div>
                         <div class="col-md-12">
                             <button class="thm-btn" type="submit">Send</button>
+                            {% if messages %}
+                                <ul class="messages">
+                                {% for message in messages %}
+                                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
                     </form>
                 </div>

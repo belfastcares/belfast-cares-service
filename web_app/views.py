@@ -1,6 +1,9 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
 
+from web_app.forms import ContactForm
 from .models import *
 
 
@@ -44,4 +47,18 @@ def help(request):
 
 
 def contact(request):
-    return render(request, 'contact.html')
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            phone = form.cleaned_data['phone']
+            message = form.cleaned_data['message']
+            print(name, email, phone, message)
+            messages.success(request, 'Thanks for getting in Touch.')
+            form = ContactForm()
+    else:
+        form = ContactForm()
+
+    return render(request, 'contact.html', {'form': form})
