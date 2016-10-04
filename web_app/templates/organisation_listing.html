@@ -8,28 +8,28 @@
     <div class="container">
 
 
-        {% for charity in charities %}
+        {% for organisation in organisations %}
         <div class="row">
             <div class="col-md-10 col-md-push-1">
                 <div class="featured-causes mb-20 pr-15">
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="thumb">
-                                <a href="/charity/{{ charity.id }}/">
-                                    <img class="img-responsive" src="{{ charity.image.url}}">
+                                <a href="{% url 'organisation_single' organisation_id=organisation.id %}">
+                                    <img class="img-responsive" src="{{ organisation.image.url }}">
                                 </a>
                             </div>
                         </div>
                         <div class="col-sm-7">
                             <div class="causes-details">
-                                <a href="/charity/{{ charity.id }}/"><h3>{{ charity.name }}</h3></a>
+                                <a href="{% url 'organisation_single' organisation_id=organisation.id %}"><h3>{{ organisation.name }}</h3></a>
                                 <ul class="list-inline">
-                                    <li>Raised: £ {{charity.raised}}</li>
-                                    <li class="text-thm">Goal: £ {{charity.goal}}</li>
+                                    <li>Raised: £ {{ organisation.raised }}</li>
+                                    <li class="text-thm">Goal: £ {{ organisation.goal }}</li>
                                 </ul>
                                 <div class="causes-progress">
                                     <div class="progress-item">
-                                        <div class="progress" data-value="{{charity.percentage_to_fund_raising_goal}}">
+                                        <div class="progress" data-value="{{ organisation.percentage_to_fund_raising_goal }}">
                                             <div class="progress-bar" role="progressbar" aria-valuenow="85"
                                                  aria-valuemin="0" aria-valuemax="100">
                                                 <div class="value-holder"><span class="value"></span>%</div>
@@ -38,8 +38,8 @@
                                     </div>
                                     <!--&lt;!&ndash;</div>&ndash;&gt;-->
                                     <!--                               <p class="p-title">Lorem ipsum dolor sit amet, consectet adipisicing elit. Sed ullam sequi at.</p> -->
-                                    <p>{{ charity.description }}</p>
-                                    {% if charity.just_giving_link %}
+                                    <p>{{ organisation.description }}</p>
+                                    {% if organisation.just_giving_link %}
 
                                     <div class="pull-left">
                                         <h6>Help us by sharing:</h6>
@@ -53,7 +53,7 @@
                                     </div>
                                     <br>
                                     <div class="pull-left">
-                                        <a class="thm-btn btn-xs mt_30" href="{{ charity.just_giving_link }}"
+                                        <a class="thm-btn btn-xs mt_30" href="{{ organisation.just_giving_link }}"
                                            target="_blank">Donate Now</a>
                                     </div>
                                     {% else %}

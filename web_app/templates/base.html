@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-4 col-md-4">
                 <div class="logo">
-                    <a href="/">
+                    <a href="{% url 'index' %}">
                         <img src="{% static 'img/resources/logo.png' %}" alt="Awesome Image"/>
                     </a>
                 </div>
@@ -58,7 +58,7 @@
             <div class="col-xs-12 col-sm-12 col-lg-3 col-md-12">
                 <div class="donate-btn clearfix">
                     <!-- Modal: donate now Starts -->
-                    <a class="thm-btn pull-left" data-toggle="modal" href="/charities">Donate Now</a>
+                    <a class="thm-btn pull-left" data-toggle="modal" href="{% url 'organisation_listing' %}">Donate Now</a>
 
                     <!-- Modal: donate now Ends -->
                 </div>
@@ -68,16 +68,16 @@
                     <div class="nav-header">
                         <ul>
                             <li>
-                                <a href="/">Home</a>
+                                <a href="{% url 'index' %}">Home</a>
                             </li>
                             <li>
-                                <a href="/help">How To Help</a>
+                                <a href="{% url 'help' %}">How To Help</a>
                             </li>
                             <li>
-                                <a href="/charities">Organisations</a>
+                                <a href="{% url 'organisation_listing' %}">Organisations</a>
                             </li>
                             <li>
-                                <a href="/contact">Contact</a>
+                                <a href="{% url 'contact' %}">Contact</a>
                             </li>
                         </ul>
                     </div>
