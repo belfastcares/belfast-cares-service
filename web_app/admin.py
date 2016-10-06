@@ -65,7 +65,7 @@ class OrganisationAdmin(admin.ModelAdmin):
         })
     )
 
-    list_display = ('image_preview_small', 'name', 'primary_contact', 'wishlist', 'address', 'description',
+    list_display = ('image_preview_small', 'name', 'primary_contact', 'wishlist', 'address',
                     'just_giving_link', 'raised', 'goal', 'associated_user_accounts')
     list_display_links = ('image_preview_small', 'name')
     inlines = [OrganisationUserInline, WishlistInline]

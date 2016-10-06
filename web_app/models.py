@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import os, re
 from django.db import models
+from django.db.models.fields.related import ForeignKey
 from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.auth.models import User
 from django.utils.html import format_html
@@ -25,7 +26,7 @@ class Contact(models.Model):
     mobile = models.CharField('mobile', max_length=15, blank=True)
     email = models.EmailField('email', max_length=50)
     description = models.TextField('description', blank=True)
-    address = models.OneToOneField(Address, on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.first_name + " " + self.surname
@@ -48,8 +49,8 @@ def get_logo_file_name(instance, filename):
 class Organisation(models.Model):
     name = models.CharField('name', max_length=30)
     image = models.ImageField(upload_to=get_logo_file_name, blank=True, default='default.jpg')
-    primary_contact = models.OneToOneField(Contact, on_delete=models.CASCADE)
-    address = models.OneToOneField(Address, on_delete=models.CASCADE)
+    primary_contact = ForeignKey(Contact, on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
     description = models.TextField('description')
     just_giving_link = models.URLField('just giving link', max_length=255, blank=True)
     raised = models.DecimalField('raised', max_digits=25, decimal_places=2, blank=True, null=True)
@@ -104,7 +105,7 @@ class Wishlist(models.Model):
 @python_2_unicode_compatible
 class OrganisationUser(models.Model):
     user = models.OneToOneField(User, verbose_name="User account details")
-    contact = models.OneToOneField(Contact, on_delete=models.CASCADE, verbose_name='Contact details')
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE, verbose_name='Contact details')
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
 
     def __str__(self):
