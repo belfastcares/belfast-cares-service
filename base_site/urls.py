@@ -5,13 +5,14 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from rest_framework import routers
-from web_app.viewsets import UserViewSet
+from web_app.viewsets import UserViewSet, ContactViewSet
 
 admin.autodiscover()
 
 # Routers provide a way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
+router.register(r'contacts', ContactViewSet)
 
 urlpatterns = [
     url(r'^$', web_app.views.index, name='index'),
