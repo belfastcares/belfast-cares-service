@@ -1,0 +1,14 @@
+{
+    "name": "Belfast Cares",
+    "short_name": "Belfast Cares",
+    "icons": [
+        {
+            "src": "img/resources/logo.png",
+            "type": "image/png",
+            "sizes": "128x128"
+        }
+    ],
+    "start_url": "/?homescreen=1",
+    "display": "standalone",
+    "background_color": "#fc7437"
+}

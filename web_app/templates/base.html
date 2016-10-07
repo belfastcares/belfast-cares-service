@@ -8,6 +8,8 @@
     <!-- responsive meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Belfast Cares | Giving back to the community!</title>
+    <!-- Manifest link -->
+    <link rel="manifest" href="{% static 'manifest.json' %}">
     <!-- master stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- responsive stylesheet -->
@@ -162,6 +164,18 @@
 
 <!-- thm custom script -->
 <script src="{% static 'js/custom.js' %}"></script>
+
+
+<!-- Service worker -->
+<script>
+        if('serviceWorker' in navigator) {
+            navigator.serviceWorker
+                    .register('static/js/sw.js')
+                    .then(function() { console.log("Service Worker Registered"); });
+        }
+
+</script>
+<!-- END -->
 
 
 </body>
