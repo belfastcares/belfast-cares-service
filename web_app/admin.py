@@ -65,12 +65,16 @@ class OrganisationAdmin(admin.ModelAdmin):
         })
     )
 
-    list_display = ('image_preview_small', 'name', 'primary_contact', 'wishlist', 'address', 'description',
+    list_display = ('image_preview_small', 'name', 'primary_contact', 'wishlist', 'address',
                     'just_giving_link', 'raised', 'goal', 'associated_user_accounts')
     list_display_links = ('image_preview_small', 'name')
     inlines = [OrganisationUserInline, WishlistInline]
     readonly_fields = ('image_preview_large',)
     search_fields = ['name']
+
+
+class ContactResponseAdmin(admin.ModelAdmin):
+    list_display = ('timestamp', 'name', 'email', 'phone', 'message')
 
 
 admin.site.register(Organisation, OrganisationAdmin)
@@ -79,3 +83,4 @@ admin.site.register(Address)
 admin.site.register(Wishlist, WishlistAdmin)
 admin.site.register(Item)
 admin.site.register(OrganisationUser)
+admin.site.register(ContactResponse, ContactResponseAdmin)

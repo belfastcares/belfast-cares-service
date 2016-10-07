@@ -1,7 +1,8 @@
 from __future__ import unicode_literals
 
-import os
+import os, re
 from django.db import models
+from django.db.models.fields.related import ForeignKey
 from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.auth.models import User
 from django.utils.html import format_html
@@ -10,7 +11,7 @@ from django.utils.html import format_html
 @python_2_unicode_compatible
 class Address(models.Model):
     address_line = models.CharField('address line', max_length=100)
-    county = models.CharField('country', max_length=50)
+    county = models.CharField('county', max_length=50)
     postcode = models.CharField('postcode', max_length=10)
 
     def __str__(self):
@@ -21,14 +22,15 @@ class Address(models.Model):
 class Contact(models.Model):
     first_name = models.CharField('first name', max_length=30)
     surname = models.CharField('surname', max_length=30)
-    telephone = models.CharField('telephone', max_length=15)
-    mobile = models.CharField('mobile', max_length=15)
+    telephone = models.CharField('telephone', max_length=15, blank=True)
+    mobile = models.CharField('mobile', max_length=15, blank=True)
     email = models.EmailField('email', max_length=50)
-    description = models.TextField('description')
-    address = models.OneToOneField(Address, on_delete=models.CASCADE)
+    description = models.TextField('description', blank=True)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.first_name + " " + self.surname
+
 
 @python_2_unicode_compatible
 class Item(models.Model):
@@ -39,21 +41,23 @@ class Item(models.Model):
         return self.name
 
 def get_logo_file_name(instance, filename):
-    return os.path.join('uploads', instance.name, 'logo' + os.path.splitext(filename)[1])
+    org_name = re.sub('[^0-9a-zA-Z]+','', instance.name)
+    return os.path.join('uploads', org_name, 'logo' + os.path.splitext(filename)[1])
+
 
 @python_2_unicode_compatible
 class Organisation(models.Model):
     name = models.CharField('name', max_length=30)
-    image = models.ImageField(upload_to=get_logo_file_name, blank=True)
-    primary_contact = models.OneToOneField(Contact, on_delete=models.CASCADE)
-    address = models.OneToOneField(Address, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=get_logo_file_name, blank=True, default='default.jpg')
+    primary_contact = ForeignKey(Contact, on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
     description = models.TextField('description')
     just_giving_link = models.URLField('just giving link', max_length=255, blank=True)
-    raised = models.DecimalField('raised', max_digits=25, decimal_places=2, blank=True)
-    goal = models.DecimalField('goal', max_digits=25, decimal_places=2, blank=True)
+    raised = models.DecimalField('raised', max_digits=25, decimal_places=2, blank=True, null=True)
+    goal = models.DecimalField('goal', max_digits=25, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
-        return str(self.id) + " " + str(self.name)
+        return str(self.id) + " " + self.name
 
     def image_preview_large(self):
         if self.image:
@@ -85,6 +89,7 @@ class Organisation(models.Model):
             return 100
         return val
 
+
 @python_2_unicode_compatible
 class Wishlist(models.Model):
     organisation = models.OneToOneField(Organisation, on_delete=models.CASCADE)
@@ -96,11 +101,24 @@ class Wishlist(models.Model):
     def __str__(self):
         return self.organisation.name + " Wishlist"
 
+
 @python_2_unicode_compatible
 class OrganisationUser(models.Model):
     user = models.OneToOneField(User, verbose_name="User account details")
-    contact = models.OneToOneField(Contact, on_delete=models.CASCADE, verbose_name='Contact details')
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE, verbose_name='Contact details')
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.organisation.name + " Organisation User " + str(self.user.username)
+
+
+@python_2_unicode_compatible
+class ContactResponse(models.Model):
+    name = models.CharField('name', max_length=300)
+    email = models.EmailField('email', max_length=50)
+    phone = models.CharField('phone number', max_length=15, blank=True)
+    message = models.TextField('message')
+    timestamp = models.DateTimeField('timestamp', auto_now_add=True)
+
+    def __str__(self):
+        return str(self.id) + " " + self.timestamp.strftime("%Y-%m-%d %H:%M:%S")
