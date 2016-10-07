@@ -4,6 +4,18 @@ The belfast cares api service built using Django utilizing postgres & bootstrap,
 
 This application supports the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
 
+### Applying Changes
+
+To ensure you have the latest schema, models, and data; run the following commands
+
+```
+dropdb hackathon
+createdb hackathon
+python manage.py migrate
+python manage.py loaddata web_app/fixtures/initial_data.json
+python manage.py runserver
+```
+
 ## Local Setup
 
 ### Setup Python IDE
