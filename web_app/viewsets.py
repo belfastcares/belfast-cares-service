@@ -28,6 +28,11 @@ class OrganisationViewSet(viewsets.ModelViewSet):
     serializer_class = OrganisationSerializer
 
 
+class OrganisationUserViewSet(viewsets.ModelViewSet):
+    queryset = OrganisationUser.objects.all()
+    serializer_class = OrganisationUserSerializer
+
+
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()
     serializer_class = WishlistSerializer
