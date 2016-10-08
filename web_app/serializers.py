@@ -12,7 +12,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class ContactSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Contact
-        fields = ('first_name', 'surname', 'telephone', 'mobile', 'email', 'description')
+        fields = ('first_name', 'surname', 'telephone', 'mobile', 'email', 'description', 'address')
 
 
 class AddressSerializer(serializers.HyperlinkedModelSerializer):
