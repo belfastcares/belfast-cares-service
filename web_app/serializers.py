@@ -25,3 +25,9 @@ class ItemSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Item
         fields = ('name', 'description')
+
+
+class OrganisationSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Organisation
+        fields = ('name', 'image', 'primary_contact', 'address', 'description', 'just_giving_link', 'raised', 'goal')
