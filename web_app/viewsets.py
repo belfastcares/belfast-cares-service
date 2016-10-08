@@ -36,3 +36,7 @@ class OrganisationUserViewSet(viewsets.ModelViewSet):
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()
     serializer_class = WishlistSerializer
+
+class ContactResponseViewSet(viewsets.ModelViewSet):
+    queryset = ContactResponse.objects.all()
+    serializer_class = ContactResponseSerializer

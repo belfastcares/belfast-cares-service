@@ -43,3 +43,9 @@ class WishlistSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Wishlist
         fields = ('organisation', 'start_time', 'end_time', 'reoccurring', 'items')
+
+
+class ContactResponseSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = ContactResponse
+        fields = ('name', 'email', 'phone', 'message', 'timestamp')
