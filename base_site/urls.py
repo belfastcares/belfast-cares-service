@@ -16,6 +16,7 @@ router.register(r'contacts', ContactViewSet)
 router.register(r'address', AddressViewSet)
 router.register(r'items', ItemViewSet)
 router.register(r'organisation', OrganisationViewSet)
+router.register(r'wishlist', WishlistViewSet)
 
 urlpatterns = [
     url(r'^$', web_app.views.index, name='index'),

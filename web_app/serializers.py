@@ -31,3 +31,9 @@ class OrganisationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Organisation
         fields = ('name', 'image', 'primary_contact', 'address', 'description', 'just_giving_link', 'raised', 'goal')
+
+
+class WishlistSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Wishlist
+        fields = ('organisation', 'start_time', 'end_time', 'reoccurring', 'items')
