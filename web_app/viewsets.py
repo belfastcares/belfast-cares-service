@@ -1,7 +1,5 @@
-from django.contrib.auth.models import User
 from rest_framework import viewsets
-from web_app.models import Contact
-from web_app.serializers import UserSerializer, ContactSerializer
+from web_app.serializers import *
 
 
 # ViewSets define the view behavior.
@@ -13,3 +11,8 @@ class UserViewSet(viewsets.ModelViewSet):
 class ContactViewSet(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
+
+
+class AddressViewSet(viewsets.ModelViewSet):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer

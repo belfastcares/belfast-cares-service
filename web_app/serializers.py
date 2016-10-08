@@ -1,6 +1,5 @@
-from django.contrib.auth.models import User
 from rest_framework import serializers
-from web_app.models import Contact
+from web_app.models import *
 
 
 # Serializers define the API representation.
@@ -14,3 +13,9 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Contact
         fields = ('first_name', 'surname', 'telephone', 'mobile', 'email', 'description')
+
+
+class AddressSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Address
+        fields = ('address_line', 'county', 'postcode')
