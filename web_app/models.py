@@ -1,11 +1,22 @@
 from __future__ import unicode_literals
 
-import os, re
+import os
+import re
+from django.conf import settings
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.fields.related import ForeignKey
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.encoding import python_2_unicode_compatible
-from django.contrib.auth.models import User
 from django.utils.html import format_html
+from rest_framework.authtoken.models import Token
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
 
 
 @python_2_unicode_compatible
@@ -40,8 +51,9 @@ class Item(models.Model):
     def __str__(self):
         return self.name
 
+
 def get_logo_file_name(instance, filename):
-    org_name = re.sub('[^0-9a-zA-Z]+','', instance.name)
+    org_name = re.sub('[^0-9a-zA-Z]+', '', instance.name)
     return os.path.join('uploads', org_name, 'logo' + os.path.splitext(filename)[1])
 
 
@@ -67,6 +79,7 @@ class Organisation(models.Model):
             )
         else:
             return 'No Logo'
+
     image_preview_large.short_description = 'Image Preview'
 
     def image_preview_small(self):
@@ -77,10 +90,12 @@ class Organisation(models.Model):
             )
         else:
             return 'No Logo'
+
     image_preview_small.short_description = 'Image Preview'
 
     def associated_user_accounts(self):
-        return ','.join(str(item.user.id) +': ' + item.user.username for item in self.organisationuser_set.all())
+        return ','.join(str(item.user.id) + ': ' + item.user.username for item in self.organisationuser_set.all())
+
     associated_user_accounts.short_description = 'User Accounts'
 
     def percentage_to_fund_raising_goal(self):
