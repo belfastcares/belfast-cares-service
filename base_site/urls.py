@@ -14,6 +14,7 @@ router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'contacts', ContactViewSet)
 router.register(r'address', AddressViewSet)
+router.register(r'items', ItemViewSet)
 
 urlpatterns = [
     url(r'^$', web_app.views.index, name='index'),
