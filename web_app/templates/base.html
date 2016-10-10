@@ -23,152 +23,155 @@
 
 <body>
 
-<!-- /.top-bar -->
-<header class="header">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-4 col-md-4">
-                <div class="logo">
-                    <a href="{% url 'index' %}">
-                        <img src="{% static 'img/resources/logo.png' %}" alt="Awesome Image"/>
-                    </a>
+<div class="main-container">
+
+    <!-- /.top-bar -->
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <div class="logo">
+                        <a href="{% url 'index' %}">
+                            <img src="{% static 'img/resources/logo.png' %}" alt="Awesome Image"/>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-xs-12 col-sm-8 col-md-8">
-                <div class="header-right-info pull-right sm-pull-none clearfix">
-                    <div class="single-header-info pb-sm-20">
-                        <div class="icon-box">
-                            <div class="inner-box">
-                                <i class="flaticon-interface-2"></i>
+                <div class="col-xs-12 col-sm-8 col-md-8">
+                    <div class="header-right-info pull-right sm-pull-none clearfix">
+                        <div class="single-header-info pb-sm-20">
+                            <div class="icon-box">
+                                <div class="inner-box">
+                                    <i class="flaticon-interface-2"></i>
+                                </div>
+                            </div>
+                            <div class="content">
+                                <h3>EMAIL</h3>
+                                <p>contact@belfastcares.com</p>
                             </div>
                         </div>
-                        <div class="content">
-                            <h3>EMAIL</h3>
-                            <p>contact@belfastcares.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- /.header -->
+
+    <nav class="mainmenu-area stricky">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-lg-3 col-md-12">
+                    <div class="donate-btn clearfix">
+                        <!-- Modal: donate now Starts -->
+                        <a class="thm-btn pull-left" data-toggle="modal" href="{% url 'organisation_listing' %}">Donate
+                            Now</a>
+
+                        <!-- Modal: donate now Ends -->
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                    <div class="navigation">
+                        <div class="nav-header">
+                            <ul>
+                                <li>
+                                    <a href="{% url 'index' %}">Home</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'help' %}">How To Help</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'organisation_listing' %}">Organisations</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'contact' %}">Contact</a>
+                                </li>
+                                <li>
+                                    {% if user.is_anonymous %}
+                                    <a href="{% url 'login' %}">Login</a>
+                                    {% else %}
+                                    <a href="{% url 'logout' %}">Logout ({{ user }})</a>
+                                    {% endif %}
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</header>
-<!-- /.header -->
+    </nav>
 
-<nav class="mainmenu-area stricky">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-lg-3 col-md-12">
-                <div class="donate-btn clearfix">
-                    <!-- Modal: donate now Starts -->
-                    <a class="thm-btn pull-left" data-toggle="modal" href="{% url 'organisation_listing' %}">Donate
-                        Now</a>
+    {% block content %}{% endblock %}
 
-                    <!-- Modal: donate now Ends -->
-                </div>
-            </div>
-            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                <div class="navigation">
-                    <div class="nav-header">
-                        <ul>
-                            <li>
-                                <a href="{% url 'index' %}">Home</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'help' %}">How To Help</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'organisation_listing' %}">Organisations</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'contact' %}">Contact</a>
-                            </li>
-                            <li>
-                                {% if user.is_anonymous %}
-                                <a href="{% url 'login' %}">Login</a>
-                                {% else %}
-                                <a href="{% url 'logout' %}">Logout ({{ user }})</a>
-                                {% endif %}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+    <section class="footer-bottom">
+        <div class="container text-center">
+            <p>Belfast Cares</p>
         </div>
-    </div>
-</nav>
+    </section>
 
-{% block content %}{% endblock %}
+    <!--Scroll to top-->
+    <div class="scroll-to-top"><span class="fa fa-arrow-up"></span></div>
 
-<section class="footer-bottom">
-    <div class="container text-center">
-        <p>Belfast Cares</p>
-    </div>
-</section>
-
-<!--Scroll to top-->
-<div class="scroll-to-top"><span class="fa fa-arrow-up"></span></div>
-
-<!-- main jQuery -->
-<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
-<!-- bootstrap -->
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-<!-- bx slider -->
-<script src="{% static 'js/jquery.bxslider.min.js' %}"></script>
-<!-- owl carousel -->
-<script src="{% static 'js/owl.carousel.min.js' %}"></script>
-<!-- validate -->
-<script src="{% static 'js/jquery-parallax.js' %}"></script>
-<!-- validate -->
-<script src="{% static 'js/validate.js' %}"></script>
-<!-- mixit up -->
-<script src="{% static 'js/jquery.mixitup.min.js' %}"></script>
-<!-- fancybox -->
-<script src="{% static 'js/jquery.fancybox.pack.js' %}"></script>
-<!-- easing -->
-<script src="{% static 'js/jquery.easing.min.js' %}"></script>
-<!-- circle progress -->
-<script src="{% static 'js/circle-progress.js' %}"></script>
-<!-- appear js -->
-<script src="{% static 'js/jquery.appear.js' %}"></script>
-<!-- count to -->
-<script src="{% static 'js/jquery.countTo.js' %}"></script>
-<!-- gmap helper -->
-<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
-<!-- gmap main script -->
-<script src="{% static 'js/gmap.js' %}"></script>
-<!-- isotope script -->
-<script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
-<!-- jQuery ui js -->
-<script src="{% static 'js/jquery-ui-1.11.4/jquery-ui.js' %}"></script>
+    <!-- main jQuery -->
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <!-- bootstrap -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- bx slider -->
+    <script src="{% static 'js/jquery.bxslider.min.js' %}"></script>
+    <!-- owl carousel -->
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <!-- validate -->
+    <script src="{% static 'js/jquery-parallax.js' %}"></script>
+    <!-- validate -->
+    <script src="{% static 'js/validate.js' %}"></script>
+    <!-- mixit up -->
+    <script src="{% static 'js/jquery.mixitup.min.js' %}"></script>
+    <!-- fancybox -->
+    <script src="{% static 'js/jquery.fancybox.pack.js' %}"></script>
+    <!-- easing -->
+    <script src="{% static 'js/jquery.easing.min.js' %}"></script>
+    <!-- circle progress -->
+    <script src="{% static 'js/circle-progress.js' %}"></script>
+    <!-- appear js -->
+    <script src="{% static 'js/jquery.appear.js' %}"></script>
+    <!-- count to -->
+    <script src="{% static 'js/jquery.countTo.js' %}"></script>
+    <!-- gmap helper -->
+    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <!-- gmap main script -->
+    <script src="{% static 'js/gmap.js' %}"></script>
+    <!-- isotope script -->
+    <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+    <!-- jQuery ui js -->
+    <script src="{% static 'js/jquery-ui-1.11.4/jquery-ui.js' %}"></script>
 
 
-<script src="{% static 'revolution/js/jquery.themepunch.tools.min.js' %}"></script>
-<script src="{% static 'revolution/js/jquery.themepunch.revolution.min.js' %}"></script>
-<script type="text/javascript"
-        src="{% static 'revolution/js/extensions/revolution.extension.actions.min.js' %}"></script>
-<script type="text/javascript"
-        src="{% static 'revolution/js/extensions/revolution.extension.carousel.min.js' %}"></script>
-<script type="text/javascript"
-        src="{% static 'revolution/js/extensions/revolution.extension.kenburn.min.js' %}"></script>
-<script type="text/javascript"
-        src="{% static 'revolution/js/extensions/revolution.extension.layeranimation.min.js' %}"></script>
-<script type="text/javascript"
-        src="{% static 'revolution/js/extensions/revolution.extension.migration.min.js' %}"></script>
-<script type="text/javascript"
-        src="{% static 'revolution/js/extensions/revolution.extension.navigation.min.js' %}"></script>
-<script type="text/javascript"
-        src="{% static 'revolution/js/extensions/revolution.extension.parallax.min.js' %}"></script>
-<script type="text/javascript"
-        src="{% static 'revolution/js/extensions/revolution.extension.slideanims.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.video.min.js' %}"></script>
+    <script src="{% static 'revolution/js/jquery.themepunch.tools.min.js' %}"></script>
+    <script src="{% static 'revolution/js/jquery.themepunch.revolution.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'revolution/js/extensions/revolution.extension.actions.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'revolution/js/extensions/revolution.extension.carousel.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'revolution/js/extensions/revolution.extension.kenburn.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'revolution/js/extensions/revolution.extension.layeranimation.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'revolution/js/extensions/revolution.extension.migration.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'revolution/js/extensions/revolution.extension.navigation.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'revolution/js/extensions/revolution.extension.parallax.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'revolution/js/extensions/revolution.extension.slideanims.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'revolution/js/extensions/revolution.extension.video.min.js' %}"></script>
 
 
-<!-- thm custom script -->
-<script src="{% static 'js/custom.js' %}"></script>
+    <!-- thm custom script -->
+    <script src="{% static 'js/custom.js' %}"></script>
 
 
-<!-- Service worker -->
-<script>
+    <!-- Service worker -->
+    <script>
         if('serviceWorker' in navigator) {
             navigator.serviceWorker
                     .register('static/js/sw.js')
@@ -177,10 +180,11 @@
 
 
 
-</script>
-<!-- END -->
 
-<script>
+    </script>
+    <!-- END -->
+
+    <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -189,8 +193,10 @@
   ga('create', 'UA-83599088-2', 'auto');
   ga('send', 'pageview');
 
-</script>
+
+    </script>
 
 
+</div>
 </body>
 </html>
