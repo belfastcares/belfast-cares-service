@@ -20,6 +20,11 @@ def volunteer_single(request, volunteer_id):
     return render(request, 'volunteer_single.html', {'id': volunteer_id})
 
 
+def volunteer_listing(request):
+    volunteers = Volunteer.objects.all()
+    return render(request, 'volunteer_listing.html', {'volunteers': volunteers})
+
+
 def organisation_listing(request):
     organisations = Organisation.objects.all()
     return render(request, 'organisation_listing.html', {'organisations': organisations})

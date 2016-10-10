@@ -57,6 +57,17 @@ def get_logo_file_name(instance, filename):
     return os.path.join('uploads', org_name, 'logo' + os.path.splitext(filename)[1])
 
 
+class Volunteer(models.Model):
+    name = models.CharField('name', max_length=30)
+    occupation = models.CharField('occupation', max_length=30)
+    about_me = models.CharField('about me', max_length=300)
+    experience = models.CharField('experience', max_length=300)
+    training = models.CharField('training', max_length=100)
+    facebook_link = models.URLField('facebook link', max_length=255, blank=True)
+    twitter_link = models.URLField('twitter link', max_length=255, blank=True)
+    email = models.EmailField('email', max_length=50, blank=False)
+
+
 @python_2_unicode_compatible
 class Organisation(models.Model):
     name = models.CharField('name', max_length=30)
