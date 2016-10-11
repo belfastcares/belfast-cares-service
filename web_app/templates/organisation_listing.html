@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+<section class="event-feature pb-60 pt-60">
+
+    <div class="container">
+
+
+        {% for organisation in organisations %}
+        <div class="row">
+            <div class="col-md-10 col-md-push-1">
+                <div class="featured-causes mb-20 pr-15">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="thumb">
+                                <a href="{% url 'organisation_single' organisation_id=organisation.id %}">
+                                    <img class="img-responsive" src="{{ organisation.image.url }}">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="causes-details">
+                                <a href="{% url 'organisation_single' organisation_id=organisation.id %}"><h3>{{ organisation.name }}</h3></a>
+                                <ul class="list-inline">
+                                    <li>Raised: £ {{ organisation.raised }}</li>
+                                    <li class="text-thm">Goal: £ {{ organisation.goal }}</li>
+                                </ul>
+                                <div class="causes-progress">
+                                    <div class="progress-item">
+                                        <div class="progress" data-value="{{ organisation.percentage_to_fund_raising_goal }}">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="85"
+                                                 aria-valuemin="0" aria-valuemax="100">
+                                                <div class="value-holder"><span class="value"></span>%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                    <!--                               <p class="p-title">Lorem ipsum dolor sit amet, consectet adipisicing elit. Sed ullam sequi at.</p> -->
+                                    <p>{{ organisation.description }}</p>
+                                    {% if organisation.just_giving_link %}
+
+                                    <div class="pull-left">
+                                        <h6>Help us by sharing:</h6>
+                                        <ul class="social">
+                                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <br>
+                                    <div class="pull-left">
+                                        <a class="thm-btn btn-xs mt_30" href="{{ organisation.just_giving_link }}"
+                                           target="_blank">Donate Now</a>
+                                    </div>
+                                    {% else %}
+                                    <div class="share">
+                                        <h6>Help us by share:</h6>
+                                        <ul class="social">
+                                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!--<div class="col-sm-12">-->
+        <!--&lt;!&ndash;Pagination&ndash;&gt;-->
+        <!--<div class="pager-outer clearfix text-right mt_30 mb_0">-->
+        <!--<ul class="pagination mb_0">-->
+        <!--<li><a href="#">Prev</a></li>-->
+        <!--<li class="active"><a href="#">1</a></li>-->
+        <!--<li><a href="#">2</a></li>-->
+        <!--<li><a href="#">3</a></li>-->
+        <!--<li><a href="#">-</a></li>-->
+        <!--<li><a href="#">4</a></li>-->
+        <!--<li><a href="#">5</a></li>-->
+        <!--<li><a href="#">Next</a></li>-->
+        <!--</ul>-->
+        <!--</div>-->
+        <!--</div>-->
+
+    </div>
+</section>
+
+
+{% endblock %}

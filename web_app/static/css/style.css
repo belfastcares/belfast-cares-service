@@ -3178,7 +3178,7 @@ blockquote {
 }
 .featured-causes {
 	background-color: #fff;
-	display: inline-block;
+	/*display: inline-block;*/
 	margin-bottom: 10px;
 }
 .featured-causes .thumb {
@@ -5668,4 +5668,15 @@ a:hover,a:focus,a:visited{
 }
 .fc-day-number.fc-other-month {
   opacity: 0.4;
+}
+
+
+/* custom layout */
+@media (min-width:1200px){
+    .main-container{
+        width: 1222px;
+        height: auto;
+        overflow: hidden;
+        margin: auto;
+    }
 }

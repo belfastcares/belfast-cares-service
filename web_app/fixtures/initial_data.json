@@ -1,0 +1,414 @@
+[
+{
+    "model": "web_app.address",
+    "pk": 1,
+    "fields": {
+        "address_line": "Unit 36, Townsend Enterprise Park, Townsend St, Belfast",
+        "county": "Antrim",
+        "postcode": "BT13 2ES"
+    }
+},
+{
+    "model": "web_app.address",
+    "pk": 2,
+    "fields": {
+        "address_line": "187 Stranmillis Road, Belfast",
+        "county": "Antrim",
+        "postcode": "BT9 5EE"
+    }
+},
+{
+    "model": "web_app.address",
+    "pk": 3,
+    "fields": {
+        "address_line": "4th Floor, Andras House, 60 Great Victoria St, Belfast",
+        "county": "Antrim",
+        "postcode": "BT2 7BB"
+    }
+},
+{
+    "model": "web_app.address",
+    "pk": 4,
+    "fields": {
+        "address_line": "25-27 Franklin St, Belfast",
+        "county": "Antrim",
+        "postcode": "BT2 8DS"
+    }
+},
+{
+    "model": "web_app.address",
+    "pk": 5,
+    "fields": {
+        "address_line": "196-200 Antrim Road, Belfast",
+        "county": "Antrim",
+        "postcode": "BT15 2AJ"
+    }
+},
+{
+    "model": "web_app.contact",
+    "pk": 1,
+    "fields": {
+        "first_name": "Outreach",
+        "surname": "Team",
+        "telephone": "02890 000 000",
+        "mobile": "07894 931 047",
+        "email": "welcome@organisation.com",
+        "description": "The outreach team is a component of the Welcome Organisation",
+        "address": 1
+    }
+},
+{
+    "model": "web_app.contact",
+    "pk": 2,
+    "fields": {
+        "first_name": "Aileen",
+        "surname": "Coney",
+        "telephone": "028 9035 1561",
+        "mobile": "028 9000 0000",
+        "email": "info@svpni.co.uk",
+        "description": "Director of St. Vincent de Paul",
+        "address": 2
+    }
+},
+{
+    "model": "web_app.contact",
+    "pk": 3,
+    "fields": {
+        "first_name": "Council for the Homeless",
+        "surname": "NI",
+        "telephone": "028 9024 6440",
+        "mobile": "028 9000 0000",
+        "email": "contact@chni.com",
+        "description": "Leader of Council for the Homeless NI",
+        "address": 3
+    }
+},
+{
+    "model": "web_app.contact",
+    "pk": 4,
+    "fields": {
+        "first_name": "Central",
+        "surname": "Office",
+        "telephone": "028 90 232 882",
+        "mobile": "028 9000 0000",
+        "email": "info@simoncommunity.org",
+        "description": "The main office for the Simon Community",
+        "address": 4
+    }
+},
+{
+    "model": "web_app.item",
+    "pk": 1,
+    "fields": {
+        "name": "Sleeping Bag",
+        "description": "Warm, durable & waterproof if possible"
+    }
+},
+{
+    "model": "web_app.item",
+    "pk": 2,
+    "fields": {
+        "name": "Toothbrush",
+        "description": "Travel toothbrush. Non-electric."
+    }
+},
+{
+    "model": "web_app.item",
+    "pk": 3,
+    "fields": {
+        "name": "Toothpaste",
+        "description": "Small travel toothpaste"
+    }
+},
+{
+    "model": "web_app.item",
+    "pk": 4,
+    "fields": {
+        "name": "Mens Winter Socks",
+        "description": "New mens winter socks."
+    }
+},
+{
+    "model": "web_app.item",
+    "pk": 5,
+    "fields": {
+        "name": "Womens Winter Socks",
+        "description": "New womens' winter socks."
+    }
+},
+{
+    "model": "web_app.item",
+    "pk": 6,
+    "fields": {
+        "name": "Cutlery",
+        "description": "All cutlery welcome. Should be clean and considered usable by others."
+    }
+},
+{
+    "model": "web_app.organisation",
+    "pk": 1,
+    "fields": {
+        "name": "Welcome Organisation",
+        "image": "uploads/WelcomeOrganisation/logo.jpg",
+        "primary_contact": 1,
+        "address": 1,
+        "description": "Every year the Welcome Organisation assists around 1,300 individuals make their journey out of homelessness.",
+        "just_giving_link": "http://www.google.co.uk",
+        "raised": "10.00",
+        "goal": "50.00"
+    }
+},
+{
+    "model": "web_app.organisation",
+    "pk": 2,
+    "fields": {
+        "name": "St. Vincent de Paul",
+        "image": "uploads/StVincentdePaul/logo.jpg",
+        "primary_contact": 2,
+        "address": 5,
+        "description": "No work of charity is foreign to the society. Our work through person to person contact encompasses every form of aid that alleviates suffering and promotes the dignity of mankind. The society strives not only to alleviate need but also to discover and redress the situations which cause it. It services everyone in need, regardless of creed, opinion,colour, origin or caste.",
+        "just_giving_link": "http://www.twitter.com",
+        "raised": "60.00",
+        "goal": "500.00"
+    }
+},
+{
+    "model": "web_app.organisation",
+    "pk": 3,
+    "fields": {
+        "name": "Council for the Homeless NI",
+        "image": "uploads/CouncilfortheHomelessNI/logo.jpg",
+        "primary_contact": 3,
+        "address": 3,
+        "description": "Founded in 1983, we are the sole representative organisation for those working with and supporting homeless people across Northern Ireland. We are the independent voice of the sector.",
+        "just_giving_link": "http://www.reddit.com",
+        "raised": "5.00",
+        "goal": "1000.00"
+    }
+},
+{
+    "model": "web_app.organisation",
+    "pk": 4,
+    "fields": {
+        "name": "Simon Community",
+        "image": "uploads/SimonCommunity/logo.jpg",
+        "primary_contact": 4,
+        "address": 4,
+        "description": "Established in 1971 in response to a homelessness crisis in Belfast, Simon Community has grown to become Northern Ireland's leading homelessness charity and service provider. From a beginning of just one house, two full time staff and a few volunteers in Belfast, Simon Community NI now helps over 3000 people every year across 22 projects throughout Northern Ireland with a staff count of 300 and 50 volunteers. We work without judgement to support people who are, or are at risk of, becoming homeless.",
+        "just_giving_link": "http://www.youtube.com",
+        "raised": "5100.00",
+        "goal": "5000.00"
+    }
+},
+{
+    "model": "web_app.wishlist",
+    "pk": 1,
+    "fields": {
+        "organisation": 1,
+        "start_time": "2016-10-06T15:54:39.098Z",
+        "end_time": "2016-11-05T15:54:39.098Z",
+        "reoccurring": false,
+        "items": [
+            3,
+            2,
+            1
+        ]
+    }
+},
+{
+    "model": "web_app.wishlist",
+    "pk": 2,
+    "fields": {
+        "organisation": 2,
+        "start_time": "2016-10-06T15:54:39.115Z",
+        "end_time": "2016-12-05T15:54:39.115Z",
+        "reoccurring": false,
+        "items": [
+            6,
+            5,
+            2,
+            1
+        ]
+    }
+},
+{
+    "model": "web_app.wishlist",
+    "pk": 3,
+    "fields": {
+        "organisation": 3,
+        "start_time": "2016-10-06T15:54:39.122Z",
+        "end_time": "2016-10-26T15:54:39.122Z",
+        "reoccurring": true,
+        "items": [
+            4,
+            2,
+            1
+        ]
+    }
+},
+{
+    "model": "web_app.wishlist",
+    "pk": 4,
+    "fields": {
+        "organisation": 4,
+        "start_time": "2016-10-06T15:54:39.134Z",
+        "end_time": "2017-03-05T15:54:39.134Z",
+        "reoccurring": true,
+        "items": [
+            6,
+            5,
+            4,
+            3,
+            1
+        ]
+    }
+},
+{
+    "model": "web_app.contactresponse",
+    "pk": 1,
+    "fields": {
+        "name": "Joe Bloggs",
+        "email": "jbloggs@hotmail.com",
+        "phone": "07746576857",
+        "message": "This is a test message sent through the contact form.",
+        "timestamp": "2016-10-06T19:06:36.298Z"
+    }
+},
+{
+    "model": "web_app.contactresponse",
+    "pk": 2,
+    "fields": {
+        "name": "John Smith",
+        "email": "jsmith@gmail.com",
+        "phone": "08737383782",
+        "message": "This is a test message sent through the contact form on the website.",
+        "timestamp": "2016-10-06T19:07:22.021Z"
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$STZVdluodaRP$FFVUg709DSpSqSv0A4iGhcv1frRhfrllnFjk0tFWxK8=",
+        "last_login": "2016-10-06T19:31:15.083Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "admin@belfastcares.co.uk",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-10-06T15:54:33Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$J6BinnZ9DLyJ$TFBuKDeiJJkScaGRGxI9voYhLcN1Y3yKyW069txR0jc=",
+        "last_login": "2016-10-06T19:03:34.771Z",
+        "is_superuser": false,
+        "username": "welcomeuser1",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2016-10-06T15:54:39.141Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$G1hsOcuyJ2Cw$/4UKOzPT1UMX8J22FEFYALZeZ0Ub/3YSjvWhe3ICSu4=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "stvincentuser1",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2016-10-06T15:54:39.180Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$uGe78uEIRx5B$h7YfntIKKTCA9XaD5sJ9BYkB4OlSCrBdZPz5CAQLaGo=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "counciluser1",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2016-10-06T15:54:39.230Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$pYiyRrN3Y1Q0$0/k1gn6mrMDVbqH9ViYUMLCd9PdRxk/YYkjZ8xC4yd0=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "simonuser1",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2016-10-06T15:54:39.272Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "web_app.organisationuser",
+    "pk": 1,
+    "fields": {
+        "user": 2,
+        "contact": 1,
+        "organisation": 1
+    }
+},
+{
+    "model": "web_app.organisationuser",
+    "pk": 2,
+    "fields": {
+        "user": 3,
+        "contact": 2,
+        "organisation": 2
+    }
+},
+{
+    "model": "web_app.organisationuser",
+    "pk": 3,
+    "fields": {
+        "user": 4,
+        "contact": 3,
+        "organisation": 3
+    }
+},
+{
+    "model": "web_app.organisationuser",
+    "pk": 4,
+    "fields": {
+        "user": 5,
+        "contact": 4,
+        "organisation": 4
+    }
+}
+]
