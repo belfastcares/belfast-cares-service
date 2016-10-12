@@ -19,17 +19,24 @@ router.register(r'organisation', OrganisationViewSet)
 router.register(r'wishlist', WishlistViewSet)
 router.register(r'organisationuser', OrganisationUserViewSet)
 router.register(r'contactresponse', ContactResponseViewSet)
+router.register(r'volunteers', VolunteerViewSet)
 
 urlpatterns = [
     url(r'^$', web_app.views.index, name='index'),
+
     url(r'^contact/$', web_app.views.contact, name='contact'),
     url(r'^help/$', web_app.views.help, name='help'),
+
+    url(r'^volunteers/$', web_app.views.volunteer_listing, name='volunteer_listing'),
     url(r'^volunteer/(?P<volunteer_id>\w{1,50})/$', web_app.views.volunteer_single, name='volunteer_single'),
+
     url(r'^organisations/$', web_app.views.organisation_listing, name='organisation_listing'),
     url(r'^organisation/(?P<organisation_id>\w{1,50})/$', web_app.views.organisation_single,
         name='organisation_single'),
+
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
+
     url(r'^account/dashboard/$', web_app.views.account_dashboard, name='account_dashboard'),
     url(r'^admin/', include(admin.site.urls)),
 

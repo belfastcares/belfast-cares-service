@@ -50,3 +50,9 @@ class ContactResponseViewSet(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
     queryset = ContactResponse.objects.all()
     serializer_class = ContactResponseSerializer
+
+
+class VolunteerViewSet(viewsets.ModelViewSet):
+    pagination_class = StandardResultsSetPagination
+    queryset = Volunteer.objects.all()
+    serializer_class = VolunteerSerializer
