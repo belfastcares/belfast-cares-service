@@ -2,36 +2,51 @@
 {% load staticfiles %}
 
 {% block content %}
-<center>
-    <br>
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
 
-{% if next %}
-    {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-    {% else %}
-    <p>Please login to see this page.</p>
-    {% endif %}
-{% endif %}
+<section class="contact-content sec-padding">
+    <div class="container">
+        <div class="sec-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Login Form</h2>
 
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
+                    <form method="post" action="{% url 'login' %}" class="contact-form row">
+                        {% csrf_token %}
+                        <div class="col-sm-6">
+                            {{ form.username.label_tag }}
+                            {{ form.username }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ form.password.label_tag }}
+                            {{ form.password }}
+                        </div>
+                        </table>
 
-<input type="submit" value="login" />
-<input type="hidden" name="next" value="{{ next }}" />
-</form>
-</center>
+                        <div class="col-sm-12">
+                            <button class="thm-btn" type="submit" value="login"/>Login</button>
+                            <button class="thm-btn" type="submit">Register</button>
+                            <input type="hidden" name="next" value="{{ next }}"/>
+                        </div>
+                    </form>
+
+
+                    {% if form.errors %}
+                    <p>Your username and password didn't match. Please try again.</p>
+                    {% endif %}
+
+                    {% if next %}
+                    {% if user.is_authenticated %}
+                    <p>Your account doesn't have access to this page. To proceed,
+                        please login with an account that has access.</p>
+                    {% else %}
+                    <p>Please login to see this page.</p>
+                    {% endif %}
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
 {% endblock %}

@@ -77,6 +77,7 @@ class ContactResponseAdmin(admin.ModelAdmin):
     list_display = ('timestamp', 'name', 'email', 'phone', 'message')
 
 
+admin.site.register(Volunteer)
 admin.site.register(Organisation, OrganisationAdmin)
 admin.site.register(Contact)
 admin.site.register(Address)
