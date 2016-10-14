@@ -6,15 +6,14 @@ from django.core.files import File
 from django.core.files.storage import Storage
 from django.test import TestCase
 from django.utils import timezone
-
-from web_app.models import Address, Contact, ContactResponse, Item, Organisation, OrganisationUser, Wishlist
+from web_app.models import Address, Contact, ContactResponse, Item, Organisation, OrganisationUser, Wishlist, Volunteer
 
 
 class AddressModelTest(TestCase):
     def setUp(self):
-        Address.objects.create(address_line = "33 Test Street", county="Antrim", postcode="BT9 RGH")
+        Address.objects.create(address_line="33 Test Street", county="Antrim", postcode="BT9 RGH")
 
-    def test_string_representation(self):
+    def test_should_fail_if_response_is_not_valid_match(self):
         address = Address.objects.get(address_line="33 Test Street")
         self.assertEqual(str(address), "33 Test Street Antrim", "Address String Representation")
 
@@ -26,7 +25,7 @@ class ContactModelTest(TestCase):
                                email="j.bloggs@hotmail.com", description="A generic Test User",
                                address=Address.objects.get(address_line="33 Test Street"))
 
-    def test_string_representation(self):
+    def test_should_fail_if_response_is_not_valid_match(self):
         contact = Contact.objects.get(address__address_line="33 Test Street")
         self.assertEqual(str(contact), "Joe Bloggs", "Contact String Representation")
 
@@ -35,9 +34,10 @@ class ItemModelTest(TestCase):
     def setUp(self):
         Item.objects.create(name="Sleeping Bag", description="Warm, durable & waterproof if possible")
 
-    def test_string_representation(self):
+    def test_should_fail_if_response_is_not_valid_match(self):
         item = Item.objects.all()[0]
         self.assertEqual(str(item), "Sleeping Bag", "Item String Representation")
+
 
 def create_organisation():
     Address.objects.create(address_line="33 Test Street", county="Antrim", postcode="BT9 RGH")
@@ -72,11 +72,12 @@ def create_organisation():
         # system is used so we don't touch the filesystem
         organisation.save()
 
+
 class OrganisationModelTest(TestCase):
     def setUp(self):
         create_organisation()
 
-    def test_string_representation(self):
+    def test_should_fail_if_response_is_not_valid_match(self):
         organisation = Organisation.objects.all()[0]
         self.assertEqual(str(organisation), str(organisation.id) + " " + "St. Vincent de Paul",
                          "Organisation String Representation")
@@ -95,17 +96,19 @@ class OrganisationModelTest(TestCase):
         organisation = Organisation.objects.all()[0]
 
         org_1 = OrganisationUser(user=User.objects.create_user(username='testuser1',
-                                                       password='testpassword'), contact=Contact.objects.all()[0],
-                         organisation=Organisation.objects.all()[0])
+                                                               password='testpassword'),
+                                 contact=Contact.objects.all()[0],
+                                 organisation=Organisation.objects.all()[0])
         org_1.save()
 
         org_2 = OrganisationUser(user=User.objects.create_user(username='testuser2',
-                                                       password='testpassword2'), contact=Contact.objects.all()[0],
-                         organisation=Organisation.objects.all()[0])
+                                                               password='testpassword2'),
+                                 contact=Contact.objects.all()[0],
+                                 organisation=Organisation.objects.all()[0])
         org_2.save()
 
         self.assertEqual(organisation.associated_user_accounts(), str(org_1.id) + ": " + org_1.user.username + ","
-        + str(org_2.id) + ": " + org_2.user.username, "Testing Organisation Associated User Accounts")
+                         + str(org_2.id) + ": " + org_2.user.username, "Testing Organisation Associated User Accounts")
 
     def test_percentage_to_fund_raising_goal(self):
         organisation = Organisation.objects.all()[0]
@@ -116,9 +119,9 @@ class WishlistModelTest(TestCase):
     def setUp(self):
         create_organisation()
         Wishlist.objects.create(organisation=Organisation.objects.all()[0], start_time=timezone.now(),
-                            end_time=timezone.now()+datetime.timedelta(days=30), reoccurring=False)
+                                end_time=timezone.now() + datetime.timedelta(days=30), reoccurring=False)
 
-    def test_string_representation(self):
+    def test_should_fail_if_response_is_not_valid_match(self):
         wishlist = Wishlist.objects.all()[0]
         self.assertEqual(str(wishlist), "St. Vincent de Paul Wishlist", "Wishlist String Representation")
 
@@ -127,10 +130,11 @@ class OrganisationUserTest(TestCase):
     def setUp(self):
         create_organisation()
         OrganisationUser.objects.create(user=User.objects.create_user(username='testuser1',
-                                                       password='testpassword1'), contact=Contact.objects.all()[0],
-                         organisation=Organisation.objects.all()[0])
+                                                                      password='testpassword1'),
+                                        contact=Contact.objects.all()[0],
+                                        organisation=Organisation.objects.all()[0])
 
-    def test_string_representation(self):
+    def test_should_fail_if_response_is_not_valid_match(self):
         org_user = OrganisationUser.objects.all()[0]
         self.assertEqual(str(org_user), "St. Vincent de Paul Organisation User testuser1",
                          "OrganisationUser String Representation")
@@ -140,8 +144,20 @@ class ContactResponseTest(TestCase):
     def setUp(self):
         ContactResponse.objects.create(name='Joe', email="joe@tester.com", phone="0289556786", message='Test message')
 
-    def test_string_representation(self):
+    def test_should_fail_if_response_is_not_valid_match(self):
         contact_response = ContactResponse.objects.all()[0]
         self.assertEqual(str(contact_response), str(contact_response.id) + " " +
                          contact_response.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
                          "Contact Response String Representation")
+
+
+class VolunteerResponseTest(TestCase):
+    def setUp(self):
+        Volunteer.objects.create(name='Joe Bloggs', occupation='Volunteer', about_me='Working hard!',
+                                 experience='Helping at a local youth center',
+                                 training='No formal training', facebook_link='http://www.facebook.com/joeblogs',
+                                 twitter_link='http://www.twitter.com/joebloggs', email='joe@bloggs.com')
+
+    def test_should_fail_if_response_is_not_valid_match(self):
+        volunteer = Volunteer.objects.all()[0]
+        self.assertEqual(str(volunteer), 'Joe Bloggs')
