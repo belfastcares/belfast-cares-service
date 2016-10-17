@@ -1,4 +1,5 @@
 import datetime
+
 from unittest import mock
 
 from django.contrib.auth.models import User
@@ -15,7 +16,7 @@ class AddressModelTest(TestCase):
 
     def test_should_fail_if_response_is_not_valid_match(self):
         address = Address.objects.get(address_line="33 Test Street")
-        self.assertEqual(str(address), "33 Test Street Antrim", "Address String Representation")
+        self.assertEqual(str(address), "33 Test Street Antrim", "Address string representation does not match expected")
 
 
 class ContactModelTest(TestCase):
@@ -27,7 +28,7 @@ class ContactModelTest(TestCase):
 
     def test_should_fail_if_response_is_not_valid_match(self):
         contact = Contact.objects.get(address__address_line="33 Test Street")
-        self.assertEqual(str(contact), "Joe Bloggs", "Contact String Representation")
+        self.assertEqual(str(contact), "Joe Bloggs", "Contact string representation does not match expected")
 
 
 class ItemModelTest(TestCase):
@@ -36,7 +37,7 @@ class ItemModelTest(TestCase):
 
     def test_should_fail_if_response_is_not_valid_match(self):
         item = Item.objects.all()[0]
-        self.assertEqual(str(item), "Sleeping Bag", "Item String Representation")
+        self.assertEqual(str(item), "Sleeping Bag", "Item string representation does not match expected")
 
 
 def create_organisation():
@@ -80,17 +81,29 @@ class OrganisationModelTest(TestCase):
     def test_should_fail_if_response_is_not_valid_match(self):
         organisation = Organisation.objects.all()[0]
         self.assertEqual(str(organisation), str(organisation.id) + " " + "St. Vincent de Paul",
-                         "Organisation String Representation")
+                         "Organisation string representation does not match expected")
 
-    def test_image_preview_large(self):
+    def test_image_preview_large_valid_logo(self):
         organisation = Organisation.objects.all()[0]
         self.assertEqual(organisation.image_preview_large(), '<img src="/tmp/test1.jpg" width="150" height="150"/>',
-                         "Large Organisation Logo Preview")
+                         "Generated html does not match expected")
 
-    def test_image_preview_small(self):
+    def test_image_preview_large_no_logo(self):
+        organisation = Organisation.objects.all()[0]
+        organisation.image = None
+        self.assertEqual(organisation.image_preview_large(), 'No Logo',
+                         "Response does not match expected")
+
+    def test_image_preview_small_valid_logo(self):
         organisation = Organisation.objects.all()[0]
         self.assertEqual(organisation.image_preview_small(), '<img src="/tmp/test1.jpg" width="50" height="50"/>',
-                         "Small Organisation Logo Preview")
+                         "Generated html does not match expected")
+
+    def test_image_preview_small_no_logo(self):
+        organisation = Organisation.objects.all()[0]
+        organisation.image = None
+        self.assertEqual(organisation.image_preview_small(), 'No Logo',
+                         "Response does not match expected")
 
     def test_associated_user_accounts(self):
         organisation = Organisation.objects.all()[0]
@@ -108,11 +121,13 @@ class OrganisationModelTest(TestCase):
         org_2.save()
 
         self.assertEqual(organisation.associated_user_accounts(), str(org_1.id) + ": " + org_1.user.username + ","
-                         + str(org_2.id) + ": " + org_2.user.username, "Testing Organisation Associated User Accounts")
+                         + str(org_2.id) + ": " + org_2.user.username,
+                         "Output from method does not match expected output")
 
     def test_percentage_to_fund_raising_goal(self):
         organisation = Organisation.objects.all()[0]
-        self.assertEqual(organisation.percentage_to_fund_raising_goal(), 12, "Testing Percentage to Fund Raising Goal")
+        self.assertEqual(organisation.percentage_to_fund_raising_goal(), 12, "Percentage calculated does not match"
+                                                                             "expected")
 
 
 class WishlistModelTest(TestCase):
@@ -123,7 +138,8 @@ class WishlistModelTest(TestCase):
 
     def test_should_fail_if_response_is_not_valid_match(self):
         wishlist = Wishlist.objects.all()[0]
-        self.assertEqual(str(wishlist), "St. Vincent de Paul Wishlist", "Wishlist String Representation")
+        self.assertEqual(str(wishlist), "St. Vincent de Paul Wishlist", "Wishlist string representation does not"
+                                                                        "match expected")
 
 
 class OrganisationUserTest(TestCase):
@@ -137,7 +153,7 @@ class OrganisationUserTest(TestCase):
     def test_should_fail_if_response_is_not_valid_match(self):
         org_user = OrganisationUser.objects.all()[0]
         self.assertEqual(str(org_user), "St. Vincent de Paul Organisation User testuser1",
-                         "OrganisationUser String Representation")
+                         "OrganisationUser string representation does not match expected")
 
 
 class ContactResponseTest(TestCase):
@@ -148,7 +164,7 @@ class ContactResponseTest(TestCase):
         contact_response = ContactResponse.objects.all()[0]
         self.assertEqual(str(contact_response), str(contact_response.id) + " " +
                          contact_response.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
-                         "Contact Response String Representation")
+                         "Contact response string representation does not match expected")
 
 
 class VolunteerResponseTest(TestCase):
