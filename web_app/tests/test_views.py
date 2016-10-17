@@ -53,15 +53,18 @@ class LoginViewTest(TestCase):
     def test_should_fail_if_invalid_username_password_cause_redirect(self):
         response = self.client.post(reverse('login'), self.invalid_user1, follow=True)
         self.assertEqual(len(response.redirect_chain), 0, 'Redirect chain not empty')
-        self.assertTrue(b'<p>Your username and password didn\'t match. Please try again.</p>' in response.content,
-                        'Error message not present in response content')
+        self.assertFormError(response, 'form', None, 'Please enter a correct username and password. '
+                                                     'Note that both fields may be case-sensitive.', 'Error message'
+                                                                                                     'not present'
+                                                                                                     'on form')
         self.assertEqual(response.status_code, 200, 'Final status code not 200')
 
     def test_should_fail_if_valid_username_invalid_password_cause_redirect(self):
         response = self.client.post(reverse('login'), self.invalid_user2, follow=True)
         self.assertEqual(len(response.redirect_chain), 0, 'Redirect chain not empty')
-        self.assertTrue(b'<p>Your username and password didn\'t match. Please try again.</p>' in response.content,
-                        'Error message not present in response content')
+        self.assertFormError(response, 'form', None, 'Please enter a correct username and password. '
+                                                     'Note that both fields may be case-sensitive.', 'Error message not'
+                                                                                                     'present on form')
         self.assertEqual(response.status_code, 200, 'Final status code not 200')
 
 
@@ -141,9 +144,8 @@ class ContactViewTest(TestCase):
         response = self.client.post(reverse('contact'), {'name': 'Joe Bloggs', 'email': 'joe@hotmail.com',
                                                          'phone': '02893838943', 'message': ''})
         self.assertEqual(response.status_code, 200, 'Status code not 200')
-        self.assertTrue(b'<ul class="errorlist"><li>This field is required.</li></ul>' in response.content, 'Error not'
-                                                                                                            'present in'
-                                                                                                            'response')
+        self.assertFormError(response, 'form', 'message', 'This field is required.', 'Error message not present for'
+                                                                                     'message field')
         self.assertEqual(ContactResponse.objects.count(), self.num_responses, 'Number of responses has changed')
 
     def test_should_fail_if_error_not_returned_for_invalid_email_in_post(self):
@@ -151,13 +153,11 @@ class ContactViewTest(TestCase):
         response = self.client.post(reverse('contact'), {'name': 'Joe Bloggs', 'email': 'joehotmail.com',
                                                          'phone': '02893838943', 'message': 'Test message'})
         self.assertEqual(response.status_code, 200, 'Status code not 200')
-        self.assertTrue(b'<ul class="errorlist"><li>Enter a valid email address.</li></ul>' in response.content,
-                        'Error not'
-                        'present in'
-                        'response')
+        self.assertFormError(response, 'form', 'email', 'Enter a valid email address.', 'Error message not present for'
+                                                                                        'email field')
         self.assertEqual(ContactResponse.objects.count(), self.num_responses, 'Number of responses has changed')
 
-    def test_should_fail_if_contact_reponses_not_increased_for_valid_post(self):
+    def test_should_fail_if_contact_responses_not_increased_for_valid_post(self):
         response = self.client.post(reverse('contact'), {'name': 'Joe Bloggs', 'email': 'joe@hotmail.com',
                                                          'phone': '02893838943', 'message': 'Test message'},
                                     follow=True)
