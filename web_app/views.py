@@ -14,7 +14,8 @@ def index(request):
 
 
 def volunteer_single(request, volunteer_id):
-    return render(request, 'volunteer_single.html', {'id': volunteer_id})
+    volunteer = get_object_or_404(Volunteer, id=volunteer_id, public=True)
+    return render(request, 'volunteer_single.html', {'volunteer': volunteer})
 
 
 def volunteer_listing(request):
