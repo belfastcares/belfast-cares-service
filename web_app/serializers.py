@@ -54,4 +54,4 @@ class ContactResponseSerializer(serializers.HyperlinkedModelSerializer):
 class VolunteerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Volunteer
-        fields = ('name', 'occupation', 'about_me', 'experience', 'training', 'facebook_link', 'twitter_link', 'email')
+        fields = ('first_name', 'surname', 'occupation', 'about_me', 'experience', 'training', 'facebook_link', 'twitter_link', 'email')

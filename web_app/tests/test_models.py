@@ -7,7 +7,8 @@ from django.core.files import File
 from django.core.files.storage import Storage
 from django.test import TestCase
 from django.utils import timezone
-from web_app.models import Address, Contact, ContactResponse, Item, Organisation, OrganisationUser, Wishlist, Volunteer
+from web_app.models import Address, Contact, ContactResponse, Item, Organisation, OrganisationUser, Wishlist, \
+    Volunteer, get_volunteer_profile_picture_path, get_organisation_logo_path
 
 
 class AddressModelTest(TestCase):
@@ -169,11 +170,43 @@ class ContactResponseTest(TestCase):
 
 class VolunteerResponseTest(TestCase):
     def setUp(self):
-        Volunteer.objects.create(name='Joe Bloggs', occupation='Volunteer', about_me='Working hard!',
+        Volunteer.objects.create(first_name='Joe', surname='Bloggs', occupation='Volunteer', about_me='Working hard!',
                                  experience='Helping at a local youth center',
                                  training='No formal training', facebook_link='http://www.facebook.com/joeblogs',
                                  twitter_link='http://www.twitter.com/joebloggs', email='joe@bloggs.com')
 
     def test_should_fail_if_response_is_not_valid_match(self):
         volunteer = Volunteer.objects.all()[0]
-        self.assertEqual(str(volunteer), 'Joe Bloggs')
+        self.assertEqual(str(volunteer), 'Joe Bloggs', 'Volunteer string representation does not match expected')
+
+
+class GetVolunteerProfilePicturePathTest(TestCase):
+    volunteer, volunteer2 = (None, None)
+
+    def setUp(self):
+        GetVolunteerProfilePicturePathTest.volunteer = Volunteer(id=1, first_name='Joe', surname='Bloggs')
+        GetVolunteerProfilePicturePathTest.volunteer2 = Volunteer(id=2, first_name='Jo)(£e-*££', surname='Blo  g*(*gs')
+
+    def test_should_fail_if_file_path_is_not_valid(self):
+        path = get_volunteer_profile_picture_path(self.volunteer, 'examplepicture.jpg')
+        self.assertEqual(path, 'uploads/volunteers/profile_1_Joe_Bloggs.jpg', 'Path generated does not match expected')
+
+    def test_should_fail_if_file_path_is_not_valid_with_invalid_names(self):
+        path = get_volunteer_profile_picture_path(self.volunteer2, 'examplepicture.jpg')
+        self.assertEqual(path, 'uploads/volunteers/profile_2_Joe_Bloggs.jpg', 'Path generated does not match expected')
+
+
+class GetOrganisationLogoPathTest(TestCase):
+    def setUp(self):
+        self.organisation = Organisation(id=1, name='Simon Community')
+        self.organisation2 = Organisation(id=2, name='Simo@)(£)(@n  Co(*£mmunity')
+
+    def test_should_fail_if_file_path_is_not_valid(self):
+        path = get_organisation_logo_path(self.organisation, 'examplepicture.jpg')
+        self.assertEqual(path, 'uploads/organisations/organisation_1_SimonCommunity.jpg', 'Path generated does not'
+                                                                                          'match expected')
+
+    def test_should_fail_if_file_path_is_not_valid_with_invalid_names(self):
+        path = get_organisation_logo_path(self.organisation2, 'examplepicture.jpg')
+        self.assertEqual(path, 'uploads/organisations/organisation_2_SimonCommunity.jpg', 'Path generated does not'
+                                                                                          'match expected')

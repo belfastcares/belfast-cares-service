@@ -74,7 +74,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='organisation',
             name='image',
-            field=models.ImageField(blank=True, default='default.jpg', upload_to=web_app.models.get_logo_file_name),
+            field=models.ImageField(blank=True, default='default.jpg', upload_to=web_app.models.get_organisation_logo_path),
         ),
         migrations.AlterField(
             model_name='organisation',
