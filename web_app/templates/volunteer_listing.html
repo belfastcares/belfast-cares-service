@@ -7,221 +7,45 @@
     <div class="container">
         <div class="row">
             <div class="our-volenteer">
-                <!--Start Single volenteer-->
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 mb-30">
-                    <div class="single-volenteer pb-sm-30">
-                        <div class="volenteer-image-holder">
-                            <img src="images/team/1.jpg" alt="">
-                            <div class="volenteer-overlay">
-                                <div class="social-links">
-                                    <a href=""><i class="fa fa-facebook mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-twitter mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-google-plus mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-linkedin mysocial_style"></i></a>
+                {% for volunteer in volunteers %}
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 mb-30">
+                        <div class="single-volenteer pb-sm-30">
+                            <div class="volenteer-image-holder">
+                                <img src="{{ volunteer.image.url }}" alt="">
+                                <div class="volenteer-overlay">
+                                    <div class="social-links">
+                                        {% if volunteer.facebook_link %}
+                                        <a href="{{ volunteer.facebook_link }}"><i class="fa fa-facebook mysocial_style"></i></a>
+                                        {% endif %}
+                                        {% if volunteer.twitter_link %}
+                                        <a href="{{ volunteer.twitter_link }}"><i class="fa fa-twitter mysocial_style"></i></a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="volenteer-minus-icon">
+                                        <img src="{% static 'img/team/volenteer-minus-icon.png' %}" alt="">
+                                    </div>
                                 </div>
-                                <div class="volenteer-minus-icon">
-                                    <img src="images/team/volenteer-minus-icon.png" alt="">
-                                </div>
-                            </div>
-                            <div class="volenteer-plus-icon">
-                                <img src="images/team/volenteer-plus-icon-golden.png" alt="">
-                            </div>
-                        </div>
-                        <div class="volenteer-name text-center">
-                            <h5>John Martin</h5>
-                            <p>Founder</p>
-                        </div>
-                    </div>
-                </div>
-                <!--Start Single volenteer-->
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 mb-30">
-                    <div class="single-volenteer pb-sm-30">
-                        <div class="volenteer-image-holder">
-                            <img src="images/team/2.jpg" alt="">
-                            <div class="volenteer-overlay">
-                                <div class="social-links">
-                                    <a href=""><i class="fa fa-facebook mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-twitter mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-google-plus mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-linkedin mysocial_style"></i></a>
-                                </div>
-                                <div class="volenteer-minus-icon">
-                                    <img src="images/team/volenteer-minus-icon.png" alt="">
+                                <div class="volenteer-plus-icon">
+                                    <img src="{% static 'img/team/volenteer-plus-icon-golden.png' %}" alt="">
                                 </div>
                             </div>
-                            <div class="volenteer-plus-icon">
-                                <img src="images/team/volenteer-plus-icon-golden.png" alt="">
-                            </div>
-                        </div>
-                        <div class="volenteer-name text-center">
-                            <h5>John Martin</h5>
-                            <p>Founder</p>
+                            <a href="{% url 'volunteer_single' volunteer_id=volunteer.id %}"> <div class="volenteer-name text-center">
+                                {% with volunteer.first_name|add:' '|add:volunteer.surname as volunteer_name %}
+                                <h5>{{ volunteer_name }}</h5>
+                                {% endwith %}
+                                <h6>{{ volunteer.occupation }}</h6>
+                                <p>{{ volunteer.about_me }}</p>
+                            </div></a>
                         </div>
                     </div>
-                </div>
-                <!--Start Single volenteer-->
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 mb-30">
-                    <div class="single-volenteer pb-sm-30">
-                        <div class="volenteer-image-holder">
-                            <img src="images/team/3.jpg" alt="">
-                            <div class="volenteer-overlay">
-                                <div class="social-links">
-                                    <a href=""><i class="fa fa-facebook mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-twitter mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-google-plus mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-linkedin mysocial_style"></i></a>
-                                </div>
-                                <div class="volenteer-minus-icon">
-                                    <img src="images/team/volenteer-minus-icon.png" alt="">
-                                </div>
-                            </div>
-                            <div class="volenteer-plus-icon">
-                                <img src="images/team/volenteer-plus-icon-golden.png" alt="">
-                            </div>
-                        </div>
-                        <div class="volenteer-name text-center">
-                            <h5>John Martin</h5>
-                            <p>Founder</p>
-                        </div>
-                    </div>
-                </div>
-                <!--Start Single volenteer-->
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 mb-30">
-                    <div class="single-volenteer pb-sm-30">
-                        <div class="volenteer-image-holder">
-                            <img src="images/team/4.jpg" alt="">
-                            <div class="volenteer-overlay">
-                                <div class="social-links">
-                                    <a href=""><i class="fa fa-facebook mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-twitter mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-google-plus mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-linkedin mysocial_style"></i></a>
-                                </div>
-                                <div class="volenteer-minus-icon">
-                                    <img src="images/team/volenteer-minus-icon.png" alt="">
-                                </div>
-                            </div>
-                            <div class="volenteer-plus-icon">
-                                <img src="images/team/volenteer-plus-icon-golden.png" alt="">
-                            </div>
-                        </div>
-                        <div class="volenteer-name text-center">
-                            <h5>John Martin</h5>
-                            <p>Founder</p>
-                        </div>
-                    </div>
-                </div>
-                <!--End Single volenteer-->
-                <!--Start Single volenteer-->
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                    <div class="single-volenteer pb-sm-30">
-                        <div class="volenteer-image-holder">
-                            <img src="images/team/1.jpg" alt="">
-                            <div class="volenteer-overlay">
-                                <div class="social-links">
-                                    <a href=""><i class="fa fa-facebook mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-twitter mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-google-plus mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-linkedin mysocial_style"></i></a>
-                                </div>
-                                <div class="volenteer-minus-icon">
-                                    <img src="images/team/volenteer-minus-icon.png" alt="">
-                                </div>
-                            </div>
-                            <div class="volenteer-plus-icon">
-                                <img src="images/team/volenteer-plus-icon-golden.png" alt="">
-                            </div>
-                        </div>
-                        <div class="volenteer-name text-center">
-                            <h5>John Martin</h5>
-                            <p>Founder</p>
-                        </div>
-                    </div>
-                </div>
-                <!--Start Single volenteer-->
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                    <div class="single-volenteer pb-sm-30">
-                        <div class="volenteer-image-holder">
-                            <img src="images/team/2.jpg" alt="">
-                            <div class="volenteer-overlay">
-                                <div class="social-links">
-                                    <a href=""><i class="fa fa-facebook mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-twitter mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-google-plus mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-linkedin mysocial_style"></i></a>
-                                </div>
-                                <div class="volenteer-minus-icon">
-                                    <img src="images/team/volenteer-minus-icon.png" alt="">
-                                </div>
-                            </div>
-                            <div class="volenteer-plus-icon">
-                                <img src="images/team/volenteer-plus-icon-golden.png" alt="">
-                            </div>
-                        </div>
-                        <div class="volenteer-name text-center">
-                            <h5>John Martin</h5>
-                            <p>Founder</p>
-                        </div>
-                    </div>
-                </div>
-                <!--Start Single volenteer-->
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                    <div class="single-volenteer pb-sm-30">
-                        <div class="volenteer-image-holder">
-                            <img src="images/team/3.jpg" alt="">
-                            <div class="volenteer-overlay">
-                                <div class="social-links">
-                                    <a href=""><i class="fa fa-facebook mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-twitter mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-google-plus mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-linkedin mysocial_style"></i></a>
-                                </div>
-                                <div class="volenteer-minus-icon">
-                                    <img src="images/team/volenteer-minus-icon.png" alt="">
-                                </div>
-                            </div>
-                            <div class="volenteer-plus-icon">
-                                <img src="images/team/volenteer-plus-icon-golden.png" alt="">
-                            </div>
-                        </div>
-                        <div class="volenteer-name text-center">
-                            <h5>John Martin</h5>
-                            <p>Founder</p>
-                        </div>
-                    </div>
-                </div>
-                <!--Start Single volenteer-->
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                    <div class="single-volenteer pb-sm-30">
-                        <div class="volenteer-image-holder">
-                            <img src="images/team/4.jpg" alt="">
-                            <div class="volenteer-overlay">
-                                <div class="social-links">
-                                    <a href=""><i class="fa fa-facebook mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-twitter mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-google-plus mysocial_style"></i></a>
-                                    <a href=""><i class="fa fa-linkedin mysocial_style"></i></a>
-                                </div>
-                                <div class="volenteer-minus-icon">
-                                    <img src="images/team/volenteer-minus-icon.png" alt="">
-                                </div>
-                            </div>
-                            <div class="volenteer-plus-icon">
-                                <img src="images/team/volenteer-plus-icon-golden.png" alt="">
-                            </div>
-                        </div>
-                        <div class="volenteer-name text-center">
-                            <h5>John Martin</h5>
-                            <p>Founder</p>
-                        </div>
-                    </div>
-                </div>
-                <!--End Single volenteer-->
+                    {% empty %}
+                    <div style="text-align:center"><h4>No Volunteers to Display</h4></div>
+                {% endfor %}
             </div>
         </div>
     </div>
 </section>
-<section class="overlay-white sec-padding parallax-section">
+{% comment %}<section class="overlay-white sec-padding parallax-section">
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2 promote-project text-center">
@@ -240,6 +64,50 @@
             </div>
         </div>
     </div>
-</section>
-
+</section>{% endcomment %}
+{% comment %}    <section class="home-appointment-form volunteer-profile">
+        <div class="container">
+            <hr>
+            <div class="heading">
+                <h3>Became a part of the world by joined our volunteer group.<br> Join Now!!</h3>
+            </div>
+            <div class="form-grp clearfix">
+                <form action="#" class="clearfix contact-form" id="appointment-form">
+                    <div class="single-form">
+                        <input type="text" placeholder="Full Name" name="name">
+                    </div>
+                    <div class="single-form">
+                        <input type="text" placeholder="Email" name="email">
+                    </div>
+                    <div class="single-form">
+                        <div class="select-input-wrapper">
+                            <select class="select-input" name="category">
+                                <option value="" selected="selected">Select Your Country</option>
+                                <option value="General Motors">Japan</option>
+                                <option value="Land Rover">Australia</option>
+                                <option value="Lexus">Bangladesh</option>
+                                <option value="Lincoln">Japan</option>
+                                <option value="Lincoln">Bangladesh</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="single-form">
+                        <div class="select-input-wrapper">
+                            <select class="select-input" name="category">
+                                <option value="" selected="selected">Select City</option>
+                                <option value="General Motors">Dhaka</option>
+                                <option value="Land Rover">Khulna</option>
+                                <option value="Lexus">Dhaka</option>
+                                <option value="Lincoln">Khulna</option>
+                                <option value="Lincoln">Dhaka</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="single-form">
+                        <button type="submit">Send Now</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>{% endcomment %}
 {% endblock %}

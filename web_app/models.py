@@ -51,30 +51,40 @@ class Item(models.Model):
     def __str__(self):
         return self.name
 
+def get_volunteer_profile_picture_path(instance, filename):
+    sanitized_volunteer_f_name = re.sub('[^0-9a-zA-Z]+', '', instance.first_name)
+    sanitized_volunteer_s_name = re.sub('[^0-9a-zA-Z]+', '', instance.surname)
 
-def get_logo_file_name(instance, filename):
-    org_name = re.sub('[^0-9a-zA-Z]+', '', instance.name)
-    return os.path.join('uploads', org_name, 'logo' + os.path.splitext(filename)[1])
+    return os.path.join('uploads', 'volunteers', 'profile_' + str(instance.id)+ "_" + sanitized_volunteer_f_name + '_'
+                        + sanitized_volunteer_s_name + os.path.splitext(filename)[1])
 
+def get_organisation_logo_path(instance, filename):
+    sanitized_org_name = re.sub('[^0-9a-zA-Z]+', '', instance.name)
+
+    return os.path.join('uploads', 'organisations', 'organisation_' + str(instance.id) + '_' + sanitized_org_name +
+                        os.path.splitext(filename)[1])
 
 class Volunteer(models.Model):
-    name = models.CharField('name', max_length=30)
+    first_name = models.CharField('first_name', max_length=30)
+    surname = models.CharField('surname', max_length=30)
     occupation = models.CharField('occupation', max_length=30)
     about_me = models.CharField('about_me', max_length=300)
+    image = models.ImageField(upload_to=get_volunteer_profile_picture_path, blank=True, default='default.jpg')
     experience = models.CharField('experience', max_length=300)
     training = models.CharField('training', max_length=100)
     facebook_link = models.URLField('facebook_link', max_length=255, blank=True)
     twitter_link = models.URLField('twitter_link', max_length=255, blank=True)
     email = models.EmailField('email', max_length=50, blank=False)
+    public = models.BooleanField('public', default=False)
 
     def __str__(self):
-        return self.name
+        return self.first_name + ' ' + self.surname
 
 
 @python_2_unicode_compatible
 class Organisation(models.Model):
     name = models.CharField('name', max_length=30)
-    image = models.ImageField(upload_to=get_logo_file_name, blank=True, default='default.jpg')
+    image = models.ImageField(upload_to=get_organisation_logo_path, blank=True, default='default.jpg')
     primary_contact = ForeignKey(Contact, on_delete=models.CASCADE)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
     description = models.TextField('description')

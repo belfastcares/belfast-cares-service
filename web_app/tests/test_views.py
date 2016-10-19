@@ -68,6 +68,38 @@ class LoginViewTest(TestCase):
         self.assertEqual(response.status_code, 200, 'Final status code not 200')
 
 
+class VolunteerListingViewTest(TestCase):
+    fixtures = ['initial_data']
+
+    def test_should_fail_if_valid_response_not_returned_for_volunteer_listing_request(self):
+        response = self.client.get(reverse('volunteer_listing'))
+        self.assertEqual(response.status_code, 200, 'Status code not 200')
+        self.assertTemplateUsed(response, "volunteer_listing.html", 'Volunteer listing '
+                                                                       'template not returned')
+        self.assertEqual(len(response.context['volunteers']), 2, 'Two volunteers in db not sent to template')
+
+
+class VolunteerSingleViewTest(TestCase):
+    fixtures = ['initial_data']
+
+    def test_should_fail_if_valid_response_not_returned_for_volunteer_with_id_one(self):
+        response = self.client.get(reverse('volunteer_single', kwargs={'volunteer_id': 1}))
+        self.assertEqual(response.status_code, 200, 'Status code not 200')
+        self.assertTemplateUsed(response, "volunteer_single.html", 'Volunteer single template not'
+                                                                      'returned')
+        self.assertEqual(response.context['volunteer'].id, 1, 'Volunteer with id 1 not sent to template')
+
+    def test_should_fail_if_valid_response_not_returned_for_non_existent_volunteer_id(self):
+        response = self.client.get(reverse('volunteer_single', kwargs={'volunteer_id': 6}))
+        self.assertEqual(response.status_code, 404, 'Status code not 404')
+        self.assertTemplateUsed(response, '404.html', '404 template not returned')
+
+    def test_should_fail_if_valid_response_not_returned_for_volunteer_with_public_flag_unset(self):
+        response = self.client.get(reverse('volunteer_single', kwargs={'volunteer_id': 3}))
+        self.assertEqual(response.status_code, 404, 'Status code not 404')
+        self.assertTemplateUsed(response, '404.html', '404 template not returned')
+
+
 class OrganisationListingViewTest(TestCase):
     fixtures = ['initial_data']
 
