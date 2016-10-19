@@ -106,7 +106,7 @@ class OrganisationModelTest(TestCase):
         self.assertEqual(organisation.image_preview_small(), 'No Logo',
                          "Response does not match expected")
 
-    def test_associated_user_accounts(self):
+    def test_associated_user_accounts_existing(self):
         organisation = Organisation.objects.all()[0]
 
         org_1 = OrganisationUser(user=User.objects.create_user(username='testuser1',
@@ -125,10 +125,46 @@ class OrganisationModelTest(TestCase):
                          + str(org_2.id) + ": " + org_2.user.username,
                          "Output from method does not match expected output")
 
-    def test_percentage_to_fund_raising_goal(self):
+    def test_associated_user_accounts_non_existing(self):
+        organisation = Organisation.objects.all()[0]
+
+        self.assertEqual(organisation.associated_user_accounts(), 'No Accounts',
+                         "Output from method does not match expected output")
+
+    def test_percentage_to_fund_raising_goal_raised_less_than_goal(self):
         organisation = Organisation.objects.all()[0]
         self.assertEqual(organisation.percentage_to_fund_raising_goal(), 12, "Percentage calculated does not match"
                                                                              "expected")
+
+    def test_percentage_to_fund_raising_goal_raised_greater_than_goal(self):
+        organisation = Organisation.objects.all()[0]
+        organisation.raised = 151
+        organisation.goal = 150
+        organisation.save()
+        self.assertEqual(organisation.percentage_to_fund_raising_goal(), 100, "Percentage calculated does not match"
+                                                                             "expected")
+
+    def test_percentage_to_fund_raising_goal_values_empty(self):
+        organisation = Organisation.objects.all()[0]
+        organisation.raised = None
+        organisation.goal = None
+        organisation.save()
+        self.assertEqual(organisation.percentage_to_fund_raising_goal(), 0, "Percentage calculated does not match"
+                                                                              "expected")
+
+    def test_percentage_to_fund_raising_goal_raised_empty(self):
+        organisation = Organisation.objects.all()[0]
+        organisation.raised = None
+        organisation.save()
+        self.assertEqual(organisation.percentage_to_fund_raising_goal(), 0, "Percentage calculated does not match"
+                                                                            "expected")
+
+    def test_percentage_to_fund_raising_goal_goal_empty(self):
+        organisation = Organisation.objects.all()[0]
+        organisation.goal = None
+        organisation.save()
+        self.assertEqual(organisation.percentage_to_fund_raising_goal(), 0, "Percentage calculated does not match"
+                                                                            "expected")
 
 
 class WishlistModelTest(TestCase):

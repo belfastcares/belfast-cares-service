@@ -101,8 +101,7 @@ class Organisation(models.Model):
                 '<img src="{}" width="150" height="150"/>',
                 self.image.url
             )
-        else:
-            return 'No Logo'
+        return 'No Logo'
 
     image_preview_large.short_description = 'Image Preview'
 
@@ -112,17 +111,20 @@ class Organisation(models.Model):
                 '<img src="{}" width="50" height="50"/>',
                 self.image.url
             )
-        else:
-            return 'No Logo'
+        return 'No Logo'
 
     image_preview_small.short_description = 'Image Preview'
 
     def associated_user_accounts(self):
+        if not self.organisationuser_set.count():
+            return 'No Accounts'
         return ','.join(str(item.user.id) + ': ' + item.user.username for item in self.organisationuser_set.all())
 
     associated_user_accounts.short_description = 'User Accounts'
 
     def percentage_to_fund_raising_goal(self):
+        if not (self.raised and self.goal):
+            return 0
         val = int(round(self.raised / self.goal * 100))
         if val > 100:
             return 100
