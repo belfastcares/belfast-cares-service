@@ -142,7 +142,7 @@ class OrganisationModelTest(TestCase):
         organisation.goal = 150
         organisation.save()
         self.assertEqual(organisation.percentage_to_fund_raising_goal(), 100, "Percentage calculated does not match"
-                                                                             "expected")
+                                                                              "expected")
 
     def test_percentage_to_fund_raising_goal_values_empty(self):
         organisation = Organisation.objects.all()[0]
@@ -150,7 +150,7 @@ class OrganisationModelTest(TestCase):
         organisation.goal = None
         organisation.save()
         self.assertEqual(organisation.percentage_to_fund_raising_goal(), 0, "Percentage calculated does not match"
-                                                                              "expected")
+                                                                            "expected")
 
     def test_percentage_to_fund_raising_goal_raised_empty(self):
         organisation = Organisation.objects.all()[0]

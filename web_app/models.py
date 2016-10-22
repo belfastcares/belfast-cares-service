@@ -4,6 +4,7 @@ import os
 import re
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.db.models.fields.related import ForeignKey
 from django.db.models.signals import post_save
@@ -51,18 +52,21 @@ class Item(models.Model):
     def __str__(self):
         return self.name
 
+
 def get_volunteer_profile_picture_path(instance, filename):
     sanitized_volunteer_f_name = re.sub('[^0-9a-zA-Z]+', '', instance.first_name)
     sanitized_volunteer_s_name = re.sub('[^0-9a-zA-Z]+', '', instance.surname)
 
-    return os.path.join('uploads', 'volunteers', 'profile_' + str(instance.id)+ "_" + sanitized_volunteer_f_name + '_'
+    return os.path.join('uploads', 'volunteers', 'profile_' + str(instance.id) + "_" + sanitized_volunteer_f_name + '_'
                         + sanitized_volunteer_s_name + os.path.splitext(filename)[1])
+
 
 def get_organisation_logo_path(instance, filename):
     sanitized_org_name = re.sub('[^0-9a-zA-Z]+', '', instance.name)
 
     return os.path.join('uploads', 'organisations', 'organisation_' + str(instance.id) + '_' + sanitized_org_name +
                         os.path.splitext(filename)[1])
+
 
 class Volunteer(models.Model):
     first_name = models.CharField('first_name', max_length=30)
@@ -89,8 +93,10 @@ class Organisation(models.Model):
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
     description = models.TextField('description')
     just_giving_link = models.URLField('just giving link', max_length=255, blank=True)
-    raised = models.DecimalField('raised', max_digits=25, decimal_places=2, blank=True, null=True)
-    goal = models.DecimalField('goal', max_digits=25, decimal_places=2, blank=True, null=True)
+    raised = models.DecimalField('raised', max_digits=25, decimal_places=2, blank=True, null=True,
+                                 validators=[MinValueValidator(0, 'Raised cannot be negative')])
+    goal = models.DecimalField('goal', max_digits=25, decimal_places=2, blank=True, null=True,
+                               validators=[MinValueValidator(0, 'Goal cannot be negative')])
 
     def __str__(self):
         return str(self.id) + " " + self.name
