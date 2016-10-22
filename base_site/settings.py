@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'admin_honeypot',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -157,3 +158,6 @@ MEDIA_URL = '/media/'
 
 # Login URLs
 LOGIN_REDIRECT_URL = 'account_dashboard'
+
+# Django admin honeypot
+ADMIN_HONEYPOT_EMAIL_ADMINS = False
