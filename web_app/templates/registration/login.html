@@ -7,23 +7,23 @@
     <div class="container">
         <div class="sec-content">
             <div class="row">
-                <div class="col-md-12">
-                    <h2>Login Form</h2>
+                <div class="col-md-12" style="margin:auto;">
+                    <h2 style="max-width: 300px;margin: auto;">Login Form</h2>
 
                     <form method="post" action="{% url 'login' %}" class="contact-form row">
                         {% csrf_token %}
-                        <div class="col-sm-6">
+                        <div style="max-width: 300px;margin: auto;">
                             {{ form.username.label_tag }}
                             {{ form.username }}
                         </div>
-                        <div class="col-sm-6">
+                        <div style="max-width: 300px;margin: auto;">
                             {{ form.password.label_tag }}
                             {{ form.password }}
                         </div>
-                        </table>
 
-                        <div class="col-sm-12">
-                            <button class="thm-btn" type="submit" value="login"/>Login</button>
+                        <div style="max-width: 300px;margin: auto;">
+                            <button class="thm-btn" type="submit" value="login"/>
+                            Login</button>
                             <button class="thm-btn" type="submit">Register</button>
                             <input type="hidden" name="next" value="{{ next }}"/>
                         </div>

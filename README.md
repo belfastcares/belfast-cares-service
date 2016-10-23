@@ -10,7 +10,6 @@ The belfast cares api service built using Django utilizing postgres & bootstrap,
 
 Initial setup via : https://github.com/belfastcares/belfast-cares-service/wiki/Setup-Guide---threats-api-service
 
-
 ### Redeployment script
 ```
 rm -rf belfastcares-env
