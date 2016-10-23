@@ -52,7 +52,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=30, verbose_name='name')),
-                ('image', models.ImageField(blank=True, upload_to=web_app.models.get_logo_file_name)),
+                ('image', models.ImageField(blank=True, upload_to=web_app.models.get_organisation_logo_path)),
                 ('description', models.TextField(verbose_name='description')),
                 ('just_giving_link', models.URLField(blank=True, max_length=255, verbose_name='just giving link')),
                 ('raised', models.DecimalField(blank=True, decimal_places=2, max_digits=25, verbose_name='raised')),

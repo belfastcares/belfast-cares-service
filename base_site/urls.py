@@ -38,7 +38,8 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, name='logout'),
 
     url(r'^account/dashboard/$', web_app.views.account_dashboard, name='account_dashboard'),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    url(r'^manage/', include(admin.site.urls)),
 
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),

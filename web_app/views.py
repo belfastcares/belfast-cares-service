@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
+
 from web_app.forms import ContactForm
 from .models import *
 
@@ -12,16 +13,13 @@ def index(request):
     return render(request, 'index.html', {'organisations': organisations})
 
 
-def login(request):
-    return render(request, 'login.html')
-
-
 def volunteer_single(request, volunteer_id):
-    return render(request, 'volunteer_single.html', {'id': volunteer_id})
+    volunteer = get_object_or_404(Volunteer, id=volunteer_id, public=True)
+    return render(request, 'volunteer_single.html', {'volunteer': volunteer})
 
 
 def volunteer_listing(request):
-    volunteers = Volunteer.objects.all()
+    volunteers = Volunteer.objects.filter(public=True)
     return render(request, 'volunteer_listing.html', {'volunteers': volunteers})
 
 
