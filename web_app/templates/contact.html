@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-md-8">
                     <h2>Contact Form</h2>
-                    <form action="/contact/" method="post" class="contact-form row">
+                    <form action="{% url 'contact' %}" method="post" class="contact-form row">
                         {% csrf_token %}
                         {{ form.non_field_errors }}
                         <div class="col-md-6">

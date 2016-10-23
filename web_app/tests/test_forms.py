@@ -5,7 +5,7 @@ from django.core.files import File
 from django.test import SimpleTestCase, TestCase
 from django.utils import timezone
 
-from web_app.forms import ContactForm, OrganisationForm, WishlistForm
+from web_app.forms import ContactForm, OrganisationAdminForm, WishlistForm
 from web_app.models import Contact, Address, Item, Organisation
 
 
@@ -42,7 +42,7 @@ class ContactFormTest(SimpleTestCase):
                          'Error not raised for invalid email field')
 
 
-class OrganisationFormTest(TestCase):
+class OrganisationAdminFormTest(TestCase):
 
     def setUp(self):
         self.file_mock = mock.MagicMock(spec=File, name='File')
@@ -53,7 +53,7 @@ class OrganisationFormTest(TestCase):
                                address=Address.objects.get(address_line="33 Test Street"))
 
     def test_should_fail_if_form_deemed_invalid_with_valid_data(self):
-        form = OrganisationForm({
+        form = OrganisationAdminForm({
             'name': 'Test Organisation',
             'image': self.file_mock,
             'primary_contact': Contact.objects.all()[0].pk,
@@ -66,7 +66,7 @@ class OrganisationFormTest(TestCase):
         self.assertTrue(form.is_valid(), 'Form was deemed invalid with valid data')
 
     def test_should_fail_if_form_deemed_valid_with_blank_data(self):
-        form = OrganisationForm({})
+        form = OrganisationAdminForm({})
         self.assertFalse(form.is_valid(), 'Form was deemed valid with invalid data')
         self.assertEqual(len(form.errors), 4, 'Different number of errors than expected raised')
         self.assertEqual(form.errors['name'], ['This field is required.'], 'Error not raised for empty name field')
@@ -78,7 +78,7 @@ class OrganisationFormTest(TestCase):
                          'Error not raised for empty description field')
 
     def test_should_fail_if_form_deemed_valid_with_invalid_relational_data(self):
-        form = OrganisationForm({
+        form = OrganisationAdminForm({
             'name': 'Test Organisation',
             'image': self.file_mock,
             'primary_contact': 6,
@@ -98,7 +98,7 @@ class OrganisationFormTest(TestCase):
                          'Error not raised for non-existent address field')
 
     def test_should_fail_if_form_deemed_invalid_with_blank_raised(self):
-        form = OrganisationForm({
+        form = OrganisationAdminForm({
             'name': 'Test Organisation',
             'image': self.file_mock,
             'primary_contact': Contact.objects.all()[0].pk,
@@ -110,7 +110,7 @@ class OrganisationFormTest(TestCase):
         self.assertTrue(form.is_valid(), 'Form was deemed invalid with valid data')
 
     def test_should_fail_if_form_deemed_invalid_with_blank_goal(self):
-        form = OrganisationForm({
+        form = OrganisationAdminForm({
             'name': 'Test Organisation',
             'image': self.file_mock,
             'primary_contact': Contact.objects.all()[0].pk,
@@ -122,7 +122,7 @@ class OrganisationFormTest(TestCase):
         self.assertTrue(form.is_valid(), 'Form was deemed invalid with valid data')
 
     def test_should_fail_if_form_deemed_valid_with_negative_raised(self):
-        form = OrganisationForm({
+        form = OrganisationAdminForm({
             'name': 'Test Organisation',
             'image': self.file_mock,
             'primary_contact': Contact.objects.all()[0].pk,
@@ -138,7 +138,7 @@ class OrganisationFormTest(TestCase):
                          'Error not raised for negative raised field')
 
     def test_should_fail_if_form_deemed_valid_with_negative_goal(self):
-        form = OrganisationForm({
+        form = OrganisationAdminForm({
             'name': 'Test Organisation',
             'image': self.file_mock,
             'primary_contact': Contact.objects.all()[0].pk,

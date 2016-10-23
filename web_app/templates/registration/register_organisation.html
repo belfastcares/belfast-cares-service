@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+    <form action="{% url 'register_organisation' %}" method="post">
+        {% csrf_token %}
+        <h2>Organisation Information:</h2>
+        {{ org_form.as_p }}
+        {{ org_addr_form.as_p }}
+        <h2>Primary Contact Information</h2>
+        {{ contact_form.as_p }}
+        {{ contact_addr_form.as_p }}
+
+        <input type="submit" value="Submit"/>
+    </form>
+
+{% endblock %}

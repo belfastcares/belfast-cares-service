@@ -37,6 +37,9 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
 
+    url(r'^register/organisation/$', web_app.views.register_organisation, name='register_organisation'),
+    url(r'^register/volunteer/$', web_app.views.register_volunteer, name='register_volunteer'),
+
     url(r'^account/dashboard/$', web_app.views.account_dashboard, name='account_dashboard'),
     url(r'^admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     url(r'^manage/', include(admin.site.urls)),

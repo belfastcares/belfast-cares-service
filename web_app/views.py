@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
-from web_app.forms import ContactForm
+from web_app.forms import ContactForm, OrganisationRegistrationForm, ContactRegistrationForm, AddressForm
 from .models import *
 
 
@@ -38,6 +38,41 @@ def organisation_single(request, organisation_id):
                                                         'org_address': org_address,
                                                         'org_wishlist': org_wishlist,
                                                         'org_primary': org_contact})
+
+
+def register_organisation(request):
+
+    if request.method == "POST":
+        org_form = OrganisationRegistrationForm(request.POST, prefix='org')
+        org_addr_form = AddressForm(request.POST, prefix='org_addr')
+        contact_form = ContactRegistrationForm(request.POST, prefix='cont')
+        contact_addr_form = AddressForm(request.POST, prefix='cont_addr')
+        # Make sure all forms are valid before continuing
+        if all([org_form.is_valid(), org_addr_form.is_valid(), contact_form.is_valid(), contact_addr_form.is_valid()]):
+            organisation = org_form.save(commit=False)
+            organisation.address = org_addr_form.save()
+
+            organisation_prim_cont = contact_form.save(commit=False)
+            organisation_prim_cont.address = contact_addr_form.save()
+            organisation_prim_cont.save()
+
+            organisation.primary_contact = organisation_prim_cont
+            organisation.save()
+            messages.success(request, 'Organisation added successfully.')
+            return HttpResponseRedirect(reverse('register_organisation'))
+    else:
+        org_form = OrganisationRegistrationForm(prefix='org')
+        org_addr_form = AddressForm(prefix='org_addr')
+        contact_form = ContactRegistrationForm(prefix='cont')
+        contact_addr_form = AddressForm(prefix='cont_addr')
+    return render(request, 'registration/register_organisation.html', {'org_form': org_form,
+                                                                       'org_addr_form': org_addr_form,
+                                                                       'contact_form': contact_form,
+                                                                       'contact_addr_form': contact_addr_form})
+
+
+def register_volunteer(request):
+    pass
 
 
 @login_required(login_url='/login/')
