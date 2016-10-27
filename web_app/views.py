@@ -1,11 +1,15 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.files.storage import FileSystemStorage
 from django.core.urlresolvers import reverse
+from django.forms import modelform_factory, modelformset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
-from web_app.forms import ContactForm, OrganisationRegistrationForm, ContactRegistrationForm, AddressForm
+from formtools_addons import SessionMultipleFormWizardView
+from web_app.forms import ContactForm, AddressForm, WishlistForm
 from .models import *
+from django.contrib.auth.forms import UserCreationForm
 
 
 def index(request):
@@ -40,35 +44,51 @@ def organisation_single(request, organisation_id):
                                                         'org_primary': org_contact})
 
 
-def register_organisation(request):
+register_organisation_form_list = [
+    ("organisation_info", (
+        ('org_details', modelform_factory(Organisation, fields=('name', 'image', 'description', 'just_giving_link',
+                                                                'raised', 'goal',))),
+        ('org_address', AddressForm),
+    )),
+    ("primary_contact_info", (
+        ('primary_contact_details',
+         modelform_factory(Contact, fields=('first_name', 'surname', 'telephone', 'mobile',
+                                            'email', 'description'))),
+        ('primary_contact_address', AddressForm)
+    )),
+    ('organisation_accounts', (
+        ('org_user_login', UserCreationForm),
 
-    if request.method == "POST":
-        org_form = OrganisationRegistrationForm(request.POST, prefix='org')
-        org_addr_form = AddressForm(request.POST, prefix='org_addr')
-        contact_form = ContactRegistrationForm(request.POST, prefix='cont')
-        contact_addr_form = AddressForm(request.POST, prefix='cont_addr')
-        # Make sure all forms are valid before continuing
-        if all([org_form.is_valid(), org_addr_form.is_valid(), contact_form.is_valid(), contact_addr_form.is_valid()]):
-            organisation = org_form.save(commit=False)
-            organisation.address = org_addr_form.save()
+        ('org_user_contact', modelform_factory(Contact, fields=('first_name', 'surname', 'telephone', 'mobile',
+                                                                'email', 'description'))),
 
-            organisation_prim_cont = contact_form.save(commit=False)
-            organisation_prim_cont.address = contact_addr_form.save()
-            organisation_prim_cont.save()
+    )),
+    ('wishlist_info', WishlistForm)
+]
 
-            organisation.primary_contact = organisation_prim_cont
-            organisation.save()
-            messages.success(request, 'Organisation added successfully.')
-            return HttpResponseRedirect(reverse('register_organisation'))
-    else:
-        org_form = OrganisationRegistrationForm(prefix='org')
-        org_addr_form = AddressForm(prefix='org_addr')
-        contact_form = ContactRegistrationForm(prefix='cont')
-        contact_addr_form = AddressForm(prefix='cont_addr')
-    return render(request, 'registration/register_organisation.html', {'org_form': org_form,
-                                                                       'org_addr_form': org_addr_form,
-                                                                       'contact_form': contact_form,
-                                                                       'contact_addr_form': contact_addr_form})
+
+class RegisterOrganisationWizard(SessionMultipleFormWizardView):
+    templates = {
+        "organisation_info": 'registration/organisation/register_organisation_step_1.html',
+        "primary_contact_info": 'registration/organisation/register_organisation_step_2.html',
+        "organisation_accounts": 'registration/organisation/register_organisation_step_3.html',
+        "wishlist_info": 'registration/organisation/register_organisation_step_4.html'
+    }
+
+    def get_context_data(self, forms, **kwargs):
+        context = super(RegisterOrganisationWizard, self).get_context_data(forms=forms, **kwargs)
+        return context
+
+
+    def get_template_names(self):
+        return [self.templates[self.steps.current]]
+
+    file_storage = FileSystemStorage()
+
+    def done(self, form_dict, **kwargs):
+        print ("weee")
+
+registration_organisation_wizard_view = RegisterOrganisationWizard.as_view(register_organisation_form_list)
 
 
 def register_volunteer(request):

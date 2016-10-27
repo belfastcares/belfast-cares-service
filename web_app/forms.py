@@ -1,5 +1,5 @@
 from django import forms
-from web_app.models import ContactResponse, Organisation, Wishlist, Contact, Address
+from web_app.models import ContactResponse, Organisation, Wishlist, Address
 
 
 class AddressForm(forms.ModelForm):
@@ -18,18 +18,6 @@ class OrganisationAdminForm(forms.ModelForm):
     class Meta:
         model = Organisation
         fields = ['name', 'image', 'primary_contact', 'address', 'description', 'just_giving_link', 'raised', 'goal']
-
-
-class OrganisationRegistrationForm(forms.ModelForm):
-    class Meta:
-        model = Organisation
-        fields = ['name', 'image', 'description', 'just_giving_link', 'raised', 'goal']
-
-
-class ContactRegistrationForm(forms.ModelForm):
-    class Meta:
-        model = Contact
-        fields = ['first_name', 'surname', 'telephone', 'mobile', 'email', 'description']
 
 
 class WishlistForm(forms.ModelForm):

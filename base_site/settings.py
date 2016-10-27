@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'admin_honeypot',
+    'formtools'
 )
 
 MIDDLEWARE_CLASSES = (

@@ -200,3 +200,12 @@ class ContactViewTest(TestCase):
         self.assertEqual(response.redirect_chain[0][0], reverse('contact'), 'Initial redirect url not contact page')
         self.assertEqual(response.redirect_chain[0][1], 302, 'Initial status code not 302')
         self.assertEqual(response.status_code, 200, 'Final status code not 200')
+
+
+class RegisterOrganisationTest(TestCase):
+
+    def test_should_fail_if_valid_response_not_returned_for_register_request(self):
+        response = self.client.get(reverse('register_organisation'))
+        pass
+
+
