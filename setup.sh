@@ -1,10 +1,9 @@
 #/bin/sh
 set -e
 
-# Prerequisites:
-
 export DATABASE_URL='postgres://admin:bcadminpass123@localhost:5432/belfastcares'
 
+# logging colour functions
 bold=$(tput bold)
 red=$(tput setaf 1)
 normal=$(tput sgr0)
@@ -21,7 +20,8 @@ error(){
 if which brew &>/dev/null; then
     print " - brew already installed "
 else
-    print " - please install brew"
+    print " - installing brew"
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
 if which python3 &>/dev/null; then
@@ -45,6 +45,7 @@ else
     brew install postgres
 fi
 
+#TODO - Check if virtual environement exists before removal
 print " - removing virtual environment - belfastcares-env"
 rm -rf belfastcares-env
 
@@ -53,7 +54,7 @@ print " - creating new virtual enviroment - belfastcares-env"
 virtualenv -p python3 belfastcares-env
 source belfastcares-env/bin/activate
 
-print " - installing project deps"
+print " - installing project deps via pip"
 pip install -r requirements.txt
 
 # creating database
@@ -69,19 +70,18 @@ USER=$(psql postgres -tAc "SELECT 1 from pg_roles where rolname='admin'")
 
 # creating postgres user
 if [ "$USER" == "1" ]; then
-    print " - admin already exists"
+    print " - postgres admin user already exists"
 else
-    print " - creating admin postgres user "
+    print " - creating postgres admin user "
     psql -d belfastcares -c "CREATE USER admin WITH PASSWORD 'bcadminpass123'"
 fi
 
-print "Adding Database Schema"
+print " - applying database migrations"
 python manage.py migrate
 
-print "Populating Database Schema with initial data"
+print " - populating schema with initial data"
 python manage.py loaddata web_app/fixtures/initial_data.json
 
-print "Running server"
+print " - running web server"
 python manage.py runserver
-
 
