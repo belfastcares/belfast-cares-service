@@ -19,7 +19,7 @@ before_script:
   - psql -c "CREATE DATABASE belfastcares;" -U postgres
   - psql -d belfastcares -c "CREATE USER admin WITH PASSWORD 'bcadminpass123'"
   - psql -d belfastcares -c "ALTER USER admin CREATEDB;"
-  - python manage.py collectstatic
+  - python manage.py collectstatic --noinput
 
 script:
   - python manage.py test
