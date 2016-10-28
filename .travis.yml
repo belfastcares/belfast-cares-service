@@ -18,7 +18,7 @@ install:
 before_script:
   - psql -c "CREATE DATABASE belfastcares;" -U postgres
   - psql -d belfastcares -c "CREATE USER admin WITH PASSWORD 'bcadminpass123'"
-  - psql -c "ALTER USER admin CREATEDB;"
+  - psql -d belfastcares -c "ALTER USER admin CREATEDB;"
 
 script:
   - python manage.py test
