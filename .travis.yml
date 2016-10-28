@@ -23,7 +23,7 @@ before_script:
   - python manage.py collectstatic --noinput
 
 script:
-  - coverage run manage.py test
+  - coverage run --source base_site,web_app manage.py test
 
 after_success:
   - echo Uploading code coverage data...; coveralls
@@ -34,7 +34,3 @@ notifications:
       - belfastcares:cripES1xwEK0lFnowQeNoCUa
     on_success: always
     on_failure: always
-
-
-
-
