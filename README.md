@@ -1,4 +1,5 @@
 # belfast-cares-service
+[![Build Status](https://travis-ci.org/belfastcares/belfast-cares-service.svg?branch=development)](https://travis-ci.org/belfastcares/belfast-cares-service)    [![Coverage Status](https://coveralls.io/repos/github/belfastcares/belfast-cares-service/badge.svg)](https://coveralls.io/github/belfastcares/belfast-cares-service)
 
 The belfast cares api service built using Django utilizing postgres & bootstrap, which can easily be deployed to Heroku.
 
