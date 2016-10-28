@@ -14,6 +14,7 @@ env:
 
 install:
   - pip install -r requirements.txt
+  - pip install coveralls
 
 before_script:
   - psql -c "CREATE DATABASE belfastcares;" -U postgres
@@ -22,4 +23,18 @@ before_script:
   - python manage.py collectstatic --noinput
 
 script:
-  - python manage.py test
+  - coverage run manage.py test
+
+after_success:
+  - echo Uploading code coverage data...; coveralls
+
+notifications:
+  slack:
+    rooms:
+      - belfastcares:cripES1xwEK0lFnowQeNoCUa
+    on_success: always
+    on_failure: always
+
+
+
+
