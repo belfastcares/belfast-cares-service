@@ -61,9 +61,13 @@ register_organisation_form_list = [
 
         ('org_user_contact', modelform_factory(Contact, fields=('first_name', 'surname', 'telephone', 'mobile',
                                                                 'email', 'description'))),
+        ('org_user_address', AddressForm)
 
     )),
-    ('wishlist_info', WishlistForm)
+    ('wishlist_info', (
+        ('wishlist_details', modelform_factory(Wishlist, WishlistForm, fields=('start_time', 'end_time', 'reoccurring',
+                                                                               'items'))),
+    )),
 ]
 
 
@@ -79,14 +83,40 @@ class RegisterOrganisationWizard(SessionMultipleFormWizardView):
         context = super(RegisterOrganisationWizard, self).get_context_data(forms=forms, **kwargs)
         return context
 
-
     def get_template_names(self):
         return [self.templates[self.steps.current]]
 
     file_storage = FileSystemStorage()
 
     def done(self, form_dict, **kwargs):
-        print ("weee")
+        # process organisation
+        new_organisation = form_dict['organisation_info']['org_details'].save(commit=False)
+        new_organisation.address = form_dict['organisation_info']['org_address'].save()
+
+        # process primary contact
+        primary_contact = form_dict['primary_contact_info']['primary_contact_details'].save(commit=False)
+        primary_contact.address = form_dict['primary_contact_info']['primary_contact_address'].save()
+        primary_contact.save()
+
+        new_organisation.primary_contact = primary_contact
+        new_organisation.save()
+
+        # process organisation accounts
+        org_user_contact = form_dict['organisation_accounts']['org_user_contact'].save(commit=False)
+        org_user_contact.address = form_dict['organisation_accounts']['org_user_address'].save()
+        org_user_contact.save()
+        org_user_login = form_dict['organisation_accounts']['org_user_login'].save()
+
+        OrganisationUser.objects.create(user=org_user_login, contact=org_user_contact,
+                                        organisation=new_organisation)
+
+        # process wishlist
+        wishlist = form_dict['wishlist_info']['wishlist_details'].save(commit=False)
+        wishlist.organisation = new_organisation
+        wishlist.save()
+
+        return render(self.request, 'registration/organisation/register_organisation_complete.html',
+                      {'organisation': new_organisation})
 
 registration_organisation_wizard_view = RegisterOrganisationWizard.as_view(register_organisation_form_list)
 
