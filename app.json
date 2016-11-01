@@ -1,8 +1,9 @@
 {
-  "name": "Start on Heroku: Python",
-  "description": "A barebones Python app, which can easily be deployed to Heroku.",
+  "name": "belfast-cares-service",
+  "description": "belfast-cares-service - A django application using postgresql",
+  "website": "http://www.belfastcares.co.uk",
   "image": "heroku/python",
-  "repository": "https://github.com/heroku/python-getting-started",
+  "repository": "https://github.com/belfastcares/belfast-cares-service",
   "keywords": ["python", "django" ],
   "addons": [ "heroku-postgresql" ]
 }

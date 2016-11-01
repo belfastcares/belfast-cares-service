@@ -1,40 +1,11 @@
 from django.contrib import admin
 
-# Register your models here.
-from django import forms
+from web_app.forms import WishlistForm, OrganisationForm
 from .models import *
 
 # Customise default admin
 admin.AdminSite.site_header = "Belfast Cares Administration"
 admin.AdminSite.site_title = "Belfast Cares Site Admin"
-
-
-class WishlistForm(forms.ModelForm):
-    class Meta:
-        model = Wishlist
-        fields = '__all__'
-
-    def clean(self):
-        super(WishlistForm, self).clean()
-        start_date = self.cleaned_data.get('start_time')
-        end_date = self.cleaned_data.get('end_time')
-        if start_date > end_date:
-            raise forms.ValidationError("End time cannot come before start time.")
-        return self.cleaned_data
-
-
-class OrganisationForm(forms.ModelForm):
-    class Meta:
-        model = Organisation
-        fields = '__all__'
-
-    def clean(self):
-        super(OrganisationForm, self).clean()
-        raised = self.cleaned_data.get('raised')
-        goal = self.cleaned_data.get('goal')
-        if raised < 0 or goal < 0:
-            raise forms.ValidationError("Raised or goal cannot be less than 0.")
-        return self.cleaned_data
 
 
 class WishlistAdmin(admin.ModelAdmin):
