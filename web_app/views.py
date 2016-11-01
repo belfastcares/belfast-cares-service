@@ -2,11 +2,11 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from django.core.urlresolvers import reverse
-from django.forms import modelform_factory, modelformset_factory
+from django.forms import modelform_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
+from formtools_addons import NamedUrlSessionMultipleFormWizardView
 
-from formtools_addons import SessionMultipleFormWizardView
 from web_app.forms import ContactForm, AddressForm, WishlistForm
 from .models import *
 from django.contrib.auth.forms import UserCreationForm
@@ -67,11 +67,11 @@ register_organisation_form_list = [
     ('wishlist_info', (
         ('wishlist_details', modelform_factory(Wishlist, WishlistForm, fields=('start_time', 'end_time', 'reoccurring',
                                                                                'items'))),
-    )),
+    ))
 ]
 
 
-class RegisterOrganisationWizard(SessionMultipleFormWizardView):
+class RegisterOrganisationWizard(NamedUrlSessionMultipleFormWizardView):
     templates = {
         "organisation_info": 'registration/organisation/register_organisation_step_1.html',
         "primary_contact_info": 'registration/organisation/register_organisation_step_2.html',
@@ -89,15 +89,15 @@ class RegisterOrganisationWizard(SessionMultipleFormWizardView):
     file_storage = FileSystemStorage()
 
     def done(self, form_dict, **kwargs):
-        # process organisation
-        new_organisation = form_dict['organisation_info']['org_details'].save(commit=False)
-        new_organisation.address = form_dict['organisation_info']['org_address'].save()
 
         # process primary contact
         primary_contact = form_dict['primary_contact_info']['primary_contact_details'].save(commit=False)
         primary_contact.address = form_dict['primary_contact_info']['primary_contact_address'].save()
         primary_contact.save()
 
+        # process organisation
+        new_organisation = form_dict['organisation_info']['org_details'].save(commit=False)
+        new_organisation.address = form_dict['organisation_info']['org_address'].save()
         new_organisation.primary_contact = primary_contact
         new_organisation.save()
 
@@ -115,10 +115,14 @@ class RegisterOrganisationWizard(SessionMultipleFormWizardView):
         wishlist.organisation = new_organisation
         wishlist.save()
 
+        # delete session object
+        del self.request.session["wizard_register_organisation_wizard"]
+
         return render(self.request, 'registration/organisation/register_organisation_complete.html',
                       {'organisation': new_organisation})
 
-registration_organisation_wizard_view = RegisterOrganisationWizard.as_view(register_organisation_form_list)
+registration_organisation_wizard_view = RegisterOrganisationWizard.as_view(register_organisation_form_list,
+                                                                           url_name="register_organisation_step")
 
 
 def register_volunteer(request):
