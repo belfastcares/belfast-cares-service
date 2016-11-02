@@ -34,3 +34,6 @@ notifications:
       - belfastcares:cripES1xwEK0lFnowQeNoCUa
     on_success: always
     on_failure: always
+
+addons:
+    srcclr: true
