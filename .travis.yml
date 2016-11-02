@@ -1,0 +1,36 @@
+language: python
+
+python:
+  - 3.5
+
+services: postgresql
+
+env:
+  global:
+  - DJANGO_SETTINGS_MODULE="base_site.settings"
+  - PYTHONPATH="/home/travis/build/belfastcares/belfast-cares-service"
+  - PIP_USE_MIRRORS=true
+  - DATABASE_URL='postgres://admin:bcadminpass123@localhost:5432/belfastcares'
+
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls
+
+before_script:
+  - psql -c "CREATE DATABASE belfastcares;" -U postgres
+  - psql -d belfastcares -c "CREATE USER admin WITH PASSWORD 'bcadminpass123'"
+  - psql -d belfastcares -c "ALTER USER admin CREATEDB;"
+  - python manage.py collectstatic --noinput
+
+script:
+  - coverage run --source base_site,web_app manage.py test
+
+after_success:
+  - echo Uploading code coverage data...; coveralls
+
+notifications:
+  slack:
+    rooms:
+      - belfastcares:cripES1xwEK0lFnowQeNoCUa
+    on_success: always
+    on_failure: always

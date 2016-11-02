@@ -85,4 +85,3 @@ python manage.py loaddata web_app/fixtures/initial_data.json
 print " - running web server"
 python manage.py runserver
 
-
