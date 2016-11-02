@@ -5671,6 +5671,7 @@ a:hover,a:focus,a:visited{
 
 
 /* custom layout */
+/*
 @media (min-width:1200px){
     .main-container{
         width: 1222px;
@@ -5679,6 +5680,7 @@ a:hover,a:focus,a:visited{
         margin: auto;
     }
 }
+*/
 
 .login-form{
     max-width: 300px;
