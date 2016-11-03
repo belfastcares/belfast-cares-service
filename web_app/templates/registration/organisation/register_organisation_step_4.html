@@ -3,6 +3,12 @@
 
 {% block content %}
 
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
     <h1>Register Organisation - Organisation Details</h1>
     <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
     {% for field in form %}
@@ -15,17 +21,27 @@
             {{ wizard.management_form }}
             <h2>Wishlist Information</h2>
             {{ wizard.forms.0.as_p }}
-        </table>
-        {% if wizard.steps.prev %}
-            <button name="wizard_goto_step" type="submit"
-                    value="{{ wizard.steps.first }}"> "first step"
-            </button>
-            <button name="wizard_goto_step" type="submit"
-                    value="{{ wizard.steps.prev }}"> "prev step"
-            </button>
-        {% endif %}
 
-        <input type="submit" value="Submit & Continue"/>
+            <h2>New Item Information</h2>
+            {{ wizard.forms.1.management_form }}
+            {% for item_form in wizard.forms.1 %}
+                <div class="item-formset">
+                    {{ item_form.as_p }}
+                </div>
+            {% endfor %}
+        </table>
+    <br>
+    <input type="submit" value="Submit" class="button"/>
     </form>
+
+    <!-- Include scripts for dynamic item formset -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="{% static 'js/jquery.formset.js' %}"></script>
+    <script>
+        $('.item-formset').formset({
+            addText: 'Add Item',
+            deleteText: 'Remove Item'
+        });
+    </script>
 
 {% endblock %}

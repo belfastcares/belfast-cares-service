@@ -2,7 +2,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from django.core.urlresolvers import reverse
-from django.forms import modelform_factory
+from django.db import transaction, DatabaseError
+from django.forms import modelform_factory, modelformset_factory
+from django.forms.widgets import CheckboxSelectMultiple
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from formtools_addons import NamedUrlSessionMultipleFormWizardView
@@ -66,7 +68,9 @@ register_organisation_form_list = [
     )),
     ('wishlist_info', (
         ('wishlist_details', modelform_factory(Wishlist, WishlistForm, fields=('start_time', 'end_time', 'reoccurring',
-                                                                               'items'))),
+                                                                               'items'),
+                                               widgets={'items': CheckboxSelectMultiple()})),
+        ('extra_item_details', modelformset_factory(Item, fields=('name', 'description'), extra=1, can_delete=True))
     ))
 ]
 
@@ -89,40 +93,61 @@ class RegisterOrganisationWizard(NamedUrlSessionMultipleFormWizardView):
     file_storage = FileSystemStorage()
 
     def done(self, form_dict, **kwargs):
+        # Execute the following in a db transaction, if anything fails rollback the db so we are not left with
+        # incomplete data
+        try:
+            with transaction.atomic():
+                # process primary contact
+                primary_contact = form_dict['primary_contact_info']['primary_contact_details'].save(commit=False)
+                primary_contact.address = form_dict['primary_contact_info']['primary_contact_address'].save()
+                primary_contact.save()
 
-        # process primary contact
-        primary_contact = form_dict['primary_contact_info']['primary_contact_details'].save(commit=False)
-        primary_contact.address = form_dict['primary_contact_info']['primary_contact_address'].save()
-        primary_contact.save()
+                # process organisation
+                new_organisation = form_dict['organisation_info']['org_details'].save(commit=False)
+                new_organisation.address = form_dict['organisation_info']['org_address'].save()
+                new_organisation.primary_contact = primary_contact
+                new_organisation.save()
 
-        # process organisation
-        new_organisation = form_dict['organisation_info']['org_details'].save(commit=False)
-        new_organisation.address = form_dict['organisation_info']['org_address'].save()
-        new_organisation.primary_contact = primary_contact
-        new_organisation.save()
+                # process organisation accounts
+                org_user_contact = form_dict['organisation_accounts']['org_user_contact'].save(commit=False)
+                org_user_contact.address = form_dict['organisation_accounts']['org_user_address'].save()
+                org_user_contact.save()
+                org_user_login = form_dict['organisation_accounts']['org_user_login'].save()
 
-        # process organisation accounts
-        org_user_contact = form_dict['organisation_accounts']['org_user_contact'].save(commit=False)
-        org_user_contact.address = form_dict['organisation_accounts']['org_user_address'].save()
-        org_user_contact.save()
-        org_user_login = form_dict['organisation_accounts']['org_user_login'].save()
+                OrganisationUser.objects.create(user=org_user_login, contact=org_user_contact,
+                                                organisation=new_organisation)
 
-        OrganisationUser.objects.create(user=org_user_login, contact=org_user_contact,
-                                        organisation=new_organisation)
+                # process wishlist
+                wishlist = form_dict['wishlist_info']['wishlist_details'].save(commit=False)
+                wishlist.organisation = new_organisation
+                wishlist.save()
 
-        # process wishlist
-        wishlist = form_dict['wishlist_info']['wishlist_details'].save(commit=False)
-        wishlist.organisation = new_organisation
-        wishlist.save()
+                # when using commit=False, have to explicitly save many to many relationships
+                form_dict['wishlist_info']['wishlist_details'].save_m2m()
 
-        # delete session object
-        del self.request.session["wizard_register_organisation_wizard"]
+                # process additional wishlist items
+                new_items = form_dict['wishlist_info']['extra_item_details'].save()
+                wishlist.items.add(*new_items)
+
+        except DatabaseError:
+            messages.error(self.request, "Something went wrong creating your organisation."
+                                         "Please try again.")
+            return HttpResponseRedirect(reverse("register_organisation_wizard"))
+
+        messages.success(self.request, "Your organisation has been created.")
 
         return render(self.request, 'registration/organisation/register_organisation_complete.html',
                       {'organisation': new_organisation})
 
+
 registration_organisation_wizard_view = RegisterOrganisationWizard.as_view(register_organisation_form_list,
-                                                                           url_name="register_organisation_step")
+                                                                           url_name="register_organisation_wizard_step",
+                                                                           instance_dict={
+                                                                               'wishlist_info': {
+                                                                                   'extra_item_details':
+                                                                                       Item.objects.none(),
+                                                                               },
+                                                                           })
 
 
 def register_volunteer(request):
