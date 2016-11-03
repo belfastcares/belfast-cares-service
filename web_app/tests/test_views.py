@@ -75,7 +75,7 @@ class VolunteerListingViewTest(TestCase):
         response = self.client.get(reverse('volunteer_listing'))
         self.assertEqual(response.status_code, 200, 'Status code not 200')
         self.assertTemplateUsed(response, "volunteer_listing.html", 'Volunteer listing '
-                                                                       'template not returned')
+                                                                    'template not returned')
         self.assertEqual(len(response.context['volunteers']), 2, 'Two volunteers in db not sent to template')
 
 
@@ -86,7 +86,7 @@ class VolunteerSingleViewTest(TestCase):
         response = self.client.get(reverse('volunteer_single', kwargs={'volunteer_id': 1}))
         self.assertEqual(response.status_code, 200, 'Status code not 200')
         self.assertTemplateUsed(response, "volunteer_single.html", 'Volunteer single template not'
-                                                                      'returned')
+                                                                   'returned')
         self.assertEqual(response.context['volunteer'].id, 1, 'Volunteer with id 1 not sent to template')
 
     def test_should_fail_if_valid_response_not_returned_for_non_existent_volunteer_id(self):
@@ -205,7 +205,12 @@ class ContactViewTest(TestCase):
 class RegisterOrganisationTest(TestCase):
 
     def test_should_fail_if_valid_response_not_returned_for_register_request(self):
-        response = self.client.get(reverse('register_organisation'))
-        pass
-
-
+        response = self.client.get(reverse('register_organisation_wizard'), follow=True)
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        # We expect the wizard to redirect to the step 1 URL
+        self.assertEqual(len(response.redirect_chain), 1, "Not 1 redirect in redirect chain")
+        self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
+                                                                kwargs={'step': 'organisation_info'}))
+        self.assertEqual(response.redirect_chain[0][1], 302, "Initial status code not 302")
+        self.assertTemplateUsed(response, "registration/organisation/register_organisation_step_1.html",
+                                'wizard step 1 template not used in response')
