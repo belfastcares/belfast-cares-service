@@ -87,7 +87,7 @@ class Volunteer(models.Model):
 
 @python_2_unicode_compatible
 class Organisation(models.Model):
-    name = models.CharField('name', max_length=30)
+    name = models.CharField('name', max_length=30, unique=True)
     image = models.ImageField(upload_to=get_organisation_logo_path, blank=True, default='default.jpg')
     primary_contact = ForeignKey(Contact, on_delete=models.CASCADE)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
