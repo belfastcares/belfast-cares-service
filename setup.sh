@@ -45,6 +45,8 @@ else
     brew install postgres
 fi
 
+brew services start postgres
+
 #TODO - Check if virtual environement exists before removal
 print " - removing virtual environment - belfastcares-env"
 rm -rf belfastcares-env
@@ -58,7 +60,7 @@ print " - installing project deps via pip"
 pip install -r requirements.txt
 
 # creating database
-if psql -l | grep belfastcares | wc -l; then
+if psql -l | grep belfastcares ; then
     print " - dropping existing belfast cares database"
     dropdb belfastcares
 fi
