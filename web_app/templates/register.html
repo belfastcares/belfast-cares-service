@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+<section class="contact-content sec-padding">
+    <div class="container">
+        <div class="sec-title text-center">
+            <p>If you are interested in contacting us, please fill out the form below.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h2>One off Donation</h2>
+                <p>Would you like to make a one off donate? Well you don't need an account for that. Find out how you
+                    can make an instant donation now!</p>
+                <a href="{% url 'register_volunteer' %}" class="thm-btn">Register</a>
+            </div>
+            <div class="col-md-4">
+                <h2>Volunteer Register</h2>
+                <p>Would you like to make a one off donate? Well you don't need an account for that. Find out how you
+                    can make an instant donation now!</p>
+                <a href="{% url 'register_volunteer' %}" class="thm-btn">Create An Account</a>
+            </div>
+            <div class="col-md-4">
+                <h2>Organisation Register</h2>
+                <p>Would you like to make a one off donate? Well you don't need an account for that. Find out how you
+                    can make an instant donation now!</p>
+                <a href="{% url 'register_organisation_wizard' %}" class="thm-btn">Register</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

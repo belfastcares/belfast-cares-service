@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from web_app.forms import WishlistForm, OrganisationForm
+from web_app.forms import WishlistForm, OrganisationAdminForm
 from .models import *
 
 # Customise default admin
@@ -26,7 +26,7 @@ class WishlistInline(admin.StackedInline):
 
 
 class OrganisationAdmin(admin.ModelAdmin):
-    form = OrganisationForm
+    form = OrganisationAdminForm
     fieldsets = (
         ('Basic Details', {
             'fields': ('name', ('image', 'image_preview_large'), 'description', 'primary_contact', 'address')
