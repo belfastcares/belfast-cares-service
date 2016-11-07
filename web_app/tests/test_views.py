@@ -214,3 +214,43 @@ class RegisterOrganisationTest(TestCase):
         self.assertEqual(response.redirect_chain[0][1], 302, "Initial status code not 302")
         self.assertTemplateUsed(response, "registration/organisation/register_organisation_step_1.html",
                                 'wizard step 1 template not used in response')
+        wizard = response.context['wizard']
+        self.assertEqual(wizard['steps'].current, 'organisation_info')
+        self.assertEqual(wizard['steps'].step0, 0)
+        self.assertEqual(wizard['steps'].step1, 1)
+        self.assertEqual(wizard['steps'].last, 'wishlist_info')
+        self.assertEqual(wizard['steps'].prev, None)
+        self.assertEqual(wizard['steps'].next, 'primary_contact_info')
+        self.assertEqual(wizard['steps'].count, 4)
+        self.assertEqual(wizard['url_name'], 'register_organisation_wizard_step')
+
+    def test_should_fail_if_errors_not_returned_for_blank_step1_data(self):
+        response = self.client.post(reverse('register_organisation_wizard_step', kwargs={'step': 'organisation_info'}),
+                                    {'register_organisation_wizard-current_step': 'organisation_info'})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['wizard']['steps'].current, 'organisation_info')
+        self.assertEqual(response.context['wizard']['forms'][0].errors,
+                         {'name': ['This field is required.'],
+                          'description': ['This field is required.']})
+        self.assertEqual(response.context['wizard']['forms'][1].errors,
+                         {'address_line': ['This field is required.'],
+                          'county': ['This field is required.'],
+                          'postcode': ['This field is required.']})
+
+    def test_should_fail_if_errors_not_returned_for_invalid_step1_data(self):
+        response = self.client.post(reverse('register_organisation_wizard_step', kwargs={'step': 'organisation_info'}),
+                                    {'organisation_info-name': 'Test',
+                                     'organisation_info-description': 'Test description',
+                                     'organisation_info-just_giving_link': 'invalid',
+                                     'organisation_info-raised': -10,
+                                     'organisation_info-goal': -10,
+                                     'organisation_info-address_line': 'testing',
+                                     'organisation_info-county': 'test',
+                                     'organisation_info-postcode': 'bt9 test',
+                                     'register_organisation_wizard-current_step': 'organisation_info'})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['wizard']['steps'].current, 'organisation_info')
+        self.assertEqual(response.context['wizard']['forms'][0].errors,
+                         {'goal': ['Goal cannot be negative'],
+                          'raised': ['Raised cannot be negative'],
+                          'just_giving_link': ['Enter a valid URL.']})
