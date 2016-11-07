@@ -52,6 +52,12 @@ urlpatterns = [
     url(r'^api-token-auth/', views.obtain_auth_token),
 ]
 
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ]
+
 # We are only want to serve the media directory here for testing purposes
 if settings.DEBUG is True:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
