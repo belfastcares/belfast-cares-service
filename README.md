@@ -9,11 +9,11 @@ The belfast cares api service built using Django utilizing postgres & bootstrap,
 - postgres
 - virtualenv
 
-Initial setup via : https://github.com/belfastcares/belfast-cares-service/wiki/Setup-Guide---threats-api-service
+Initial setup via : https://github.com/belfastcares/belfast-cares-service/wiki/Setup-Guide
 
 You can run the following steps manually or use ./setup.sh within the repository. Be sure to chmod 777 setup.sh before use.
 
-### Redeployment script
+### Redeployment Steps
 ```
 rm -rf belfastcares-env
 
@@ -27,5 +27,3 @@ python manage.py migrate
 python manage.py loaddata web_app/fixtures/initial_data.json
 python manage.py runserver
 ```
-
-*** Note : You may need to replace belfastcares-env with hackathon-env.
