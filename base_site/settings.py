@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'admin_honeypot',
+    'debug_toolbar'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -46,6 +47,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -161,3 +163,6 @@ LOGIN_REDIRECT_URL = 'account_dashboard'
 
 # Django admin honeypot
 ADMIN_HONEYPOT_EMAIL_ADMINS = False
+
+# Django debug toolbar
+INTERNAL_IPS = ('127.0.0.1',)
