@@ -35,6 +35,7 @@ urlpatterns = [
         name='organisation_single'),
 
     url(r'^login/$', auth_views.login, name='login'),
+    url(r'^register/$', web_app.views.register, name='register'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r"^register/organisation/(?P<step>[-\w]+)/$", web_app.views.registration_organisation_wizard_view,
         name="register_organisation_wizard_step"),

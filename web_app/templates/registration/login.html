@@ -24,7 +24,7 @@
                         <div style="max-width: 300px;margin: auto;">
                             <button class="thm-btn" type="submit" value="login"/>
                             Login</button>
-                            <button class="thm-btn" type="submit">Register</button>
+                            <a href="{% url 'register' %}" class="thm-btn">Register</a>
                             <input type="hidden" name="next" value="{{ next }}"/>
                         </div>
                     </form>
