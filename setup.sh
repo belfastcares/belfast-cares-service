@@ -58,7 +58,9 @@ print " - installing project deps via pip"
 pip install -r requirements.txt
 
 # creating database
-if psql -l | grep belfastcares | wc -l; then
+# ensure postgres has started
+brew services start postgres
+if psql -l | grep belfastcares ; then
     print " - dropping existing belfast cares database"
     dropdb belfastcares
 fi

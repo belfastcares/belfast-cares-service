@@ -35,6 +35,7 @@ urlpatterns = [
         name='organisation_single'),
 
     url(r'^login/$', auth_views.login, name='login'),
+    url(r'^register/$', web_app.views.register, name='register'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r"^register/organisation/(?P<step>[-\w]+)/$", web_app.views.registration_organisation_wizard_view,
         name="register_organisation_wizard_step"),
@@ -50,6 +51,12 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', views.obtain_auth_token),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ]
 
 # We are only want to serve the media directory here for testing purposes
 if settings.DEBUG is True:

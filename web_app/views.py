@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.core.files.storage import FileSystemStorage
 from django.core.urlresolvers import reverse
 from django.db import transaction, DatabaseError
@@ -8,10 +9,8 @@ from django.forms.widgets import CheckboxSelectMultiple
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from formtools_addons import NamedUrlSessionMultipleFormWizardView
-
 from web_app.forms import ContactForm, AddressForm, WishlistForm
 from .models import *
-from django.contrib.auth.forms import UserCreationForm
 
 
 def index(request):
@@ -177,3 +176,7 @@ def contact(request):
         form = ContactForm()
 
     return render(request, 'contact.html', {'form': form})
+
+
+def register(request):
+    return render(request, 'register.html', {'register': []})
