@@ -69,7 +69,8 @@ register_organisation_form_list = [
         ('wishlist_details', modelform_factory(Wishlist, WishlistForm, fields=('start_time', 'end_time', 'reoccurring',
                                                                                'items'),
                                                widgets={'items': CheckboxSelectMultiple()})),
-        ('extra_item_details', modelformset_factory(Item, fields=('name', 'description'), extra=1, can_delete=True))
+        ('extra_item_details', modelformset_factory(Item, fields=('name', 'description'), extra=3, can_delete=False,
+                                                    max_num=3, validate_max=True))
     ))
 ]
 

@@ -42,13 +42,13 @@
     </form>
 
     <!-- Include scripts for dynamic item formset -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+{% comment %}    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="{% static 'js/jquery.formset.js' %}"></script>
     <script>
         $('.item-formset').formset({
             addText: 'Add Item',
             deleteText: 'Remove Item'
         });
-    </script>
+    </script>{% endcomment %}
 
 {% endblock %}
