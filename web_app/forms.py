@@ -21,6 +21,11 @@ class OrganisationAdminForm(forms.ModelForm):
 
 
 class WishlistForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(WishlistForm, self).__init__(*args, **kwargs)
+
+        self.fields['items'].required = False
+
     class Meta:
         model = Wishlist
         fields = ['organisation', 'start_time', 'end_time', 'reoccurring', 'items']

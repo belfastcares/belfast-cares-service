@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -69,7 +71,7 @@ register_organisation_form_list = [
         ('wishlist_details', modelform_factory(Wishlist, WishlistForm, fields=('start_time', 'end_time', 'reoccurring',
                                                                                'items'),
                                                widgets={'items': CheckboxSelectMultiple()})),
-        ('extra_item_details', modelformset_factory(Item, fields=('name', 'description'), extra=3, can_delete=False,
+        ('extra_item_details', modelformset_factory(Item, fields=('name', 'description'), can_delete=False,
                                                     max_num=3, validate_max=True))
     ))
 ]
@@ -92,7 +94,74 @@ class RegisterOrganisationWizard(NamedUrlSessionMultipleFormWizardView):
 
     file_storage = FileSystemStorage()
 
+    def render_done(self, form, **kwargs):
+        """
+        This method gets called when all forms passed. The method should also
+        re-validate all steps to prevent manipulation. If any form fails to
+        validate, `render_revalidation_failure` should get called.
+        If everything is fine call `done`.
+
+        Overriding method so that we can perform our own validation across multiple forms
+        """
+        final_forms = OrderedDict()
+        # walk through the form list and try to validate the data again.
+        for form_key in self.get_form_list():
+            form_objs = self.get_forms(step=form_key,
+                data=self.storage.get_step_data(form_key),
+                files=self.storage.get_step_files(form_key))
+            final_forms[form_key] = []
+            for form_obj in form_objs:
+                if not form_obj.is_valid():
+                    return self.render_revalidation_failure(form_key, form_obj, **kwargs)
+                final_forms[form_key].append(form_obj)
+
+        result_forms = {}
+        result_forms_dict = {}
+        for form_key in final_forms:
+            formcollection = final_forms[form_key]
+            result_forms_dict[form_key] = {}
+            for form in formcollection:
+                if hasattr(form, '_tag'):
+                    result_forms_dict[form_key][form._tag] = form
+
+            if len(formcollection) == 1:
+                result_forms[form_key] = formcollection[0]
+            elif len(formcollection) > 1:
+                # We expect a _tag property
+                formcollection_dict = {}
+                for form in formcollection:
+                    formcollection_dict[form._tag] = form
+                    delattr(form, '_tag')
+                result_forms[form_key] = formcollection_dict
+
+
+        # Construct a result list, ordered by step number
+        form_list = [result_forms[key] for key in sorted(result_forms.keys())]
+
+        # Validation to ensure at least one item in wishlist
+        wishlist_items_count = result_forms_dict['wishlist_info']['wishlist_details'].cleaned_data['items'].count()
+        extra_items_count = len(result_forms_dict['wishlist_info']['extra_item_details'].save(commit=False))
+
+        if wishlist_items_count + extra_items_count < 1:
+            messages.error(self.request, "Wishlist submitted without any items")
+            return HttpResponseRedirect(reverse("register_organisation_wizard_step", kwargs={'step': 'wishlist_info'}))
+
+        # render the done view and reset the wizard before returning the
+        # response. This is needed to prevent from rendering done with the
+        # same data twice.
+        done_response = self.done(form_list=form_list, form_dict=result_forms_dict, **kwargs)
+        self.storage.reset()
+        return done_response
+
     def done(self, form_dict, **kwargs):
+        # Check wishlist has been created with at least one item before continuing
+        selected_item_count = form_dict['wishlist_info']['wishlist_details'].cleaned_data['items'].count()
+        new_items = form_dict['wishlist_info']['extra_item_details'].save(commit=False)
+
+        if (len(new_items) + selected_item_count) < 1:
+            messages.error(self.request, "Wishlist must have at least one item")
+            return HttpResponseRedirect(reverse("register_organisation_wizard"))
+
         # Execute the following in a db transaction, if anything fails rollback the db so we are not left with
         # incomplete data
         try:
