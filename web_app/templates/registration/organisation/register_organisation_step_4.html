@@ -20,22 +20,44 @@
         <table>
             {{ wizard.management_form }}
             <h2>Wishlist Information</h2>
-            {{ wizard.forms.0.as_p }}
+            {{ wizard.forms.0.start_time.errors }}
+            {{ wizard.forms.0.start_time.label_tag }}
+            {{ wizard.forms.0.start_time }}
+            {{ wizard.forms.0.start_time.help_text }}
+            {{ wizard.forms.0.end_time.errors }}
+            {{ wizard.forms.0.end_time.label_tag }}
+            {{ wizard.forms.0.end_time }}
+            {{ wizard.forms.0.end_time.help_text }}
+            {{ wizard.forms.0.reoccurring.errors }}
+            {{ wizard.forms.0.reoccurring.label_tag }}
+            {{ wizard.forms.0.reoccurring }}
+            {{ wizard.forms.0.reoccurring.help_text }}
+            {{ wizard.forms.0.items.errors }}
+            {{ wizard.forms.0.items.label_tag }}
+            {{ wizard.forms.0.items }}
+            {{ wizard.forms.0.items.help_text }}
 
             <h2>New Item Information</h2>
             {{ wizard.forms.1.management_form }}
             {% for item_form in wizard.forms.1 %}
                 <div class="item-formset">
-                    {{ item_form.as_p }}
+                    {{ item_form.name.errors }}
+                    {{ item_form.name.label_tag }}
+                    {{ item_form.name }}
+                    {{ item_form.name.help_text }}
+                    {{ item_form.description.errors }}
+                    {{ item_form.description.label_tag }}
+                    {{ item_form.description }}
+                    {{ item_form.description.help_text }}
                 </div>
             {% endfor %}
         </table>
         {% if wizard.steps.prev %}
             <button name="wizard_goto_step" type="submit"
-                    value="{{ wizard.steps.first }}"> "first step"
+                    value="{{ wizard.steps.first }}">First Step
             </button>
             <button name="wizard_goto_step" type="submit"
-                    value="{{ wizard.steps.prev }}"> "prev step"
+                    value="{{ wizard.steps.prev }}">Prev Step
             </button>
         {% endif %}
     <input type="submit" value="Submit" class="button"/>
