@@ -12,36 +12,38 @@
 
                     <form method="post" action="{% url 'login' %}" class="contact-form row">
                         {% csrf_token %}
-                        <div style="max-width: 300px;margin: auto;">
+                        <div class="login-form">
                             {{ form.username.label_tag }}
                             {{ form.username }}
                         </div>
-                        <div style="max-width: 300px;margin: auto;">
+                        <div class="login-form">
                             {{ form.password.label_tag }}
                             {{ form.password }}
                         </div>
 
-                        <div style="max-width: 300px;margin: auto;">
+                        <div class="login-form">
                             <button class="thm-btn" type="submit" value="login"/>
                             Login</button>
                             <a href="{% url 'register' %}" class="thm-btn">Register</a>
                             <input type="hidden" name="next" value="{{ next }}"/>
                         </div>
+
+                        <div class="login-form-error">
+                            {% if form.errors %}
+                            <p>Your username and password didn't match. Please try again.</p>
+                            {% endif %}
+
+                            {% if next %}
+                            {% if user.is_authenticated %}
+                            <p>Your account doesn't have access to this page. To proceed,
+                                please login with an account that has access.</p>
+                            {% else %}
+                            <p>Please login to see this page.</p>
+                            {% endif %}
+                            {% endif %}
+                        </div>
                     </form>
 
-
-                    {% if form.errors %}
-                    <p>Your username and password didn't match. Please try again.</p>
-                    {% endif %}
-
-                    {% if next %}
-                    {% if user.is_authenticated %}
-                    <p>Your account doesn't have access to this page. To proceed,
-                        please login with an account that has access.</p>
-                    {% else %}
-                    <p>Please login to see this page.</p>
-                    {% endif %}
-                    {% endif %}
                 </div>
 
             </div>
