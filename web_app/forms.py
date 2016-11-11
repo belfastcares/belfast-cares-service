@@ -20,20 +20,24 @@ class OrganisationAdminForm(forms.ModelForm):
         fields = ['name', 'image', 'primary_contact', 'address', 'description', 'just_giving_link', 'raised', 'goal']
 
 
-class WishlistForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(WishlistForm, self).__init__(*args, **kwargs)
-
-        self.fields['items'].required = False
-
+class AdminWishlistForm(forms.ModelForm):
     class Meta:
         model = Wishlist
         fields = ['organisation', 'start_time', 'end_time', 'reoccurring', 'items']
 
     def clean(self):
-        super(WishlistForm, self).clean()
+        super(AdminWishlistForm, self).clean()
         start_date = self.cleaned_data.get('start_time')
         end_date = self.cleaned_data.get('end_time')
         if (start_date and end_date) and (start_date > end_date):
             raise forms.ValidationError({'end_time': ["End time cannot come before start time."]})
         return self.cleaned_data
+
+class WizardWishlistForm(AdminWishlistForm):
+    def __init__(self, *args, **kwargs):
+        super(WizardWishlistForm, self).__init__(*args, **kwargs)
+        self.fields['items'].required = False
+
+    class Meta:
+        model = Wishlist
+        fields = ['start_time', 'end_time', 'reoccurring', 'items']

@@ -11,7 +11,7 @@ from django.forms.widgets import CheckboxSelectMultiple
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from formtools_addons import NamedUrlSessionMultipleFormWizardView
-from web_app.forms import ContactForm, AddressForm, WishlistForm
+from web_app.forms import ContactForm, AddressForm, WizardWishlistForm
 from .models import *
 
 
@@ -68,7 +68,7 @@ register_organisation_form_list = [
 
     )),
     ('wishlist_info', (
-        ('wishlist_details', modelform_factory(Wishlist, WishlistForm, fields=('start_time', 'end_time', 'reoccurring',
+        ('wishlist_details', modelform_factory(Wishlist, WizardWishlistForm, fields=('start_time', 'end_time', 'reoccurring',
                                                                                'items'),
                                                widgets={'items': CheckboxSelectMultiple()})),
         ('extra_item_details', modelformset_factory(Item, fields=('name', 'description'), can_delete=False,

@@ -5,7 +5,7 @@ from django.core.files import File
 from django.test import SimpleTestCase, TestCase
 from django.utils import timezone
 
-from web_app.forms import ContactForm, OrganisationAdminForm, WishlistForm
+from web_app.forms import ContactForm, OrganisationAdminForm, AdminWishlistForm
 from web_app.models import Contact, Address, Item, Organisation
 
 
@@ -176,7 +176,7 @@ class WishlistFormTest(TestCase):
                                     just_giving_link='http://www.google.co.uk', raised=10, goal=50)
 
     def test_should_fail_if_form_deemed_invalid_with_valid_data(self):
-        form = WishlistForm({
+        form = AdminWishlistForm({
             'organisation': Organisation.objects.all()[0].pk,
             'start_time': timezone.now(),
             'end_time': timezone.now() + timedelta(days=30),
@@ -189,7 +189,7 @@ class WishlistFormTest(TestCase):
         self.assertTrue(form.is_valid(), 'Form was deemed invalid with valid data')
 
     def test_should_fail_if_form_deemed_valid_with_blank_data(self):
-        form = WishlistForm({})
+        form = AdminWishlistForm({})
         self.assertFalse(form.is_valid(), 'Form was deemed valid with invalid data')
         self.assertEqual(len(form.errors), 4, 'Different number of errors than expected raised')
         self.assertEqual(form.errors['organisation'], ['This field is required.'], 'Error not raised for empty'
@@ -201,7 +201,7 @@ class WishlistFormTest(TestCase):
         self.assertEqual(form.errors['items'], ['This field is required.'], 'Error not raised for empty items field')
 
     def test_should_fail_if_form_deemed_valid_with_invalid_relational_data(self):
-        form = WishlistForm({
+        form = AdminWishlistForm({
             'organisation': 6,
             'start_time': timezone.now(),
             'end_time': timezone.now() + timedelta(days=30),
@@ -219,7 +219,7 @@ class WishlistFormTest(TestCase):
                          'Error not raised for non-existent item in items field')
 
     def test_should_fail_if_form_deemed_valid_with_end_time_before_start_time(self):
-        form = WishlistForm({
+        form = AdminWishlistForm({
             'organisation': Organisation.objects.all()[0].pk,
             'start_time': timezone.now() + timedelta(days=40),
             'end_time': timezone.now() + timedelta(days=30),

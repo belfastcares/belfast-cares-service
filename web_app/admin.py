@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from web_app.forms import WishlistForm, OrganisationAdminForm
+from web_app.forms import AdminWishlistForm, OrganisationAdminForm
 from .models import *
 
 # Customise default admin
@@ -9,7 +9,7 @@ admin.AdminSite.site_title = "Belfast Cares Site Admin"
 
 
 class WishlistAdmin(admin.ModelAdmin):
-    form = WishlistForm
+    form = AdminWishlistForm
     filter_horizontal = ('items',)
 
 
@@ -19,7 +19,7 @@ class OrganisationUserInline(admin.StackedInline):
 
 
 class WishlistInline(admin.StackedInline):
-    form = WishlistForm
+    form = AdminWishlistForm
     model = Wishlist
     filter_horizontal = ('items',)
     verbose_name_plural = 'Wishlist'
