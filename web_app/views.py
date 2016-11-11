@@ -154,14 +154,6 @@ class RegisterOrganisationWizard(NamedUrlSessionMultipleFormWizardView):
         return done_response
 
     def done(self, form_dict, **kwargs):
-        # Check wishlist has been created with at least one item before continuing
-        selected_item_count = form_dict['wishlist_info']['wishlist_details'].cleaned_data['items'].count()
-        new_items = form_dict['wishlist_info']['extra_item_details'].save(commit=False)
-
-        if (len(new_items) + selected_item_count) < 1:
-            messages.error(self.request, "Wishlist must have at least one item")
-            return HttpResponseRedirect(reverse("register_organisation_wizard"))
-
         # Execute the following in a db transaction, if anything fails rollback the db so we are not left with
         # incomplete data
         try:
