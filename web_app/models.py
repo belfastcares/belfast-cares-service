@@ -57,14 +57,14 @@ def get_volunteer_profile_picture_path(instance, filename):
     sanitized_volunteer_f_name = re.sub('[^0-9a-zA-Z]+', '', instance.first_name)
     sanitized_volunteer_s_name = re.sub('[^0-9a-zA-Z]+', '', instance.surname)
 
-    return os.path.join('uploads', 'volunteers', 'profile_' + str(instance.id) + "_" + sanitized_volunteer_f_name + '_'
+    return os.path.join('uploads', 'volunteers', 'profile_' + sanitized_volunteer_f_name + '_'
                         + sanitized_volunteer_s_name + os.path.splitext(filename)[1])
 
 
 def get_organisation_logo_path(instance, filename):
     sanitized_org_name = re.sub('[^0-9a-zA-Z]+', '', instance.name)
 
-    return os.path.join('uploads', 'organisations', 'organisation_' + str(instance.id) + '_' + sanitized_org_name +
+    return os.path.join('uploads', 'organisations', 'organisation_' + sanitized_org_name +
                         os.path.splitext(filename)[1])
 
 

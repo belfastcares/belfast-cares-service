@@ -676,8 +676,7 @@ class RegisterOrganisationTest(TestCase):
 
     def test_should_fail_if_organisation_not_created_after_completing_wizard_successfully(self):
         self.setup_items()
-        data = self.valid_form_data[3]
-        data['wishlist_info-items'] = [Item.objects.all()[0].pk, Item.objects.all()[1].pk]
+        self.valid_form_data[3]['wishlist_info-items'] = [Item.objects.all()[0].pk, Item.objects.all()[1].pk]
         self.assertEqual(Organisation.objects.count(), 0, "Number of organisations not 0 at start of test")
         response = self.client.get(reverse('register_organisation_wizard_step',
                                            kwargs={'step': 'organisation_info'}))
@@ -739,8 +738,7 @@ class RegisterOrganisationTest(TestCase):
         with patch.object(OrganisationUser.objects, 'create') as mock_method:
             mock_method.side_effect = DatabaseError()
             self.setup_items()
-            data = self.valid_form_data[3]
-            data['wishlist_info-items'] = [Item.objects.all()[0].pk, Item.objects.all()[1].pk]
+            self.valid_form_data[3]['wishlist_info-items'] = [Item.objects.all()[0].pk, Item.objects.all()[1].pk]
             self.assertEqual(Organisation.objects.count(), 0, "Number of organisations not 0 at start of test")
             self.assertEqual(Contact.objects.count(), 0, "Number of contacts not 0 at start of test")
             response = self.client.get(reverse('register_organisation_wizard_step',

@@ -92,7 +92,9 @@ class RegisterOrganisationWizard(NamedUrlSessionMultipleFormWizardView):
     def get_template_names(self):
         return [self.templates[self.steps.current]]
 
-    file_storage = FileSystemStorage()
+    # Wizard temporarily stores uploaded org_wizard_uploads in a temporarily location until completed, so set the path here
+    location = os.path.join(settings.MEDIA_ROOT, 'temp', 'org_wizard_uploads')
+    file_storage = FileSystemStorage(location=location)
 
     def render_done(self, form, **kwargs):
         """
@@ -193,6 +195,7 @@ class RegisterOrganisationWizard(NamedUrlSessionMultipleFormWizardView):
         except DatabaseError:
             messages.error(self.request, "Something went wrong creating your organisation."
                                          "Please try again.")
+            # TODO: Properly handle removal of uploads during failure
             return HttpResponseRedirect(reverse("register_organisation_wizard"))
 
         messages.success(self.request, "Your organisation has been created.")

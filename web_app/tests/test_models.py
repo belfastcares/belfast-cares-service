@@ -225,11 +225,11 @@ class GetVolunteerProfilePicturePathTest(TestCase):
 
     def test_should_fail_if_file_path_is_not_valid(self):
         path = get_volunteer_profile_picture_path(self.volunteer, 'examplepicture.jpg')
-        self.assertEqual(path, 'uploads/volunteers/profile_1_Joe_Bloggs.jpg', 'Path generated does not match expected')
+        self.assertEqual(path, 'uploads/volunteers/profile_Joe_Bloggs.jpg', 'Path generated does not match expected')
 
     def test_should_fail_if_file_path_is_not_valid_with_invalid_names(self):
         path = get_volunteer_profile_picture_path(self.volunteer2, 'examplepicture.jpg')
-        self.assertEqual(path, 'uploads/volunteers/profile_2_Joe_Bloggs.jpg', 'Path generated does not match expected')
+        self.assertEqual(path, 'uploads/volunteers/profile_Joe_Bloggs.jpg', 'Path generated does not match expected')
 
 
 class GetOrganisationLogoPathTest(TestCase):
@@ -239,10 +239,10 @@ class GetOrganisationLogoPathTest(TestCase):
 
     def test_should_fail_if_file_path_is_not_valid(self):
         path = get_organisation_logo_path(self.organisation, 'examplepicture.jpg')
-        self.assertEqual(path, 'uploads/organisations/organisation_1_SimonCommunity.jpg', 'Path generated does not'
+        self.assertEqual(path, 'uploads/organisations/organisation_SimonCommunity.jpg', 'Path generated does not'
                                                                                           'match expected')
 
     def test_should_fail_if_file_path_is_not_valid_with_invalid_names(self):
         path = get_organisation_logo_path(self.organisation2, 'examplepicture.jpg')
-        self.assertEqual(path, 'uploads/organisations/organisation_2_SimonCommunity.jpg', 'Path generated does not'
+        self.assertEqual(path, 'uploads/organisations/organisation_SimonCommunity.jpg', 'Path generated does not'
                                                                                           'match expected')
