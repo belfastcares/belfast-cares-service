@@ -1,7 +1,10 @@
 from django.core.urlresolvers import reverse
+from django.db import DatabaseError
 from django.test import SimpleTestCase, TestCase
 
-from web_app.models import ContactResponse
+from web_app.models import ContactResponse, Item, Organisation, OrganisationUser, Contact
+from unittest.mock import patch
+patch.object = patch.object
 
 
 class IndexViewTest(SimpleTestCase):
@@ -203,6 +206,78 @@ class ContactViewTest(TestCase):
 
 
 class RegisterOrganisationTest(TestCase):
+    def setUp(self):
+        self.valid_form_data = (
+            {'organisation_info-name': 'Test',
+             'organisation_info-description': 'Test description',
+             'organisation_info-just_giving_link': 'http://www.google.co.uk',
+             'organisation_info-raised': 10,
+             'organisation_info-goal': 100,
+             'organisation_info-address_line': 'testing',
+             'organisation_info-county': 'test',
+             'organisation_info-postcode': 'BT19 TST',
+             'register_organisation_wizard-current_step': 'organisation_info',
+             },
+            {
+                'primary_contact_info-first_name': 'Joe',
+                'primary_contact_info-surname': 'Bloggs',
+                'primary_contact_info-telephone': '02890876576',
+                'primary_contact_info-mobile': '07786459078',
+                'primary_contact_info-email': 'jbloggs@test.com',
+                'primary_contact_info-description': 'Test description',
+                'primary_contact_info-address_line': '123 Test Street',
+                'primary_contact_info-county': 'Test County',
+                'primary_contact_info-postcode': 'BT9 TSR',
+                'register_organisation_wizard-current_step': 'primary_contact_info',
+            },
+            {
+                'organisation_accounts-username': 'test123',
+                'organisation_accounts-password1': 'password123',
+                'organisation_accounts-password2': 'password123',
+                'organisation_accounts-first_name': 'Joe',
+                'organisation_accounts-surname': 'Bloggs',
+                'organisation_accounts-telephone': '02890876576',
+                'organisation_accounts-mobile': '07786459078',
+                'organisation_accounts-email': 'jbloggs@test.com',
+                'organisation_accounts-description': 'Test description',
+                'organisation_accounts-address_line': 'testing',
+                'organisation_accounts-county': 'test',
+                'organisation_accounts-postcode': 'BT10 test',
+                'register_organisation_wizard-current_step': 'organisation_accounts',
+            },
+            {
+                'wishlist_info-start_time': '2006-10-25 14:30:59',
+                'wishlist_info-end_time': '2006-10-26 14:30:59',
+                'wishlist_info-reoccurring': 'on',
+                'wishlist_info-INITIAL_FORMS': '0',
+                'wishlist_info-TOTAL_FORMS': '3',
+                'wishlist_info-MAX_NUM_FORMS': '3',
+                'wishlist_info-MIN_NUM_FORMS': '0',
+                'wishlist_info-0-id': '',
+                'wishlist_info-0-name': 'Test Item',
+                'wishlist_info-0-description': 'The first test item',
+                'wishlist_info-1-id': '',
+                'wishlist_info-1-name': 'Test Item 2',
+                'wishlist_info-1-description': 'The second test item',
+                'wishlist_info-2-id': '',
+                'wishlist_info-2-name': '',
+                'wishlist_info-2-description': '',
+                'register_organisation_wizard-current_step': 'wishlist_info',
+            }
+        )
+
+    @staticmethod
+    def setup_items():
+        item_data = [['Sleeping Bag', 'Warm, durable & waterproof if possible'],
+                     ['Toothbrush', 'Travel toothbrush. Non-electric.'],
+                     ['Toothpaste', 'Small travel toothpaste'],
+                     ['Mens Winter Socks', 'New mens winter socks.'],
+                     ['Womens Winter Socks', '''New womens' winter socks.'''],
+                     ['Cutlery', 'All cutlery welcome. Should be clean and considered usable by others.']]
+
+        for item in item_data:
+            temp_item = Item(name=item[0], description=item[1])
+            temp_item.save()
 
     def test_should_fail_if_valid_response_not_returned_for_register_request(self):
         response = self.client.get(reverse('register_organisation_wizard'), follow=True)
@@ -210,7 +285,511 @@ class RegisterOrganisationTest(TestCase):
         # We expect the wizard to redirect to the step 1 URL
         self.assertEqual(len(response.redirect_chain), 1, "Not 1 redirect in redirect chain")
         self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
-                                                                kwargs={'step': 'organisation_info'}))
+                                                                kwargs={'step': 'organisation_info'}),
+                         "Redirect URL not step 1")
         self.assertEqual(response.redirect_chain[0][1], 302, "Initial status code not 302")
         self.assertTemplateUsed(response, "registration/organisation/register_organisation_step_1.html",
                                 'wizard step 1 template not used in response')
+        wizard = response.context['wizard']
+        self.assertEqual(wizard['steps'].current, 'organisation_info', 'Invalid current step')
+        self.assertEqual(wizard['steps'].step0, 0, 'Invalid step 0')
+        self.assertEqual(wizard['steps'].step1, 1, 'Invalid step 1')
+        self.assertEqual(wizard['steps'].last, 'wishlist_info', 'Invalid last step')
+        self.assertEqual(wizard['steps'].prev, None, 'Invalid previous step')
+        self.assertEqual(wizard['steps'].next, 'primary_contact_info', 'Invalid next step')
+        self.assertEqual(wizard['steps'].count, 4, 'Invalid total steps')
+        self.assertEqual(wizard['url_name'], 'register_organisation_wizard_step', 'Invalid current URL')
+
+    def test_should_fail_if_errors_not_returned_for_blank_step1_data(self):
+        response = self.client.post(reverse('register_organisation_wizard_step', kwargs={'step': 'organisation_info'}),
+                                    {'register_organisation_wizard-current_step': 'organisation_info'})
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'organisation_info', 'Invalid current step')
+        self.assertEqual(len(response.context['wizard']['forms'][0].errors), 2, 'Invalid number of errors for org info'
+                                                                                'form')
+        self.assertEqual(response.context['wizard']['forms'][0].errors,
+                         {'name': ['This field is required.'],
+                          'description': ['This field is required.']}, 'Invalid errors returned for org info form')
+        self.assertEqual(len(response.context['wizard']['forms'][1].errors), 3,
+                         'Invalid number of errors for org address'
+                         'form')
+        self.assertEqual(response.context['wizard']['forms'][1].errors,
+                         {'address_line': ['This field is required.'],
+                          'county': ['This field is required.'],
+                          'postcode': ['This field is required.']}, 'Invalid errors returned for org address form')
+
+    def test_should_fail_if_errors_not_returned_for_invalid_step1_data(self):
+        data = self.valid_form_data[0]
+        data['organisation_info-just_giving_link'] = 'invalid'
+        data['organisation_info-raised'] = -10,
+        data['organisation_info-goal'] = -10
+
+        response = self.client.post(reverse('register_organisation_wizard_step', kwargs={'step': 'organisation_info'}),
+                                    data)
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'organisation_info', 'Invalid current step')
+        self.assertEqual(len(response.context['wizard']['forms'][0].errors), 3,
+                         'Invalid number of errors for org info form')
+        self.assertEqual(response.context['wizard']['forms'][0].errors,
+                         {'goal': ['Goal cannot be negative'],
+                          'raised': ['Raised cannot be negative'],
+                          'just_giving_link': ['Enter a valid URL.']}, 'Invalid errors returned for org info form')
+
+    def test_should_fail_if_errors_returned_for_valid_step1_data(self):
+        response = self.client.post(reverse('register_organisation_wizard_step', kwargs={'step': 'organisation_info'}),
+                                    self.valid_form_data[0], follow=True)
+        self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
+                                                                kwargs={'step': 'primary_contact_info'}),
+                         'Initial redirect url not step 2')
+        self.assertEqual(response.redirect_chain[0][1], 302, 'Initial status code not 302')
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        wizard = response.context['wizard']
+        self.assertEqual(wizard['steps'].current, 'primary_contact_info', 'Invalid current step')
+        self.assertEqual(wizard['steps'].step0, 1, 'Invalid step0')
+        self.assertEqual(wizard['steps'].prev, 'organisation_info', 'Invalid previous step')
+        self.assertEqual(wizard['steps'].next, 'organisation_accounts', 'Invalid next step')
+
+    def test_should_fail_if_errors_not_returned_for_blank_step2_data(self):
+        response = self.client.get(reverse('register_organisation_wizard_step',
+                                           kwargs={'step': 'primary_contact_info'}))
+        self.assertEqual(response.status_code, 200, "Initial status code not 200")
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'primary_contact_info'}),
+                                    {'register_organisation_wizard-current_step': 'primary_contact_info'})
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'primary_contact_info', 'Invalid current step')
+        self.assertEqual(len(response.context['wizard']['forms'][0].errors), 3,
+                         'Invalid number of errors for primary contact'
+                         ' info form')
+        self.assertEqual(response.context['wizard']['forms'][0].errors,
+                         {'first_name': ['This field is required.'],
+                          'surname': ['This field is required.'],
+                          'email': ['This field is required.']},
+                         'Invalid errors returned for primary contact info form')
+        self.assertEqual(len(response.context['wizard']['forms'][1].errors), 3,
+                         'Invalid number of errors for primary contact'
+                         ' address form')
+        self.assertEqual(response.context['wizard']['forms'][1].errors,
+                         {'address_line': ['This field is required.'],
+                          'county': ['This field is required.'],
+                          'postcode': ['This field is required.']}, 'Invalid errors returned for primary contact '
+                                                                    'address form')
+
+    def test_should_fail_if_errors_not_returned_for_invalid_step2_data(self):
+        response = self.client.get(reverse('register_organisation_wizard_step',
+                                           kwargs={'step': 'primary_contact_info'}))
+        self.assertEqual(response.status_code, 200, "Initial status code not 200")
+        data = self.valid_form_data[1]
+        data['primary_contact_info-email'] = 'invalid email'
+
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'primary_contact_info'}), data)
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'primary_contact_info', 'Invalid current step')
+        self.assertEqual(len(response.context['wizard']['forms'][0].errors), 1,
+                         'Invalid number of errors for primary contact'
+                         ' info form')
+        self.assertEqual(response.context['wizard']['forms'][0].errors,
+                         {'email': ['Enter a valid email address.']},
+                         'Invalid errors returned for primary contact info form')
+
+    def test_should_fail_if_errors_returned_for_valid_step2_data(self):
+        response = self.client.get(reverse('register_organisation_wizard_step',
+                                           kwargs={'step': 'primary_contact_info'}))
+        self.assertEqual(response.status_code, 200, "Initial status code not 200")
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'primary_contact_info'}),
+                                    self.valid_form_data[1], follow=True)
+        self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
+                                                                kwargs={'step': 'organisation_accounts'}),
+                         'Initial redirect url not step 3')
+        self.assertEqual(response.redirect_chain[0][1], 302, 'Initial status code not 302')
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        wizard = response.context['wizard']
+        self.assertEqual(wizard['steps'].current, 'organisation_accounts', 'Invalid current step')
+        self.assertEqual(wizard['steps'].step0, 2, 'Invalid step0')
+        self.assertEqual(wizard['steps'].prev, 'primary_contact_info', 'Invalid previous step')
+        self.assertEqual(wizard['steps'].next, 'wishlist_info', 'Invalid next step')
+
+    def test_should_fail_if_errors_not_returned_for_blank_step3_data(self):
+        response = self.client.get(reverse('register_organisation_wizard_step',
+                                           kwargs={'step': 'organisation_accounts'}))
+        self.assertEqual(response.status_code, 200, "Initial status code not 200")
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'organisation_accounts'}),
+                                    {'register_organisation_wizard-current_step': 'organisation_accounts'})
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'organisation_accounts', 'Invalid current step')
+        self.assertEqual(len(response.context['wizard']['forms'][0].errors), 3,
+                         'Invalid number of errors for org user login form')
+        self.assertEqual(response.context['wizard']['forms'][0].errors,
+                         {'username': ['This field is required.'],
+                          'password1': ['This field is required.'],
+                          'password2': ['This field is required.']},
+                         'Invalid errors returned for org user login form')
+        self.assertEqual(len(response.context['wizard']['forms'][1].errors), 3,
+                         'Invalid number of errors for org user'
+                         ' contact form')
+        self.assertEqual(response.context['wizard']['forms'][1].errors,
+                         {'first_name': ['This field is required.'],
+                          'surname': ['This field is required.'],
+                          'email': ['This field is required.']},
+                         'Invalid errors returned for org user contact form')
+        self.assertEqual(len(response.context['wizard']['forms'][2].errors), 3,
+                         'Invalid number of errors for org user'
+                         ' address form')
+        self.assertEqual(response.context['wizard']['forms'][2].errors,
+                         {'address_line': ['This field is required.'],
+                          'county': ['This field is required.'],
+                          'postcode': ['This field is required.']}, 'Invalid errors returned for org user '
+                                                                    'address form')
+
+    def test_should_fail_if_errors_not_returned_for_invalid_step3_data(self):
+        response = self.client.get(reverse('register_organisation_wizard_step',
+                                           kwargs={'step': 'organisation_accounts'}))
+        self.assertEqual(response.status_code, 200, "Initial status code not 200")
+        data = self.valid_form_data[2]
+        data['organisation_accounts-username'] = ')!(*"!*"&!(*"^!'
+        data['organisation_accounts-password1'] = 'password'
+        data['organisation_accounts-password2'] = 'password'
+        data['organisation_accounts-email'] = 'invalid email'
+
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'organisation_accounts'}), data)
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'organisation_accounts', 'Invalid current step')
+        self.assertEqual(len(response.context['wizard']['forms'][0].errors), 2,
+                         'Invalid number of errors for org user'
+                         ' login form')
+        self.assertEqual(response.context['wizard']['forms'][0].errors,
+                         {'username': ['Enter a valid username. This value may contain only letters,'
+                                       ' numbers and @/./+/-/_ characters.'],
+                          'password2': ['This password is too common.']},
+                         'Invalid errors returned for org user login form')
+        self.assertEqual(len(response.context['wizard']['forms'][1].errors), 1,
+                         'Invalid number of errors for org user'
+                         ' contact form')
+        self.assertEqual(response.context['wizard']['forms'][1].errors,
+                         {'email': ['Enter a valid email address.']},
+                         'Invalid errors returned for org user contact form')
+
+    def test_should_fail_if_errors_not_returned_for_non_matching_step3_password_data(self):
+        response = self.client.get(reverse('register_organisation_wizard_step',
+                                           kwargs={'step': 'organisation_accounts'}))
+        self.assertEqual(response.status_code, 200, "Initial status code not 200")
+        data = self.valid_form_data[2]
+        data['organisation_accounts-password1'] = 'password'
+        data['organisation_accounts-password2'] = 'password2'
+
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'organisation_accounts'}), data)
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'organisation_accounts', 'Invalid current step')
+        self.assertEqual(len(response.context['wizard']['forms'][0].errors), 1,
+                         'Invalid number of errors for org user'
+                         ' login form')
+        self.assertEqual(response.context['wizard']['forms'][0].errors,
+                         {'password2': ["The two password fields didn't match."]},
+                         'Invalid errors returned for org user login form')
+
+    def test_should_fail_if_errors_returned_for_valid_step3_data(self):
+        response = self.client.get(reverse('register_organisation_wizard_step',
+                                           kwargs={'step': 'organisation_accounts'}))
+        self.assertEqual(response.status_code, 200, "Initial status code not 200")
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'organisation_accounts'}),
+                                    self.valid_form_data[2], follow=True)
+        self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
+                                                                kwargs={'step': 'wishlist_info'}),
+                         'Initial redirect url not step 4')
+        self.assertEqual(response.redirect_chain[0][1], 302, 'Initial status code not 302')
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        wizard = response.context['wizard']
+        self.assertEqual(wizard['steps'].current, 'wishlist_info', 'Invalid current step')
+        self.assertEqual(wizard['steps'].step0, 3, 'Invalid step0')
+        self.assertEqual(wizard['steps'].prev, 'organisation_accounts', 'Invalid previous step')
+        self.assertEqual(wizard['steps'].next, None, 'Invalid next step')
+
+    def test_should_fail_if_errors_not_returned_for_blank_step4_data(self):
+        response = self.client.get(reverse('register_organisation_wizard_step',
+                                           kwargs={'step': 'wishlist_info'}))
+        self.assertEqual(response.status_code, 200, "Initial status code not 200")
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'wishlist_info'}),
+                                    {'register_organisation_wizard-current_step': 'wishlist_info',
+                                     'wishlist_info-INITIAL_FORMS': '0',
+                                     'wishlist_info-MAX_NUM_FORMS': '3',
+                                     'wishlist_info-MIN_NUM_FORMS': '0',
+                                     'wishlist_info-TOTAL_FORMS': '3',
+                                     })
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'wishlist_info', 'Invalid current step')
+        self.assertEqual(len(response.context['wizard']['forms'][0].errors), 2,
+                         'Invalid number of errors for wishlist info form')
+        self.assertEqual(response.context['wizard']['forms'][0].errors,
+                         {'start_time': ['This field is required.'],
+                          'end_time': ['This field is required.']},
+                         'Invalid errors returned for wishlist info form')
+
+    def test_should_fail_if_errors_not_returned_for_invalid_step4_data(self):
+        RegisterOrganisationTest.setup_items()
+        response = self.client.get(reverse('register_organisation_wizard_step',
+                                           kwargs={'step': 'wishlist_info'}))
+        self.assertEqual(response.status_code, 200, "Initial status code not 200")
+        data = self.valid_form_data[3]
+        data['wishlist_info-start_time'] = 'invalid'
+        data['wishlist_info-end_time'] = 'invalid'
+        data['wishlist_info-items'] = [Item.objects.all()[0].pk, Item.objects.all()[1].pk]
+
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'wishlist_info'}), data)
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'wishlist_info', 'Invalid current step')
+        self.assertEqual(len(response.context['wizard']['forms'][0].errors), 2,
+                         'Invalid number of errors for wishlist info form')
+        self.assertEqual(response.context['wizard']['forms'][0].errors,
+                         {'start_time': ['Enter a valid date/time.'],
+                          'end_time': ['Enter a valid date/time.']},
+                         'Invalid errors returned for wishlist info form')
+
+    def test_should_fail_if_error_not_returned_for_step4_end_date_before_start_date(self):
+        RegisterOrganisationTest.setup_items()
+        response = self.client.get(reverse('register_organisation_wizard_step',
+                                           kwargs={'step': 'wishlist_info'}))
+        self.assertEqual(response.status_code, 200, "Initial status code not 200")
+        data = self.valid_form_data[3]
+        data['wishlist_info-start_time'] = '2006-10-26 14:30:59'
+        data['wishlist_info-end_time'] = '2006-10-24 14:30:59'
+        data['wishlist_info-items'] = [Item.objects.all()[0].pk, Item.objects.all()[1].pk]
+
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'wishlist_info'}), data)
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'wishlist_info', 'Invalid current step')
+        self.assertEqual(len(response.context['wizard']['forms'][0].errors), 1,
+                         'Invalid number of errors for wishlist info form')
+        self.assertEqual(response.context['wizard']['forms'][0].errors,
+                         {'end_time': ["End time cannot come before start time."]},
+                         'Invalid errors returned for wishlist info form')
+
+    def test_should_fail_if_errors_returned_for_valid_step4_data(self):
+        RegisterOrganisationTest.setup_items()
+        data = self.valid_form_data[3]
+        data['wishlist_info-items'] = [Item.objects.all()[0].pk, Item.objects.all()[1].pk]
+        response = self.client.get(reverse('register_organisation_wizard_step',
+                                           kwargs={'step': 'wishlist_info'}))
+        self.assertEqual(response.status_code, 200, "Initial status code not 200")
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'wishlist_info'}),
+                                    self.valid_form_data[3], follow=True)
+        # As user hasn't filled in rest of form, wizard should redirect to start instead of done
+        self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
+                                                                kwargs={'step': 'organisation_info'}),
+                         'Initial redirect url not step 1')
+        self.assertEqual(response.redirect_chain[0][1], 302, 'Initial status code not 302')
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        wizard = response.context['wizard']
+        self.assertEqual(wizard['steps'].current, 'organisation_info', 'Invalid current step')
+        self.assertEqual(wizard['steps'].step0, 0, 'Invalid step0')
+        self.assertEqual(wizard['steps'].prev, None, 'Invalid previous step')
+        self.assertEqual(wizard['steps'].next, 'primary_contact_info', 'Invalid next step')
+
+    def test_should_fail_if_wizard_stepback_is_not_functioning_currently(self):
+        response = self.client.get(reverse('register_organisation_wizard_step',
+                                           kwargs={'step': 'organisation_info'}))
+
+        self.assertEqual(response.status_code, 200, 'Initial status code not 200')
+        self.assertEqual(response.context['wizard']['steps'].current, 'organisation_info', 'Invalid current step')
+
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'organisation_info'}), self.valid_form_data[0], follow=True)
+        self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
+                                                                kwargs={'step': 'primary_contact_info'}),
+                         'Initial redirect url not step 2')
+        self.assertEqual(response.redirect_chain[0][1], 302, 'Initial status code not 302')
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'primary_contact_info')
+
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'primary_contact_info'}),
+                                    {'wizard_goto_step': response.context['wizard']['steps'].prev}, follow=True)
+        self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
+                                                                kwargs={'step': 'organisation_info'}),
+                         'Initial redirect url not step 1')
+        self.assertEqual(response.redirect_chain[0][1], 302, 'Initial status code not 302')
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'organisation_info')
+
+    def test_should_fail_if_error_not_raised_if_finishing_wishlist_with_no_items_in_wishlist(self):
+        response = self.client.get(reverse('register_organisation_wizard_step',
+                                           kwargs={'step': 'organisation_info'}))
+
+        self.assertEqual(response.status_code, 200, 'Initial status code not 200')
+        self.assertEqual(response.context['wizard']['steps'].current, 'organisation_info', 'Invalid current step')
+
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'organisation_info'}), self.valid_form_data[0], follow=True)
+        self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
+                                                                kwargs={'step': 'primary_contact_info'}),
+                         'Initial redirect url not step 2')
+        self.assertEqual(response.redirect_chain[0][1], 302, 'Initial status code not 302')
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'primary_contact_info')
+
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'primary_contact_info'}), self.valid_form_data[1],
+                                    follow=True)
+        self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
+                                                                kwargs={'step': 'organisation_accounts'}),
+                         'Initial redirect url not step 3')
+        self.assertEqual(response.redirect_chain[0][1], 302, 'Initial status code not 302')
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'organisation_accounts')
+
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'organisation_accounts'}), self.valid_form_data[2],
+                                    follow=True)
+        self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
+                                                                kwargs={'step': 'wishlist_info'}),
+                         'Initial redirect url not step 4')
+        self.assertEqual(response.redirect_chain[0][1], 302, 'Initial status code not 302')
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'wishlist_info')
+
+        data = self.valid_form_data[3]
+        data['wishlist_info-0-name'] = ''
+        data['wishlist_info-0-description'] = ''
+        data['wishlist_info-1-name'] = ''
+        data['wishlist_info-1-description'] = ''
+
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'wishlist_info'}), data, follow=True)
+        self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
+                                                                kwargs={'step': 'wishlist_info'}),
+                         'Initial redirect url not step 4')
+        self.assertEqual(response.redirect_chain[0][1], 302, 'Initial status code not 302')
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'wishlist_info')
+        messages = list(response.context['messages'])
+        self.assertEqual(len(messages), 1, 'Incorrect number of messages returned')
+        self.assertEqual(messages[0].message, 'Wishlist submitted without any items', 'Incorrect message returned')
+
+    def test_should_fail_if_organisation_not_created_after_completing_wizard_successfully(self):
+        self.setup_items()
+        self.valid_form_data[3]['wishlist_info-items'] = [Item.objects.all()[0].pk, Item.objects.all()[1].pk]
+        self.assertEqual(Organisation.objects.count(), 0, "Number of organisations not 0 at start of test")
+        response = self.client.get(reverse('register_organisation_wizard_step',
+                                           kwargs={'step': 'organisation_info'}))
+
+        self.assertEqual(response.status_code, 200, 'Initial status code not 200')
+        self.assertEqual(response.context['wizard']['steps'].current, 'organisation_info', 'Invalid current step')
+
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'organisation_info'}), self.valid_form_data[0],
+                                    follow=True)
+        self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
+                                                                kwargs={'step': 'primary_contact_info'}),
+                         'Initial redirect url not step 2')
+        self.assertEqual(response.redirect_chain[0][1], 302, 'Initial status code not 302')
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'primary_contact_info')
+
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'primary_contact_info'}), self.valid_form_data[1],
+                                    follow=True)
+        self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
+                                                                kwargs={'step': 'organisation_accounts'}),
+                         'Initial redirect url not step 3')
+        self.assertEqual(response.redirect_chain[0][1], 302, 'Initial status code not 302')
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'organisation_accounts')
+
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'organisation_accounts'}), self.valid_form_data[2],
+                                    follow=True)
+        self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
+                                                                kwargs={'step': 'wishlist_info'}),
+                         'Initial redirect url not step 4')
+        self.assertEqual(response.redirect_chain[0][1], 302, 'Initial status code not 302')
+        self.assertEqual(response.status_code, 200, "Final status code not 200")
+        self.assertEqual(response.context['wizard']['steps'].current, 'wishlist_info')
+
+        response = self.client.post(reverse('register_organisation_wizard_step',
+                                            kwargs={'step': 'wishlist_info'}), self.valid_form_data[3])
+        self.assertTemplateUsed(response, 'registration/organisation/register_organisation_complete.html',
+                                'Organisation registration complete template not used in response')
+        self.assertEqual(Organisation.objects.count(), 1, "Number of organisations not 1 at end of test")
+        organisation = Organisation.objects.all()[0]
+        self.assertEqual(organisation.name, self.valid_form_data[0]['organisation_info-name'], 'Organisation name not'
+                                                                                               'as submitted in wizard')
+        self.assertEqual(organisation.primary_contact.first_name,
+                         self.valid_form_data[1]['primary_contact_info-first_name'], 'Organisation primary contact'
+                                                                                     'first name not as submitted in'
+                                                                                     'wizard')
+        self.assertEqual(organisation.organisationuser_set.all()[0].user.username,
+                         self.valid_form_data[2]['organisation_accounts-username'], 'Organisation'
+                                                                                    'user username'
+                                                                                    ' not as submitted in wizard')
+        self.assertEqual(organisation.wishlist.items.count(), 4, 'Incorrect number of items in organisation wishlist')
+
+    def test_should_fail_if_database_error_exception_not_handled_properly(self):
+        # For this test we want to throw a database error during saving organisation, in this instance mocking the
+        # create method of organisation user seems appropriate
+        with patch.object(OrganisationUser.objects, 'create') as mock_method:
+            mock_method.side_effect = DatabaseError()
+            self.setup_items()
+            self.valid_form_data[3]['wishlist_info-items'] = [Item.objects.all()[0].pk, Item.objects.all()[1].pk]
+            self.assertEqual(Organisation.objects.count(), 0, "Number of organisations not 0 at start of test")
+            self.assertEqual(Contact.objects.count(), 0, "Number of contacts not 0 at start of test")
+            response = self.client.get(reverse('register_organisation_wizard_step',
+                                               kwargs={'step': 'organisation_info'}))
+
+            self.assertEqual(response.status_code, 200, 'Initial status code not 200')
+            self.assertEqual(response.context['wizard']['steps'].current, 'organisation_info', 'Invalid current step')
+
+            response = self.client.post(reverse('register_organisation_wizard_step',
+                                                kwargs={'step': 'organisation_info'}), self.valid_form_data[0],
+                                        follow=True)
+            self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
+                                                                    kwargs={'step': 'primary_contact_info'}),
+                             'Initial redirect url not step 2')
+            self.assertEqual(response.redirect_chain[0][1], 302, 'Initial status code not 302')
+            self.assertEqual(response.status_code, 200, "Final status code not 200")
+            self.assertEqual(response.context['wizard']['steps'].current, 'primary_contact_info')
+
+            response = self.client.post(reverse('register_organisation_wizard_step',
+                                                kwargs={'step': 'primary_contact_info'}), self.valid_form_data[1],
+                                        follow=True)
+            self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
+                                                                    kwargs={'step': 'organisation_accounts'}),
+                             'Initial redirect url not step 3')
+            self.assertEqual(response.redirect_chain[0][1], 302, 'Initial status code not 302')
+            self.assertEqual(response.status_code, 200, "Final status code not 200")
+            self.assertEqual(response.context['wizard']['steps'].current, 'organisation_accounts')
+
+            response = self.client.post(reverse('register_organisation_wizard_step',
+                                                kwargs={'step': 'organisation_accounts'}), self.valid_form_data[2],
+                                        follow=True)
+            self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard_step',
+                                                                    kwargs={'step': 'wishlist_info'}),
+                             'Initial redirect url not step 4')
+            self.assertEqual(response.redirect_chain[0][1], 302, 'Initial status code not 302')
+            self.assertEqual(response.status_code, 200, "Final status code not 200")
+            self.assertEqual(response.context['wizard']['steps'].current, 'wishlist_info')
+
+            response = self.client.post(reverse('register_organisation_wizard_step',
+                                                kwargs={'step': 'wishlist_info'}), self.valid_form_data[3], follow=True)
+            self.assertEqual(len(response.redirect_chain), 2, 'Redirect chain not correct size')
+            self.assertEqual(response.redirect_chain[0][0], reverse('register_organisation_wizard'),
+                             'First redirect not'
+                             'main wizard URL')
+            self.assertEqual(response.redirect_chain[1][0], reverse('register_organisation_wizard_step',
+                                                                    kwargs={'step': 'organisation_info'}),
+                             'Second redirect not'
+                             'first step of wizard')
+            messages = list(response.context['messages'])
+            self.assertEqual(len(messages), 1, 'Incorrect number of messages returned')
+            self.assertEqual(messages[0].message, "Something went wrong creating your organisation."
+                                                  "Please try again.")
+            self.assertEqual(Organisation.objects.count(), 0, "Number of organisations not 0 at end of test")
+            self.assertEqual(Contact.objects.count(), 0, "Number of contacts not 0 at end of test")

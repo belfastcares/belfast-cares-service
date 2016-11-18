@@ -20,19 +20,54 @@
         <table>
             {{ wizard.management_form }}
             <h2>Contact Information</h2>
-            {{ wizard.forms.0.as_p }}
+            {{ wizard.forms.0.first_name.errors }}
+            {{ wizard.forms.0.first_name.label_tag }}
+            {{ wizard.forms.0.first_name }}
+            {{ wizard.forms.0.first_name.help_text }}
+            {{ wizard.forms.0.surname.errors }}
+            {{ wizard.forms.0.surname.label_tag }}
+            {{ wizard.forms.0.surname }}
+            {{ wizard.forms.0.surname.help_text }}
+            {{ wizard.forms.0.telephone.errors }}
+            {{ wizard.forms.0.telephone.label_tag }}
+            {{ wizard.forms.0.telephone }}
+            {{ wizard.forms.0.telephone.help_text }}
+            {{ wizard.forms.0.mobile.errors }}
+            {{ wizard.forms.0.mobile.label_tag }}
+            {{ wizard.forms.0.mobile }}
+            {{ wizard.forms.0.mobile.help_text }}
+            {{ wizard.forms.0.email.errors }}
+            {{ wizard.forms.0.email.label_tag }}
+            {{ wizard.forms.0.email }}
+            {{ wizard.forms.0.email.help_text }}
+            {{ wizard.forms.0.description.errors }}
+            {{ wizard.forms.0.description.label_tag }}
+            {{ wizard.forms.0.description }}
+            {{ wizard.forms.0.description.help_text }}
             <br>
+
             <h2>Address Information</h2>
-            {{ wizard.forms.1.as_p }}
+            {{ wizard.forms.1.address_line.errors }}
+            {{ wizard.forms.1.address_line.label_tag }}
+            {{ wizard.forms.1.address_line }}
+            {{ wizard.forms.1.address_line.help_text }}
+            {{ wizard.forms.1.county.errors }}
+            {{ wizard.forms.1.county.label_tag }}
+            {{ wizard.forms.1.county }}
+            {{ wizard.forms.1.county.help_text }}
+            {{ wizard.forms.1.postcode.errors }}
+            {{ wizard.forms.1.postcode.label_tag }}
+            {{ wizard.forms.1.postcode }}
+            {{ wizard.forms.1.postcode.help_text }}
         </table>
         {% if wizard.steps.prev %}
             <button name="wizard_goto_step" type="submit"
-                    value="{{ wizard.steps.first }}"> "first step" </button>
+                    value="{{ wizard.steps.first }}">First Step</button>
             <button name="wizard_goto_step" type="submit"
-                    value="{{ wizard.steps.prev }}"> "prev step" </button>
+                    value="{{ wizard.steps.prev }}">Prev Step</button>
         {% endif %}
 
-        <input type="submit" value= "Submit & Continue"/>
+        <input type="submit" value= "Next Step"/>
     </form>
 
 {% endblock %}

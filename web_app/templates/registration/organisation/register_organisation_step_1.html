@@ -20,33 +20,66 @@
             {% endif %}
         </div>
         <div class="row">
-
-            <form action="" method="post" class="contact-form row">
+            <form action="" enctype="multipart/form-data" method="post" class="contact-form row">
                 {% csrf_token %}
 
                 <div class="col-md-6">
                     {{ wizard.management_form }}
 
                     <h2>General Information</h2>
-                    {{ wizard.forms.0 }}
+                    {{ wizard.forms.0.name.errors }}
+                    {{ wizard.forms.0.name.label_tag }}
+                    {{ wizard.forms.0.name }}
+                    {{ wizard.forms.0.name.help_text }}
+                    {{ wizard.forms.0.image.errors }}
+                    {{ wizard.forms.0.image.label_tag }}
+                    {{ wizard.forms.0.image }}
+                    {{ wizard.forms.0.image.help_text }}
+                    {{ wizard.forms.0.description.errors }}
+                    {{ wizard.forms.0.description.label_tag }}
+                    {{ wizard.forms.0.description }}
+                    {{ wizard.forms.0.description.help_text }}
+                    {{ wizard.forms.0.just_giving_link.errors }}
+                    {{ wizard.forms.0.just_giving_link.label_tag }}
+                    {{ wizard.forms.0.just_giving_link }}
+                    {{ wizard.forms.0.just_giving_link.help_text }}
+                    {{ wizard.forms.0.raised.errors }}
+                    {{ wizard.forms.0.raised.label_tag }}
+                    {{ wizard.forms.0.raised }}
+                    {{ wizard.forms.0.raised.help_text }}
+                    {{ wizard.forms.0.goal.errors }}
+                    {{ wizard.forms.0.goal.label_tag }}
+                    {{ wizard.forms.0.goal }}
+                    {{ wizard.forms.0.goal.help_text }}
                 </div>
 
                 <div class="col-md-6">
                     <h2>Organisation Address</h2>
-                    {{ wizard.forms.1.as_p }}
+                    {{ wizard.forms.1.address_line.errors }}
+                    {{ wizard.forms.1.address_line.label_tag }}
+                    {{ wizard.forms.1.address_line }}
+                    {{ wizard.forms.1.address_line.help_text }}
+                    {{ wizard.forms.1.county.errors }}
+                    {{ wizard.forms.1.county.label_tag }}
+                    {{ wizard.forms.1.county }}
+                    {{ wizard.forms.1.county.help_text }}
+                    {{ wizard.forms.1.postcode.errors }}
+                    {{ wizard.forms.1.postcode.label_tag }}
+                    {{ wizard.forms.1.postcode }}
+                    {{ wizard.forms.1.postcode.help_text }}
                 </div>
 
                 {% if wizard.steps.prev %}
                 <button name="wizard_goto_step" type="submit"
-                        value="{{ wizard.steps.first }}"> "first step"
+                        value="{{ wizard.steps.first }}">"First Step"
                 </button>
                 <button name="wizard_goto_step" type="submit"
-                        value="{{ wizard.steps.prev }}"> "prev step"
+                        value="{{ wizard.steps.prev }}">"Prev Step"
                 </button>
                 {% endif %}
 
                 <div class="col-md-12">
-                    <input class="thm-btn" type="submit" value="Submit & Continue"/>
+                    <input class="thm-btn" type="submit" value="Next Step"/>
                 </div>
 
             </form>

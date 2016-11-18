@@ -20,21 +20,68 @@
         <table>
             {{ wizard.management_form }}
             <h2>Login Information</h2>
-            {{ wizard.forms.0.as_p }}
+            {{ wizard.forms.0.username.errors }}
+            {{ wizard.forms.0.username.label_tag }}
+            {{ wizard.forms.0.username }}
+            {{ wizard.forms.0.username.help_text }}
+            {{ wizard.forms.0.password1.errors }}
+            {{ wizard.forms.0.password1.label_tag }}
+            {{ wizard.forms.0.password1 }}
+            {{ wizard.forms.0.password1.help_text }}
+            {{ wizard.forms.0.password2.errors }}
+            {{ wizard.forms.0.password2.label_tag }}
+            {{ wizard.forms.0.password2 }}
+            {{ wizard.forms.0.password2.help_text }}
             <br>
+
             <h2>Contact Information</h2>
-            {{ wizard.forms.1.as_p }}
+            {{ wizard.forms.1.first_name.errors }}
+            {{ wizard.forms.1.first_name.label_tag }}
+            {{ wizard.forms.1.first_name }}
+            {{ wizard.forms.1.first_name.help_text }}
+            {{ wizard.forms.1.surname.errors }}
+            {{ wizard.forms.1.surname.label_tag }}
+            {{ wizard.forms.1.surname }}
+            {{ wizard.forms.1.surname.help_text }}
+            {{ wizard.forms.1.telephone.errors }}
+            {{ wizard.forms.1.telephone.label_tag }}
+            {{ wizard.forms.1.telephone }}
+            {{ wizard.forms.1.telephone.help_text }}
+            {{ wizard.forms.1.mobile.errors }}
+            {{ wizard.forms.1.mobile.label_tag }}
+            {{ wizard.forms.1.mobile }}
+            {{ wizard.forms.1.mobile.help_text }}
+            {{ wizard.forms.1.email.errors }}
+            {{ wizard.forms.1.email.label_tag }}
+            {{ wizard.forms.1.email }}
+            {{ wizard.forms.1.email.help_text }}
+            {{ wizard.forms.1.description.errors }}
+            {{ wizard.forms.1.description.label_tag }}
+            {{ wizard.forms.1.description }}
+            {{ wizard.forms.1.description.help_text }}
+
             <h2>Address Information</h2>
-            {{ wizard.forms.2.as_p }}
+            {{ wizard.forms.2.address_line.errors }}
+            {{ wizard.forms.2.address_line.label_tag }}
+            {{ wizard.forms.2.address_line }}
+            {{ wizard.forms.2.address_line.help_text }}
+            {{ wizard.forms.2.county.errors }}
+            {{ wizard.forms.2.county.label_tag }}
+            {{ wizard.forms.2.county }}
+            {{ wizard.forms.2.county.help_text }}
+            {{ wizard.forms.2.postcode.errors }}
+            {{ wizard.forms.2.postcode.label_tag }}
+            {{ wizard.forms.2.postcode }}
+            {{ wizard.forms.2.postcode.help_text }}
         </table>
         {% if wizard.steps.prev %}
             <button name="wizard_goto_step" type="submit"
-                    value="{{ wizard.steps.first }}"> "first step" </button>
+                    value="{{ wizard.steps.first }}">First Step</button>
             <button name="wizard_goto_step" type="submit"
-                    value="{{ wizard.steps.prev }}"> "prev step" </button>
+                    value="{{ wizard.steps.prev }}">Prev Step</button>
         {% endif %}
 
-        <input type="submit" value= "Submit & Continue"/>
+        <input type="submit" value= "Next Step"/>
     </form>
 
 {% endblock %}
